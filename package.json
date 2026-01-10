@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "description": "Punkass Grackle website - D&D tools and more",
   "scripts": {
-    "build": "echo 'No build required for static site'"
+    "build": "exit 0"
   }
 }
