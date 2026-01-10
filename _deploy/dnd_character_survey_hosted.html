@@ -1,0 +1,2529 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D 5e Character Builder - Complete Edition</title>
+    <meta name="description" content="Create your D&D 5th Edition character with all official races, classes, and Tasha's Custom Lineage options">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(40, 40, 60, 0.95);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            text-align: center;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            margin-bottom: 30px;
+        }
+        
+        .section {
+            margin: 20px 0;
+            padding: 25px;
+            background: rgba(60, 60, 80, 0.5);
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        h2 {
+            color: #ffd93d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0ff;
+            font-weight: 600;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px;
+            margin-bottom: 15px;
+            background: rgba(30, 30, 50, 0.8);
+            color: #e0e0e0;
+            border: 2px solid rgba(100, 100, 150, 0.3);
+            border-radius: 8px;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background: rgba(30, 30, 50, 1);
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .form-row > div {
+            flex: 1;
+        }
+        
+        .features-display {
+            background: rgba(20, 20, 40, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            min-height: 100px;
+        }
+        
+        .feature-card {
+            background: rgba(60, 60, 80, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .feature-card h3 {
+            color: #4ecdc4;
+            margin-bottom: 10px;
+        }
+        
+        .feature-list {
+            list-style: none;
+            padding: 0;
+            margin: 10px 0;
+        }
+        
+        .feature-list li {
+            padding: 5px 0;
+            border-bottom: 1px solid rgba(100, 100, 150, 0.2);
+        }
+        
+        .feature-list li:last-child {
+            border-bottom: none;
+        }
+        
+        button {
+            background: linear-gradient(45deg, #ff6b6b, #4ecdc4);
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .help-text {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 5px;
+        }
+        
+        .loading {
+            color: #4ecdc4;
+            font-style: italic;
+        }
+        
+        .error {
+            color: #ff6b6b;
+            font-style: italic;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 20px;
+        }
+        
+        .checkbox-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox-group input {
+            width: auto;
+            margin-right: 10px;
+            margin-bottom: 0;
+        }
+        
+        .checkbox-group label {
+            margin-bottom: 0;
+            flex: 1;
+        }
+        
+        .checkbox-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+        }
+        
+        .tashas-select {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            background: rgba(30, 30, 50, 0.8);
+            color: #e0e0e0;
+            border: 2px solid rgba(100, 100, 150, 0.3);
+            border-radius: 6px;
+            font-size: 14px;
+        }
+        
+        .tashas-select:focus {
+            border-color: #4caf50;
+            box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+        }
+        
+        .tashas-invalid {
+            border-color: #ff6b6b !important;
+            background: rgba(255, 107, 107, 0.1) !important;
+        }
+        
+        .tashas-valid {
+            border-color: #4caf50 !important;
+            background: rgba(76, 175, 80, 0.1) !important;
+        }
+        
+        .ability-scores-container {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .ability-score-row {
+            display: flex;
+            align-items: center;
+            padding: 15px;
+            background: rgba(60, 60, 80, 0.3);
+            border-radius: 8px;
+            border-left: 4px solid #4ecdc4;
+        }
+        
+        .ability-info {
+            flex: 0 0 120px;
+        }
+        
+        .ability-info label {
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 0;
+            color: #4ecdc4;
+        }
+        
+        .ability-input-group {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+        
+        .score-breakdown {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex: 1;
+        }
+        
+        .base-score {
+            width: 80px;
+            padding: 8px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 16px;
+            background: rgba(30, 30, 50, 0.8);
+            color: #e0e0e0;
+            border: 2px solid rgba(100, 100, 150, 0.3);
+            border-radius: 6px;
+            margin-bottom: 0;
+        }
+        
+        .base-score:focus {
+            border-color: #4ecdc4;
+            box-shadow: 0 0 8px rgba(78, 205, 196, 0.3);
+        }
+        
+        .plus-sign, .equals-sign {
+            font-weight: bold;
+            color: #ffd93d;
+            font-size: 18px;
+        }
+        
+        .racial-bonus {
+            display: inline-block;
+            min-width: 20px;
+            text-align: center;
+            font-weight: bold;
+            color: #4caf50;
+            font-size: 16px;
+            padding: 4px 8px;
+            border-radius: 4px;
+            background: rgba(76, 175, 80, 0.2);
+        }
+        
+        .total-score {
+            display: inline-block;
+            width: 50px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 18px;
+            color: #ff6b6b;
+            padding: 8px;
+            background: rgba(255, 107, 107, 0.2);
+            border-radius: 6px;
+        }
+        
+        .modifier-display {
+            flex: 0 0 150px;
+            text-align: center;
+            padding: 10px;
+            background: rgba(255, 215, 61, 0.2);
+            border-radius: 6px;
+            border: 2px solid rgba(255, 215, 61, 0.3);
+        }
+        
+        .modifier-label {
+            display: block;
+            font-size: 12px;
+            color: #b0b0ff;
+            margin-bottom: 2px;
+        }
+        
+        .modifier-value {
+            display: block;
+            font-size: 24px;
+            font-weight: bold;
+            color: #ffd93d;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+            
+            .form-row {
+                flex-direction: column;
+            }
+            
+            .ability-score-row {
+                flex-wrap: wrap;
+            }
+            
+            .ability-input-group {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎲 D&D 5e Character Builder</h1>
+        <p class="subtitle">Complete Character Creation with All Official Content</p>
+        
+        <form id="characterForm">
+            <!-- Basic Information -->
+            <div class="section">
+                <h2>📋 Basic Information</h2>
+                <div class="form-row">
+                    <div>
+                        <label for="playerName">Player Name *</label>
+                        <input type="text" id="playerName" name="playerName" required>
+                    </div>
+                    <div>
+                        <label for="characterName">Character Name *</label>
+                        <input type="text" id="characterName" name="characterName" required>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Race & Class -->
+            <div class="section">
+                <h2>⚔️ Class & Race</h2>
+                <div class="form-row">
+                    <div>
+                        <label for="race">Race *</label>
+                        <select id="race" name="race" required>
+                            <option value="">Select a race...</option>
+                            <optgroup label="Core Races (PHB)">
+                                <option value="human">Human</option>
+                                <option value="elf">Elf</option>
+                                <option value="dwarf">Dwarf</option>
+                                <option value="halfling">Halfling</option>
+                                <option value="dragonborn">Dragonborn</option>
+                                <option value="gnome">Gnome</option>
+                                <option value="half-elf">Half-Elf</option>
+                                <option value="half-orc">Half-Orc</option>
+                                <option value="tiefling">Tiefling</option>
+                            </optgroup>
+                            <optgroup label="Elemental Evil">
+                                <option value="aarakocra">Aarakocra</option>
+                                <option value="genasi">Genasi</option>
+                                <option value="goliath">Goliath</option>
+                            </optgroup>
+                            <optgroup label="Volo's Guide">
+                                <option value="aasimar">Aasimar</option>
+                                <option value="firbolg">Firbolg</option>
+                                <option value="kenku">Kenku</option>
+                                <option value="lizardfolk">Lizardfolk</option>
+                                <option value="tabaxi">Tabaxi</option>
+                                <option value="triton">Triton</option>
+                                <option value="bugbear">Bugbear</option>
+                                <option value="goblin">Goblin</option>
+                                <option value="hobgoblin">Hobgoblin</option>
+                                <option value="kobold">Kobold</option>
+                                <option value="orc">Orc</option>
+                                <option value="yuan-ti">Yuan-ti Pureblood</option>
+                            </optgroup>
+                            <optgroup label="Mordenkainen's Tome">
+                                <option value="githyanki">Githyanki</option>
+                                <option value="githzerai">Githzerai</option>
+                            </optgroup>
+                            <optgroup label="Eberron">
+                                <option value="changeling">Changeling</option>
+                                <option value="kalashtar">Kalashtar</option>
+                                <option value="shifter">Shifter</option>
+                                <option value="warforged">Warforged</option>
+                            </optgroup>
+                            <optgroup label="Ravnica">
+                                <option value="centaur">Centaur</option>
+                                <option value="loxodon">Loxodon</option>
+                                <option value="minotaur">Minotaur</option>
+                                <option value="simic-hybrid">Simic Hybrid</option>
+                                <option value="vedalken">Vedalken</option>
+                            </optgroup>
+                            <optgroup label="Theros">
+                                <option value="leonin">Leonin</option>
+                                <option value="satyr">Satyr</option>
+                            </optgroup>
+                            <optgroup label="Wildemount">
+                                <option value="tortle">Tortle</option>
+                            </optgroup>
+                            <optgroup label="Van Richten's Guide">
+                                <option value="dhampir">Dhampir</option>
+                                <option value="hexblood">Hexblood</option>
+                                <option value="reborn">Reborn</option>
+                            </optgroup>
+                            <optgroup label="Other Sources">
+                                <option value="grung">Grung</option>
+                                <option value="locathah">Locathah</option>
+                                <option value="verdan">Verdan</option>
+                            </optgroup>
+                        </select>
+                        <p class="help-text">Race will auto-populate ability score bonuses and features</p>
+                    </div>
+                    <div>
+                        <label for="subrace">Subrace</label>
+                        <select id="subrace" name="subrace">
+                            <option value="">None / Select race first</option>
+                        </select>
+                        <p class="help-text">Available after selecting race</p>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div>
+                        <label for="class">Class *</label>
+                        <select id="class" name="class" required>
+                            <option value="">Select a class...</option>
+                            <option value="artificer">Artificer</option>
+                            <option value="barbarian">Barbarian</option>
+                            <option value="bard">Bard</option>
+                            <option value="blood-hunter">Blood Hunter (Critical Role)</option>
+                            <option value="cleric">Cleric</option>
+                            <option value="druid">Druid</option>
+                            <option value="fighter">Fighter</option>
+                            <option value="monk">Monk</option>
+                            <option value="paladin">Paladin</option>
+                            <option value="ranger">Ranger</option>
+                            <option value="rogue">Rogue</option>
+                            <option value="sorcerer">Sorcerer</option>
+                            <option value="warlock">Warlock</option>
+                            <option value="wizard">Wizard</option>
+                        </select>
+                        <p class="help-text">Class will auto-populate saves, skills, and features</p>
+                    </div>
+                    <div>
+                        <label for="level">Level *</label>
+                        <input type="number" id="level" name="level" min="1" max="20" value="1" required>
+                        <p class="help-text">Features update based on level</p>
+                    </div>
+                </div>
+                
+                <div>
+                    <label for="subclass">Subclass</label>
+                    <select id="subclass" name="subclass">
+                        <option value="">None / Select class first</option>
+                    </select>
+                    <p class="help-text">Your archetype/specialization (usually chosen at level 1-3)</p>
+                </div>
+            </div>
+            
+            <!-- Background -->
+            <div class="section">
+                <h2>📜 Background</h2>
+                <div class="form-row">
+                    <div>
+                        <label for="background">Background *</label>
+                        <select id="background" name="background" required>
+                            <option value="">Select a background...</option>
+                            <option value="acolyte">Acolyte</option>
+                            <option value="criminal">Criminal / Spy</option>
+                            <option value="folk_hero">Folk Hero</option>
+                            <option value="noble">Noble</option>
+                            <option value="sage">Sage</option>
+                            <option value="soldier">Soldier</option>
+                            <option value="charlatan">Charlatan</option>
+                            <option value="entertainer">Entertainer</option>
+                            <option value="guild_artisan">Guild Artisan</option>
+                            <option value="hermit">Hermit</option>
+                            <option value="outlander">Outlander</option>
+                            <option value="sailor">Sailor</option>
+                            <option value="urchin">Urchin</option>
+                        </select>
+                        <p class="help-text">Background grants skills, tools, and languages</p>
+                    </div>
+                    <div>
+                        <label for="alignment">Alignment</label>
+                        <select id="alignment" name="alignment">
+                            <option value="">Select alignment...</option>
+                            <option value="Lawful Good">Lawful Good</option>
+                            <option value="Neutral Good">Neutral Good</option>
+                            <option value="Chaotic Good">Chaotic Good</option>
+                            <option value="Lawful Neutral">Lawful Neutral</option>
+                            <option value="True Neutral">True Neutral</option>
+                            <option value="Chaotic Neutral">Chaotic Neutral</option>
+                            <option value="Lawful Evil">Lawful Evil</option>
+                            <option value="Neutral Evil">Neutral Evil</option>
+                            <option value="Chaotic Evil">Chaotic Evil</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Features & Traits -->
+            <div class="section">
+                <h2>✨ Features & Traits</h2>
+                <p class="help-text">Class and race features are automatically populated based on your selections.</p>
+                
+                <div>
+                    <h3>Race Features</h3>
+                    <div id="raceFeatures" class="features-display">
+                        <p style="color: #888;">Select a race to see features...</p>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 20px;">
+                    <h3>Class Features</h3>
+                    <div id="classFeatures" class="features-display">
+                        <p style="color: #888;">Select a class to see features...</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ability Scores -->
+            <div class="section">
+                <h2>💪 Ability Scores</h2>
+                
+                <!-- Tasha's Custom Lineage Option -->
+                <div id="tashasOption" style="display: none; margin-bottom: 20px; padding: 15px; background: rgba(76, 175, 80, 0.2); border-radius: 8px; border-left: 4px solid #4caf50;">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="useTashas" name="useTashas">
+                        <label for="useTashas" style="font-weight: bold; color: #4caf50;">Use Tasha's Custom Lineage</label>
+                    </div>
+                    <p class="help-text" style="margin-top: 10px;">Replace racial ability bonuses with custom ones: +2 to one ability and +1 to another, OR +1 to three different abilities.</p>
+                    
+                    <div id="tashasControls" style="display: none; margin-top: 15px;">
+                        <div style="display: flex; gap: 20px; margin-bottom: 15px;">
+                            <div>
+                                <input type="radio" id="tashas2plus1" name="tashasMode" value="2plus1" checked>
+                                <label for="tashas2plus1">+2/+1 Distribution</label>
+                            </div>
+                            <div>
+                                <input type="radio" id="tashas1plus1plus1" name="tashasMode" value="1plus1plus1">
+                                <label for="tashas1plus1plus1">+1/+1/+1 Distribution</label>
+                            </div>
+                        </div>
+                        
+                        <div id="tashasDistribution">
+                            <div class="stat-grid" style="grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));">
+                                <div>
+                                    <label>Strength</label>
+                                    <select id="tashasStr" class="tashas-select">
+                                        <option value="0">+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Dexterity</label>
+                                    <select id="tashasDex" class="tashas-select">
+                                        <option value="0">+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Constitution</label>
+                                    <select id="tashasCon" class="tashas-select">
+                                        <option value="0">+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Intelligence</label>
+                                    <select id="tashasInt" class="tashas-select">
+                                        <option value="0">+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Wisdom</label>
+                                    <select id="tashasWis" class="tashas-select">
+                                        <option value="0">+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label>Charisma</label>
+                                    <select id="tashasCha" class="tashas-select">
+                                        <option value="0">+0</option>
+                                        <option value="1">+1</option>
+                                        <option value="2">+2</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div id="tashasPoints" style="margin-top: 10px; font-weight: bold; color: #4caf50;">
+                                Points remaining: <span id="tashasPointsRemaining">3</span>
+                            </div>
+                            <div id="tashasError" style="color: #ff6b6b; margin-top: 5px; display: none;"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="help-text">Enter your base ability scores. Racial/custom bonuses are automatically added to show the final modifier.</p>
+                
+                <div class="ability-scores-container">
+                    <div class="ability-score-row">
+                        <div class="ability-info">
+                            <label for="strength">Strength</label>
+                        </div>
+                        <div class="ability-input-group">
+                            <div class="score-breakdown">
+                                <input type="number" id="strength" name="strength" min="3" max="20" value="10" class="base-score">
+                                <span class="plus-sign">+</span>
+                                <span id="strRacialBonus" class="racial-bonus">0</span>
+                                <span class="equals-sign">=</span>
+                                <span id="strTotal" class="total-score">10</span>
+                            </div>
+                            <div class="modifier-display">
+                                <span class="modifier-label">Modifier:</span>
+                                <span id="strMod" class="modifier-value">+0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ability-score-row">
+                        <div class="ability-info">
+                            <label for="dexterity">Dexterity</label>
+                        </div>
+                        <div class="ability-input-group">
+                            <div class="score-breakdown">
+                                <input type="number" id="dexterity" name="dexterity" min="3" max="20" value="10" class="base-score">
+                                <span class="plus-sign">+</span>
+                                <span id="dexRacialBonus" class="racial-bonus">0</span>
+                                <span class="equals-sign">=</span>
+                                <span id="dexTotal" class="total-score">10</span>
+                            </div>
+                            <div class="modifier-display">
+                                <span class="modifier-label">Modifier:</span>
+                                <span id="dexMod" class="modifier-value">+0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ability-score-row">
+                        <div class="ability-info">
+                            <label for="constitution">Constitution</label>
+                        </div>
+                        <div class="ability-input-group">
+                            <div class="score-breakdown">
+                                <input type="number" id="constitution" name="constitution" min="3" max="20" value="10" class="base-score">
+                                <span class="plus-sign">+</span>
+                                <span id="conRacialBonus" class="racial-bonus">0</span>
+                                <span class="equals-sign">=</span>
+                                <span id="conTotal" class="total-score">10</span>
+                            </div>
+                            <div class="modifier-display">
+                                <span class="modifier-label">Modifier:</span>
+                                <span id="conMod" class="modifier-value">+0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ability-score-row">
+                        <div class="ability-info">
+                            <label for="intelligence">Intelligence</label>
+                        </div>
+                        <div class="ability-input-group">
+                            <div class="score-breakdown">
+                                <input type="number" id="intelligence" name="intelligence" min="3" max="20" value="10" class="base-score">
+                                <span class="plus-sign">+</span>
+                                <span id="intRacialBonus" class="racial-bonus">0</span>
+                                <span class="equals-sign">=</span>
+                                <span id="intTotal" class="total-score">10</span>
+                            </div>
+                            <div class="modifier-display">
+                                <span class="modifier-label">Modifier:</span>
+                                <span id="intMod" class="modifier-value">+0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ability-score-row">
+                        <div class="ability-info">
+                            <label for="wisdom">Wisdom</label>
+                        </div>
+                        <div class="ability-input-group">
+                            <div class="score-breakdown">
+                                <input type="number" id="wisdom" name="wisdom" min="3" max="20" value="10" class="base-score">
+                                <span class="plus-sign">+</span>
+                                <span id="wisRacialBonus" class="racial-bonus">0</span>
+                                <span class="equals-sign">=</span>
+                                <span id="wisTotal" class="total-score">10</span>
+                            </div>
+                            <div class="modifier-display">
+                                <span class="modifier-label">Modifier:</span>
+                                <span id="wisMod" class="modifier-value">+0</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="ability-score-row">
+                        <div class="ability-info">
+                            <label for="charisma">Charisma</label>
+                        </div>
+                        <div class="ability-input-group">
+                            <div class="score-breakdown">
+                                <input type="number" id="charisma" name="charisma" min="3" max="20" value="10" class="base-score">
+                                <span class="plus-sign">+</span>
+                                <span id="chaRacialBonus" class="racial-bonus">0</span>
+                                <span class="equals-sign">=</span>
+                                <span id="chaTotal" class="total-score">10</span>
+                            </div>
+                            <div class="modifier-display">
+                                <span class="modifier-label">Modifier:</span>
+                                <span id="chaMod" class="modifier-value">+0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Skills & Proficiencies -->
+            <div class="section">
+                <h2>🎯 Skills & Proficiencies</h2>
+                <p class="help-text">Check skills you're proficient in. Background and class skills are auto-selected.</p>
+                
+                <div class="checkbox-grid">
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="acrobatics" name="skills" value="acrobatics">
+                        <label for="acrobatics">Acrobatics (DEX)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="animal_handling" name="skills" value="animal_handling">
+                        <label for="animal_handling">Animal Handling (WIS)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="arcana" name="skills" value="arcana">
+                        <label for="arcana">Arcana (INT)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="athletics" name="skills" value="athletics">
+                        <label for="athletics">Athletics (STR)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="deception" name="skills" value="deception">
+                        <label for="deception">Deception (CHA)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="history" name="skills" value="history">
+                        <label for="history">History (INT)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="insight" name="skills" value="insight">
+                        <label for="insight">Insight (WIS)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="intimidation" name="skills" value="intimidation">
+                        <label for="intimidation">Intimidation (CHA)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="investigation" name="skills" value="investigation">
+                        <label for="investigation">Investigation (INT)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="medicine" name="skills" value="medicine">
+                        <label for="medicine">Medicine (WIS)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="nature" name="skills" value="nature">
+                        <label for="nature">Nature (INT)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="perception" name="skills" value="perception">
+                        <label for="perception">Perception (WIS)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="performance" name="skills" value="performance">
+                        <label for="performance">Performance (CHA)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="persuasion" name="skills" value="persuasion">
+                        <label for="persuasion">Persuasion (CHA)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="religion" name="skills" value="religion">
+                        <label for="religion">Religion (INT)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="sleight_of_hand" name="skills" value="sleight_of_hand">
+                        <label for="sleight_of_hand">Sleight of Hand (DEX)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="stealth" name="skills" value="stealth">
+                        <label for="stealth">Stealth (DEX)</label>
+                    </div>
+                    <div class="checkbox-group">
+                        <input type="checkbox" id="survival" name="skills" value="survival">
+                        <label for="survival">Survival (WIS)</label>
+                    </div>
+                </div>
+                
+                <div class="form-row" style="margin-top: 20px;">
+                    <div>
+                        <label for="languages">Languages</label>
+                        <textarea id="languages" name="languages" rows="3" placeholder="Common, Elvish, etc."></textarea>
+                    </div>
+                    <div>
+                        <label for="tools">Tool Proficiencies</label>
+                        <textarea id="tools" name="tools" rows="3" placeholder="Thieves' Tools, Herbalism Kit, etc."></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Equipment -->
+            <div class="section">
+                <h2>🎒 Equipment</h2>
+                <div>
+                    <label for="equipment">Starting Equipment</label>
+                    <textarea id="equipment" name="equipment" rows="6" placeholder="List your starting equipment..."></textarea>
+                    <p class="help-text">Equipment from background and class will be suggested</p>
+                </div>
+            </div>
+            
+            <div style="text-align: center; margin-top: 30px;">
+                <button type="submit">
+                    <span style="font-size: 24px; margin-right: 10px;">🎲</span>
+                    Create Character
+                </button>
+            </div>
+        </form>
+    </div>
+    
+    <script>
+        // Complete D&D 5e Data - All Embedded for Static Hosting
+        const dndData = {
+            races: {
+                // Core PHB Races
+                human: {
+                    name: 'Human',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 1, dexterity: 1, constitution: 1, intelligence: 1, wisdom: 1, charisma: 1 },
+                    features: ['Ability Score Increase: +1 to all abilities', 'Extra Language', 'Extra Skill'],
+                    languages: ['Common', 'One of your choice'],
+                    subraces: {}
+                },
+                elf: {
+                    name: 'Elf',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { dexterity: 2 },
+                    features: ['Darkvision (60 ft)', 'Keen Senses (Perception proficiency)', 'Fey Ancestry', 'Trance'],
+                    languages: ['Common', 'Elvish'],
+                    subraces: {
+                        high: { name: 'High Elf', ability_scores: { intelligence: 1 }, features: ['Elf Weapon Training', 'Cantrip', 'Extra Language'] },
+                        wood: { name: 'Wood Elf', ability_scores: { wisdom: 1 }, features: ['Elf Weapon Training', 'Fleet of Foot (35 ft speed)', 'Mask of the Wild'] },
+                        dark: { name: 'Dark Elf (Drow)', ability_scores: { charisma: 1 }, features: ['Superior Darkvision (120 ft)', 'Sunlight Sensitivity', 'Drow Magic', 'Drow Weapon Training'] },
+                        eladrin: { name: 'Eladrin', ability_scores: { charisma: 1 }, features: ['Fey Step (Misty Step 1/rest)', 'Shifting Seasons'] },
+                        sea: { name: 'Sea Elf', ability_scores: { constitution: 1 }, features: ['Sea Elf Training', 'Child of the Sea', 'Friend of the Sea'] },
+                        shadar_kai: { name: 'Shadar-kai', ability_scores: { constitution: 1 }, features: ['Necrotic Resistance', 'Blessing of the Raven Queen'] }
+                    }
+                },
+                dwarf: {
+                    name: 'Dwarf',
+                    size: 'Medium',
+                    speed: 25,
+                    ability_scores: { constitution: 2 },
+                    features: ['Darkvision (60 ft)', 'Dwarven Resilience', 'Dwarven Combat Training', 'Tool Proficiency', 'Stonecunning'],
+                    languages: ['Common', 'Dwarvish'],
+                    subraces: {
+                        hill: { name: 'Hill Dwarf', ability_scores: { wisdom: 1 }, features: ['Dwarven Toughness (+1 HP per level)'] },
+                        mountain: { name: 'Mountain Dwarf', ability_scores: { strength: 2 }, features: ['Light and Medium Armor Proficiency'] },
+                        duergar: { name: 'Duergar (Gray Dwarf)', ability_scores: { strength: 1 }, features: ['Superior Darkvision', 'Duergar Resilience', 'Duergar Magic', 'Sunlight Sensitivity'] }
+                    }
+                },
+                halfling: {
+                    name: 'Halfling',
+                    size: 'Small',
+                    speed: 25,
+                    ability_scores: { dexterity: 2 },
+                    features: ['Lucky', 'Brave', 'Halfling Nimbleness'],
+                    languages: ['Common', 'Halfling'],
+                    subraces: {
+                        lightfoot: { name: 'Lightfoot', ability_scores: { charisma: 1 }, features: ['Naturally Stealthy'] },
+                        stout: { name: 'Stout', ability_scores: { constitution: 1 }, features: ['Stout Resilience'] },
+                        ghostwise: { name: 'Ghostwise', ability_scores: { wisdom: 1 }, features: ['Silent Speech'] }
+                    }
+                },
+                dragonborn: {
+                    name: 'Dragonborn',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, charisma: 1 },
+                    features: ['Draconic Ancestry', 'Breath Weapon', 'Damage Resistance'],
+                    languages: ['Common', 'Draconic'],
+                    subraces: {}
+                },
+                gnome: {
+                    name: 'Gnome',
+                    size: 'Small',
+                    speed: 25,
+                    ability_scores: { intelligence: 2 },
+                    features: ['Darkvision (60 ft)', 'Gnome Cunning'],
+                    languages: ['Common', 'Gnomish'],
+                    subraces: {
+                        forest: { name: 'Forest Gnome', ability_scores: { dexterity: 1 }, features: ['Natural Illusionist', 'Speak with Small Beasts'] },
+                        rock: { name: 'Rock Gnome', ability_scores: { constitution: 1 }, features: ['Artificer\'s Lore', 'Tinker'] },
+                        deep: { name: 'Deep Gnome', ability_scores: { dexterity: 1 }, features: ['Superior Darkvision', 'Stone Camouflage'] }
+                    }
+                },
+                'half-elf': {
+                    name: 'Half-Elf',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { charisma: 2 },
+                    features: ['Darkvision (60 ft)', 'Fey Ancestry', 'Skill Versatility', 'Two ability scores +1'],
+                    languages: ['Common', 'Elvish', 'One of your choice'],
+                    subraces: {}
+                },
+                'half-orc': {
+                    name: 'Half-Orc',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, constitution: 1 },
+                    features: ['Darkvision (60 ft)', 'Menacing', 'Relentless Endurance', 'Savage Attacks'],
+                    languages: ['Common', 'Orc'],
+                    subraces: {}
+                },
+                tiefling: {
+                    name: 'Tiefling',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { charisma: 2, intelligence: 1 },
+                    features: ['Darkvision (60 ft)', 'Hellish Resistance', 'Infernal Legacy'],
+                    languages: ['Common', 'Infernal'],
+                    subraces: {
+                        asmodeus: { name: 'Tiefling of Asmodeus', features: ['Legacy of Asmodeus (Thaumaturgy, Hellish Rebuke, Darkness)'] },
+                        baalzebul: { name: 'Tiefling of Baalzebul', features: ['Legacy of Baalzebul (Thaumaturgy, Ray of Sickness, Crown of Madness)'] },
+                        dispater: { name: 'Tiefling of Dispater', features: ['Legacy of Dispater (Thaumaturgy, Disguise Self, Detect Thoughts)'] },
+                        fierna: { name: 'Tiefling of Fierna', features: ['Legacy of Fierna (Friends, Charm Person, Suggestion)'] },
+                        glasya: { name: 'Tiefling of Glasya', features: ['Legacy of Glasya (Minor Illusion, Disguise Self, Invisibility)'] },
+                        levistus: { name: 'Tiefling of Levistus', features: ['Legacy of Levistus (Ray of Frost, Armor of Agathys, Darkness)'] },
+                        mammon: { name: 'Tiefling of Mammon', features: ['Legacy of Mammon (Mage Hand, Tenser\'s Floating Disk, Arcane Lock)'] },
+                        mephistopheles: { name: 'Tiefling of Mephistopheles', features: ['Legacy of Mephistopheles (Mage Hand, Burning Hands, Flame Blade)'] },
+                        zariel: { name: 'Tiefling of Zariel', features: ['Legacy of Zariel (Thaumaturgy, Searing Smite, Branding Smite)'] }
+                    }
+                },
+                // Extended Races
+                aarakocra: {
+                    name: 'Aarakocra',
+                    size: 'Medium',
+                    speed: 25,
+                    ability_scores: { dexterity: 2, wisdom: 1 },
+                    features: ['Flight (50 ft)', 'Talons (1d4 unarmed damage)'],
+                    languages: ['Common', 'Aarakocra', 'Auran'],
+                    subraces: {}
+                },
+                genasi: {
+                    name: 'Genasi',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { constitution: 2 },
+                    features: ['Elemental Heritage'],
+                    languages: ['Common', 'Primordial'],
+                    subraces: {
+                        air: { name: 'Air Genasi', ability_scores: { dexterity: 1 }, features: ['Unending Breath', 'Mingle with the Wind (Levitate 1/long rest)'] },
+                        earth: { name: 'Earth Genasi', ability_scores: { strength: 1 }, features: ['Earth Walk', 'Merge with Stone (Pass without Trace 1/long rest)'] },
+                        fire: { name: 'Fire Genasi', ability_scores: { intelligence: 1 }, features: ['Darkvision', 'Fire Resistance', 'Reach to the Blaze (Produce Flame, Burning Hands)'] },
+                        water: { name: 'Water Genasi', ability_scores: { wisdom: 1 }, features: ['Acid Resistance', 'Amphibious', 'Swim (30 ft)', 'Call to the Wave (Shape Water, Create/Destroy Water)'] }
+                    }
+                },
+                goliath: {
+                    name: 'Goliath',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, constitution: 1 },
+                    features: ['Natural Athlete', 'Stone\'s Endurance', 'Powerful Build', 'Mountain Born'],
+                    languages: ['Common', 'Giant'],
+                    subraces: {}
+                },
+                aasimar: {
+                    name: 'Aasimar',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { charisma: 2 },
+                    features: ['Darkvision (60 ft)', 'Celestial Resistance', 'Healing Hands', 'Light Bearer'],
+                    languages: ['Common', 'Celestial'],
+                    subraces: {
+                        protector: { name: 'Protector Aasimar', ability_scores: { wisdom: 1 }, features: ['Radiant Soul'] },
+                        scourge: { name: 'Scourge Aasimar', ability_scores: { constitution: 1 }, features: ['Radiant Consumption'] },
+                        fallen: { name: 'Fallen Aasimar', ability_scores: { strength: 1 }, features: ['Necrotic Shroud'] }
+                    }
+                },
+                firbolg: {
+                    name: 'Firbolg',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { wisdom: 2, strength: 1 },
+                    features: ['Firbolg Magic', 'Hidden Step', 'Powerful Build', 'Speech of Beast and Leaf'],
+                    languages: ['Common', 'Elvish', 'Giant'],
+                    subraces: {}
+                },
+                kenku: {
+                    name: 'Kenku',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { dexterity: 2, wisdom: 1 },
+                    features: ['Expert Forgery', 'Kenku Training', 'Mimicry'],
+                    languages: ['Common', 'Auran (understand only)'],
+                    subraces: {}
+                },
+                lizardfolk: {
+                    name: 'Lizardfolk',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { constitution: 2, wisdom: 1 },
+                    features: ['Bite', 'Cunning Artisan', 'Hold Breath', 'Hunter\'s Lore', 'Natural Armor', 'Hungry Jaws'],
+                    languages: ['Common', 'Draconic'],
+                    subraces: {}
+                },
+                tabaxi: {
+                    name: 'Tabaxi',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { dexterity: 2, charisma: 1 },
+                    features: ['Darkvision (60 ft)', 'Feline Agility', 'Cat\'s Claws', 'Cat\'s Talents'],
+                    languages: ['Common', 'One of your choice'],
+                    subraces: {}
+                },
+                triton: {
+                    name: 'Triton',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 1, constitution: 1, charisma: 1 },
+                    features: ['Speed (swim 30 ft)', 'Amphibious', 'Control Air and Water', 'Emissary of the Sea', 'Guardians of the Depths'],
+                    languages: ['Common', 'Primordial'],
+                    subraces: {}
+                },
+                bugbear: {
+                    name: 'Bugbear',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, dexterity: 1 },
+                    features: ['Darkvision (60 ft)', 'Long-Limbed', 'Powerful Build', 'Sneaky', 'Surprise Attack'],
+                    languages: ['Common', 'Goblin'],
+                    subraces: {}
+                },
+                goblin: {
+                    name: 'Goblin',
+                    size: 'Small',
+                    speed: 30,
+                    ability_scores: { dexterity: 2, constitution: 1 },
+                    features: ['Darkvision (60 ft)', 'Fury of the Small', 'Nimble Escape'],
+                    languages: ['Common', 'Goblin'],
+                    subraces: {}
+                },
+                hobgoblin: {
+                    name: 'Hobgoblin',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { constitution: 2, intelligence: 1 },
+                    features: ['Darkvision (60 ft)', 'Martial Training', 'Saving Face'],
+                    languages: ['Common', 'Goblin'],
+                    subraces: {}
+                },
+                kobold: {
+                    name: 'Kobold',
+                    size: 'Small',
+                    speed: 30,
+                    ability_scores: { dexterity: 2, strength: -2 },
+                    features: ['Darkvision (60 ft)', 'Grovel, Cower, and Beg', 'Pack Tactics', 'Sunlight Sensitivity'],
+                    languages: ['Common', 'Draconic'],
+                    subraces: {}
+                },
+                orc: {
+                    name: 'Orc',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, constitution: 1, intelligence: -2 },
+                    features: ['Darkvision (60 ft)', 'Aggressive', 'Menacing', 'Powerful Build'],
+                    languages: ['Common', 'Orc'],
+                    subraces: {}
+                },
+                'yuan-ti': {
+                    name: 'Yuan-ti Pureblood',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { charisma: 2, intelligence: 1 },
+                    features: ['Darkvision (60 ft)', 'Innate Spellcasting', 'Magic Resistance', 'Poison Immunity'],
+                    languages: ['Common', 'Abyssal', 'Draconic'],
+                    subraces: {}
+                },
+                githyanki: {
+                    name: 'Githyanki',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, intelligence: 1 },
+                    features: ['Decadent Mastery', 'Martial Prodigy', 'Githyanki Psionics'],
+                    languages: ['Common', 'Gith'],
+                    subraces: {}
+                },
+                githzerai: {
+                    name: 'Githzerai',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { wisdom: 2, intelligence: 1 },
+                    features: ['Mental Discipline', 'Githzerai Psionics'],
+                    languages: ['Common', 'Gith'],
+                    subraces: {}
+                },
+                // Eberron Races
+                changeling: {
+                    name: 'Changeling',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { charisma: 2 },
+                    features: ['Shapechanger', 'Changeling Instincts', 'Divergent Persona', '+1 to any ability'],
+                    languages: ['Common', 'Two of your choice'],
+                    subraces: {}
+                },
+                kalashtar: {
+                    name: 'Kalashtar',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { wisdom: 2, charisma: 1 },
+                    features: ['Dual Mind', 'Mental Discipline', 'Mind Link', 'Severed from Dreams'],
+                    languages: ['Common', 'Quori', 'One of your choice'],
+                    subraces: {}
+                },
+                shifter: {
+                    name: 'Shifter',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: {},
+                    features: ['Darkvision (60 ft)', 'Shifting'],
+                    languages: ['Common'],
+                    subraces: {
+                        beasthide: { name: 'Beasthide', ability_scores: { constitution: 2, strength: 1 }, features: ['Shifting Feature: Beasthide (temp HP)'] },
+                        longtooth: { name: 'Longtooth', ability_scores: { strength: 2, dexterity: 1 }, features: ['Shifting Feature: Longtooth (bite attack)'] },
+                        swiftstride: { name: 'Swiftstride', ability_scores: { dexterity: 2, charisma: 1 }, features: ['Shifting Feature: Swiftstride (speed bonus)'] },
+                        wildhunt: { name: 'Wildhunt', ability_scores: { wisdom: 2, dexterity: 1 }, features: ['Shifting Feature: Wildhunt (tracking)'] }
+                    }
+                },
+                warforged: {
+                    name: 'Warforged',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { constitution: 2 },
+                    features: ['Constructed Resilience', 'Sentry\'s Rest', 'Integrated Protection', 'Specialized Design (+1 to any ability)'],
+                    languages: ['Common', 'One of your choice'],
+                    subraces: {}
+                },
+                // Ravnica Races
+                centaur: {
+                    name: 'Centaur',
+                    size: 'Medium',
+                    speed: 40,
+                    ability_scores: { strength: 2, wisdom: 1 },
+                    features: ['Fey', 'Charge', 'Hooves', 'Equine Build', 'Survivor'],
+                    languages: ['Common', 'Sylvan'],
+                    subraces: {}
+                },
+                loxodon: {
+                    name: 'Loxodon',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { constitution: 2, wisdom: 1 },
+                    features: ['Powerful Build', 'Loxodon Serenity', 'Natural Armor', 'Trunk', 'Keen Smell'],
+                    languages: ['Common', 'Loxodon'],
+                    subraces: {}
+                },
+                minotaur: {
+                    name: 'Minotaur',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, constitution: 1 },
+                    features: ['Horns', 'Goring Rush', 'Hammering Horns', 'Imposing Presence'],
+                    languages: ['Common', 'Minotaur'],
+                    subraces: {}
+                },
+                'simic-hybrid': {
+                    name: 'Simic Hybrid',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { constitution: 2 },
+                    features: ['Darkvision (60 ft)', 'Animal Enhancement', '+1 to any ability'],
+                    languages: ['Common', 'Elvish or Vedalken'],
+                    subraces: {}
+                },
+                vedalken: {
+                    name: 'Vedalken',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { intelligence: 2, wisdom: 1 },
+                    features: ['Vedalken Dispassion', 'Tireless Precision', 'Partially Amphibious'],
+                    languages: ['Common', 'Vedalken', 'One of your choice'],
+                    subraces: {}
+                },
+                // Theros Races
+                leonin: {
+                    name: 'Leonin',
+                    size: 'Medium',
+                    speed: 35,
+                    ability_scores: { constitution: 2, strength: 1 },
+                    features: ['Darkvision (60 ft)', 'Claws', 'Hunter\'s Instincts', 'Daunting Roar'],
+                    languages: ['Common', 'Leonin'],
+                    subraces: {}
+                },
+                satyr: {
+                    name: 'Satyr',
+                    size: 'Medium',
+                    speed: 35,
+                    ability_scores: { charisma: 2, dexterity: 1 },
+                    features: ['Fey', 'Ram', 'Magic Resistance', 'Mirthful Leaps', 'Reveler'],
+                    languages: ['Common', 'Sylvan'],
+                    subraces: {}
+                },
+                // Wildemount and Others
+                tortle: {
+                    name: 'Tortle',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, wisdom: 1 },
+                    features: ['Claws', 'Hold Breath', 'Natural Armor (17 AC)', 'Shell Defense', 'Survival Instinct'],
+                    languages: ['Common', 'Aquan'],
+                    subraces: {}
+                },
+                // Van Richten's Guide
+                dhampir: {
+                    name: 'Dhampir',
+                    size: 'Small or Medium',
+                    speed: 35,
+                    ability_scores: {},
+                    features: ['Darkvision (60 ft)', 'Deathless Nature', 'Spider Climb', 'Vampiric Bite', 'Choose +2/+1 or +1/+1/+1 to abilities'],
+                    languages: ['Common', 'One of your choice'],
+                    subraces: {}
+                },
+                hexblood: {
+                    name: 'Hexblood',
+                    size: 'Small or Medium',
+                    speed: 30,
+                    ability_scores: {},
+                    features: ['Darkvision (60 ft)', 'Fey Ancestry', 'Hex Magic', 'Magic Token', 'Choose +2/+1 or +1/+1/+1 to abilities'],
+                    languages: ['Common', 'One of your choice'],
+                    subraces: {}
+                },
+                reborn: {
+                    name: 'Reborn',
+                    size: 'Small or Medium',
+                    speed: 30,
+                    ability_scores: {},
+                    features: ['Deathless Nature', 'Knowledge from a Past Life', 'Choose +2/+1 or +1/+1/+1 to abilities'],
+                    languages: ['Common', 'One of your choice'],
+                    subraces: {}
+                },
+                // Other Sources
+                grung: {
+                    name: 'Grung',
+                    size: 'Small',
+                    speed: 25,
+                    ability_scores: { dexterity: 2, constitution: 1 },
+                    features: ['Arboreal Alertness', 'Amphibious', 'Poison Immunity', 'Poisonous Skin', 'Standing Leap'],
+                    languages: ['Common', 'Grung'],
+                    subraces: {}
+                },
+                locathah: {
+                    name: 'Locathah',
+                    size: 'Medium',
+                    speed: 30,
+                    ability_scores: { strength: 2, dexterity: 1 },
+                    features: ['Natural Armor', 'Observant & Athletic', 'Leviathan Will', 'Limited Amphibiousness'],
+                    languages: ['Common', 'Aquan'],
+                    subraces: {}
+                },
+                verdan: {
+                    name: 'Verdan',
+                    size: 'Small to Medium',
+                    speed: 30,
+                    ability_scores: { charisma: 2, constitution: 1 },
+                    features: ['Black Blood Healing', 'Limited Telepathy', 'Persuasive', 'Telepathic Insight'],
+                    languages: ['Common', 'Goblin', 'One of your choice'],
+                    subraces: {}
+                }
+            },
+            
+            classes: {
+                artificer: {
+                    name: 'Artificer',
+                    hit_dice: 'd8',
+                    primary_ability: 'Intelligence',
+                    saves: ['constitution', 'intelligence'],
+                    skills_choices: 2,
+                    skills: ['Arcana', 'History', 'Investigation', 'Medicine', 'Nature', 'Perception', 'Sleight of Hand'],
+                    features_by_level: {
+                        '1': ['Magical Tinkering', 'Spellcasting', 'Ritual Casting'],
+                        '2': ['Infuse Item (4 known, 2 items)'],
+                        '3': ['Artificer Specialist', 'The Right Tool for the Job'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Artificer Specialist feature'],
+                        '6': ['Tool Expertise', 'Infuse Item (6 known, 3 items)'],
+                        '7': ['Flash of Genius'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Artificer Specialist feature'],
+                        '10': ['Magic Item Adept', 'Infuse Item (8 known, 4 items)'],
+                        '11': ['Spell-Storing Item'],
+                        '12': ['Ability Score Improvement'],
+                        '14': ['Magic Item Savant', 'Infuse Item (10 known, 5 items)'],
+                        '15': ['Artificer Specialist feature'],
+                        '16': ['Ability Score Improvement'],
+                        '18': ['Magic Item Master', 'Infuse Item (12 known, 6 items)'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Soul of Artifice']
+                    }
+                },
+                barbarian: {
+                    name: 'Barbarian',
+                    hit_dice: 'd12',
+                    primary_ability: 'Strength',
+                    saves: ['strength', 'constitution'],
+                    skills_choices: 2,
+                    skills: ['Animal Handling', 'Athletics', 'Intimidation', 'Nature', 'Perception', 'Survival'],
+                    features_by_level: {
+                        '1': ['Rage (2 uses)', 'Unarmored Defense'],
+                        '2': ['Reckless Attack', 'Danger Sense'],
+                        '3': ['Primal Path', 'Rage (3 uses)'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Extra Attack', 'Fast Movement'],
+                        '6': ['Path feature', 'Rage (4 uses)'],
+                        '7': ['Feral Instinct'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Brutal Critical (1 die)'],
+                        '10': ['Path feature'],
+                        '11': ['Relentless Rage'],
+                        '12': ['Ability Score Improvement', 'Rage (5 uses)'],
+                        '13': ['Brutal Critical (2 dice)'],
+                        '14': ['Path feature'],
+                        '15': ['Persistent Rage'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Brutal Critical (3 dice)', 'Rage (6 uses)'],
+                        '18': ['Indomitable Might'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Primal Champion', 'Rage (Unlimited)']
+                    }
+                },
+                bard: {
+                    name: 'Bard',
+                    hit_dice: 'd8',
+                    primary_ability: 'Charisma',
+                    saves: ['dexterity', 'charisma'],
+                    skills_choices: 3,
+                    skills: ['Any'],
+                    features_by_level: {
+                        '1': ['Bardic Inspiration (d6)', 'Spellcasting'],
+                        '2': ['Jack of All Trades', 'Song of Rest (d6)'],
+                        '3': ['Expertise', 'Bard College'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Bardic Inspiration (d8)', 'Font of Inspiration'],
+                        '6': ['Countercharm', 'Bard College feature'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Song of Rest (d8)'],
+                        '10': ['Bardic Inspiration (d10)', 'Expertise', 'Magical Secrets'],
+                        '12': ['Ability Score Improvement'],
+                        '13': ['Song of Rest (d10)'],
+                        '14': ['Magical Secrets', 'Bard College feature'],
+                        '15': ['Bardic Inspiration (d12)'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Song of Rest (d12)'],
+                        '18': ['Magical Secrets'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Superior Inspiration']
+                    }
+                },
+                cleric: {
+                    name: 'Cleric',
+                    hit_dice: 'd8',
+                    primary_ability: 'Wisdom',
+                    saves: ['wisdom', 'charisma'],
+                    skills_choices: 2,
+                    skills: ['History', 'Insight', 'Medicine', 'Persuasion', 'Religion'],
+                    features_by_level: {
+                        '1': ['Spellcasting', 'Divine Domain'],
+                        '2': ['Channel Divinity (1/rest)', 'Divine Domain feature'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Destroy Undead (CR 1/2)'],
+                        '6': ['Channel Divinity (2/rest)', 'Divine Domain feature'],
+                        '8': ['Ability Score Improvement', 'Destroy Undead (CR 1)', 'Divine Domain feature'],
+                        '10': ['Divine Intervention'],
+                        '11': ['Destroy Undead (CR 2)'],
+                        '12': ['Ability Score Improvement'],
+                        '14': ['Destroy Undead (CR 3)'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Destroy Undead (CR 4)', 'Divine Domain feature'],
+                        '18': ['Channel Divinity (3/rest)'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Divine Intervention improvement']
+                    }
+                },
+                druid: {
+                    name: 'Druid',
+                    hit_dice: 'd8',
+                    primary_ability: 'Wisdom',
+                    saves: ['intelligence', 'wisdom'],
+                    skills_choices: 2,
+                    skills: ['Arcana', 'Animal Handling', 'Insight', 'Medicine', 'Nature', 'Perception', 'Religion', 'Survival'],
+                    features_by_level: {
+                        '1': ['Druidic', 'Spellcasting'],
+                        '2': ['Wild Shape', 'Druid Circle'],
+                        '4': ['Wild Shape improvement', 'Ability Score Improvement'],
+                        '6': ['Druid Circle feature'],
+                        '8': ['Wild Shape improvement', 'Ability Score Improvement'],
+                        '10': ['Druid Circle feature'],
+                        '12': ['Ability Score Improvement'],
+                        '14': ['Druid Circle feature'],
+                        '16': ['Ability Score Improvement'],
+                        '18': ['Timeless Body', 'Beast Spells'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Archdruid']
+                    }
+                },
+                fighter: {
+                    name: 'Fighter',
+                    hit_dice: 'd10',
+                    primary_ability: 'Strength or Dexterity',
+                    saves: ['strength', 'constitution'],
+                    skills_choices: 2,
+                    skills: ['Acrobatics', 'Animal Handling', 'Athletics', 'History', 'Insight', 'Intimidation', 'Perception', 'Survival'],
+                    features_by_level: {
+                        '1': ['Fighting Style', 'Second Wind'],
+                        '2': ['Action Surge (1 use)'],
+                        '3': ['Martial Archetype'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Extra Attack'],
+                        '6': ['Ability Score Improvement'],
+                        '7': ['Martial Archetype feature'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Indomitable (1 use)'],
+                        '10': ['Martial Archetype feature'],
+                        '11': ['Extra Attack (2)'],
+                        '12': ['Ability Score Improvement'],
+                        '13': ['Indomitable (2 uses)'],
+                        '14': ['Ability Score Improvement'],
+                        '15': ['Martial Archetype feature'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Action Surge (2 uses)', 'Indomitable (3 uses)'],
+                        '18': ['Martial Archetype feature'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Extra Attack (3)']
+                    }
+                },
+                monk: {
+                    name: 'Monk',
+                    hit_dice: 'd8',
+                    primary_ability: 'Dexterity & Wisdom',
+                    saves: ['strength', 'dexterity'],
+                    skills_choices: 2,
+                    skills: ['Acrobatics', 'Athletics', 'History', 'Insight', 'Religion', 'Stealth'],
+                    features_by_level: {
+                        '1': ['Unarmored Defense', 'Martial Arts (d4)'],
+                        '2': ['Ki', 'Unarmored Movement'],
+                        '3': ['Monastic Tradition', 'Deflect Missiles'],
+                        '4': ['Ability Score Improvement', 'Slow Fall'],
+                        '5': ['Extra Attack', 'Stunning Strike', 'Martial Arts (d6)'],
+                        '6': ['Ki-Empowered Strikes', 'Monastic Tradition feature'],
+                        '7': ['Evasion', 'Stillness of Mind'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Unarmored Movement improvement'],
+                        '10': ['Purity of Body'],
+                        '11': ['Monastic Tradition feature', 'Martial Arts (d8)'],
+                        '12': ['Ability Score Improvement'],
+                        '13': ['Tongue of the Sun and Moon'],
+                        '14': ['Diamond Soul'],
+                        '15': ['Timeless Body'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Monastic Tradition feature', 'Martial Arts (d10)'],
+                        '18': ['Empty Body'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Perfect Self']
+                    }
+                },
+                paladin: {
+                    name: 'Paladin',
+                    hit_dice: 'd10',
+                    primary_ability: 'Strength & Charisma',
+                    saves: ['wisdom', 'charisma'],
+                    skills_choices: 2,
+                    skills: ['Athletics', 'Insight', 'Intimidation', 'Medicine', 'Persuasion', 'Religion'],
+                    features_by_level: {
+                        '1': ['Divine Sense', 'Lay on Hands'],
+                        '2': ['Fighting Style', 'Spellcasting', 'Divine Smite'],
+                        '3': ['Divine Health', 'Sacred Oath'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Extra Attack'],
+                        '6': ['Aura of Protection'],
+                        '7': ['Sacred Oath feature'],
+                        '8': ['Ability Score Improvement'],
+                        '10': ['Aura of Courage'],
+                        '11': ['Improved Divine Smite'],
+                        '12': ['Ability Score Improvement'],
+                        '14': ['Cleansing Touch'],
+                        '15': ['Sacred Oath feature'],
+                        '16': ['Ability Score Improvement'],
+                        '18': ['Aura improvements'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Sacred Oath feature']
+                    }
+                },
+                ranger: {
+                    name: 'Ranger',
+                    hit_dice: 'd10',
+                    primary_ability: 'Dexterity & Wisdom',
+                    saves: ['strength', 'dexterity'],
+                    skills_choices: 3,
+                    skills: ['Animal Handling', 'Athletics', 'Insight', 'Investigation', 'Nature', 'Perception', 'Stealth', 'Survival'],
+                    features_by_level: {
+                        '1': ['Favored Enemy', 'Natural Explorer'],
+                        '2': ['Fighting Style', 'Spellcasting'],
+                        '3': ['Ranger Archetype', 'Primeval Awareness'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Extra Attack'],
+                        '6': ['Favored Enemy improvement', 'Natural Explorer improvement'],
+                        '7': ['Ranger Archetype feature'],
+                        '8': ['Ability Score Improvement', 'Land\'s Stride'],
+                        '10': ['Natural Explorer improvement', 'Hide in Plain Sight'],
+                        '11': ['Ranger Archetype feature'],
+                        '12': ['Ability Score Improvement'],
+                        '14': ['Favored Enemy improvement', 'Vanish'],
+                        '15': ['Ranger Archetype feature'],
+                        '16': ['Ability Score Improvement'],
+                        '18': ['Feral Senses'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Foe Slayer']
+                    }
+                },
+                rogue: {
+                    name: 'Rogue',
+                    hit_dice: 'd8',
+                    primary_ability: 'Dexterity',
+                    saves: ['dexterity', 'intelligence'],
+                    skills_choices: 4,
+                    skills: ['Acrobatics', 'Athletics', 'Deception', 'Insight', 'Intimidation', 'Investigation', 'Perception', 'Performance', 'Persuasion', 'Sleight of Hand', 'Stealth'],
+                    features_by_level: {
+                        '1': ['Expertise', 'Sneak Attack (1d6)', 'Thieves\' Cant'],
+                        '2': ['Cunning Action'],
+                        '3': ['Roguish Archetype', 'Sneak Attack (2d6)'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Uncanny Dodge', 'Sneak Attack (3d6)'],
+                        '6': ['Expertise'],
+                        '7': ['Evasion', 'Sneak Attack (4d6)'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Roguish Archetype feature', 'Sneak Attack (5d6)'],
+                        '10': ['Ability Score Improvement'],
+                        '11': ['Reliable Talent', 'Sneak Attack (6d6)'],
+                        '12': ['Ability Score Improvement'],
+                        '13': ['Roguish Archetype feature', 'Sneak Attack (7d6)'],
+                        '14': ['Blindsense'],
+                        '15': ['Slippery Mind', 'Sneak Attack (8d6)'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Roguish Archetype feature', 'Sneak Attack (9d6)'],
+                        '18': ['Elusive'],
+                        '19': ['Ability Score Improvement', 'Sneak Attack (10d6)'],
+                        '20': ['Stroke of Luck']
+                    }
+                },
+                sorcerer: {
+                    name: 'Sorcerer',
+                    hit_dice: 'd6',
+                    primary_ability: 'Charisma',
+                    saves: ['constitution', 'charisma'],
+                    skills_choices: 2,
+                    skills: ['Arcana', 'Deception', 'Insight', 'Intimidation', 'Persuasion', 'Religion'],
+                    features_by_level: {
+                        '1': ['Spellcasting', 'Sorcerous Origin'],
+                        '2': ['Font of Magic'],
+                        '3': ['Metamagic (2 options)'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Sorcerous Origin feature'],
+                        '6': ['Sorcerous Origin feature'],
+                        '8': ['Ability Score Improvement'],
+                        '10': ['Metamagic (3 options)'],
+                        '12': ['Ability Score Improvement'],
+                        '14': ['Sorcerous Origin feature'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Metamagic (4 options)'],
+                        '18': ['Sorcerous Origin feature'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Sorcerous Restoration']
+                    }
+                },
+                warlock: {
+                    name: 'Warlock',
+                    hit_dice: 'd8',
+                    primary_ability: 'Charisma',
+                    saves: ['wisdom', 'charisma'],
+                    skills_choices: 2,
+                    skills: ['Arcana', 'Deception', 'History', 'Intimidation', 'Investigation', 'Nature', 'Religion'],
+                    features_by_level: {
+                        '1': ['Otherworldly Patron', 'Pact Magic'],
+                        '2': ['Eldritch Invocations (2)'],
+                        '3': ['Pact Boon'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Eldritch Invocations (3)'],
+                        '6': ['Otherworldly Patron feature'],
+                        '7': ['Eldritch Invocations (4)'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Eldritch Invocations (5)'],
+                        '10': ['Otherworldly Patron feature'],
+                        '11': ['Mystic Arcanum (6th level)'],
+                        '12': ['Ability Score Improvement', 'Eldritch Invocations (6)'],
+                        '13': ['Mystic Arcanum (7th level)'],
+                        '14': ['Otherworldly Patron feature'],
+                        '15': ['Mystic Arcanum (8th level)', 'Eldritch Invocations (7)'],
+                        '16': ['Ability Score Improvement'],
+                        '17': ['Mystic Arcanum (9th level)'],
+                        '18': ['Eldritch Invocations (8)'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Eldritch Master']
+                    }
+                },
+                wizard: {
+                    name: 'Wizard',
+                    hit_dice: 'd6',
+                    primary_ability: 'Intelligence',
+                    saves: ['intelligence', 'wisdom'],
+                    skills_choices: 2,
+                    skills: ['Arcana', 'History', 'Insight', 'Investigation', 'Medicine', 'Religion'],
+                    features_by_level: {
+                        '1': ['Spellcasting', 'Arcane Recovery'],
+                        '2': ['Arcane Tradition'],
+                        '3': ['Cantrip Formulas'],
+                        '4': ['Ability Score Improvement'],
+                        '6': ['Arcane Tradition feature'],
+                        '8': ['Ability Score Improvement'],
+                        '10': ['Arcane Tradition feature'],
+                        '12': ['Ability Score Improvement'],
+                        '14': ['Arcane Tradition feature'],
+                        '16': ['Ability Score Improvement'],
+                        '18': ['Spell Mastery'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Signature Spells']
+                    }
+                },
+                'blood-hunter': {
+                    name: 'Blood Hunter',
+                    hit_dice: 'd10',
+                    primary_ability: 'Strength or Dexterity, Intelligence',
+                    saves: ['dexterity', 'intelligence'],
+                    skills_choices: 3,
+                    skills: ['Acrobatics', 'Arcana', 'Athletics', 'History', 'Insight', 'Investigation', 'Religion', 'Survival'],
+                    features_by_level: {
+                        '1': ['Hunter\'s Bane', 'Blood Maledict'],
+                        '2': ['Fighting Style', 'Crimson Rite'],
+                        '3': ['Blood Hunter Order'],
+                        '4': ['Ability Score Improvement'],
+                        '5': ['Extra Attack'],
+                        '6': ['Brand of Castigation', 'Blood Maledict (2 uses)'],
+                        '7': ['Order Feature', 'Primal Rite'],
+                        '8': ['Ability Score Improvement'],
+                        '9': ['Grim Psychometry'],
+                        '10': ['Dark Augmentation'],
+                        '11': ['Order Feature', 'Blood Maledict (3 uses)'],
+                        '12': ['Ability Score Improvement'],
+                        '13': ['Brand of Tethering'],
+                        '14': ['Hardened Soul'],
+                        '15': ['Order Feature'],
+                        '16': ['Ability Score Improvement', 'Blood Maledict (4 uses)'],
+                        '18': ['Order Feature'],
+                        '19': ['Ability Score Improvement'],
+                        '20': ['Sanguine Mastery']
+                    }
+                }
+            },
+            
+            subclasses: {
+                artificer: {
+                    alchemist: 'Alchemist',
+                    armorer: 'Armorer',
+                    'battle-smith': 'Battle Smith',
+                    artillerist: 'Artillerist'
+                },
+                barbarian: {
+                    berserker: 'Path of the Berserker',
+                    totem: 'Path of the Totem Warrior',
+                    'ancestral-guardian': 'Path of the Ancestral Guardian',
+                    'storm-herald': 'Path of the Storm Herald',
+                    zealot: 'Path of the Zealot',
+                    'wild-magic': 'Path of Wild Magic',
+                    beast: 'Path of the Beast',
+                    'battlerager': 'Path of the Battlerager'
+                },
+                bard: {
+                    lore: 'College of Lore',
+                    valor: 'College of Valor',
+                    glamour: 'College of Glamour',
+                    swords: 'College of Swords',
+                    whispers: 'College of Whispers',
+                    eloquence: 'College of Eloquence',
+                    creation: 'College of Creation',
+                    spirits: 'College of Spirits'
+                },
+                'blood-hunter': {
+                    ghostslayer: 'Order of the Ghostslayer',
+                    lycan: 'Order of the Lycan',
+                    mutant: 'Order of the Mutant',
+                    profane: 'Order of the Profane Soul'
+                },
+                cleric: {
+                    knowledge: 'Knowledge Domain',
+                    life: 'Life Domain',
+                    light: 'Light Domain',
+                    nature: 'Nature Domain',
+                    tempest: 'Tempest Domain',
+                    trickery: 'Trickery Domain',
+                    war: 'War Domain',
+                    death: 'Death Domain',
+                    arcana: 'Arcana Domain',
+                    forge: 'Forge Domain',
+                    grave: 'Grave Domain',
+                    order: 'Order Domain',
+                    peace: 'Peace Domain',
+                    twilight: 'Twilight Domain'
+                },
+                druid: {
+                    land: 'Circle of the Land',
+                    moon: 'Circle of the Moon',
+                    dreams: 'Circle of Dreams',
+                    shepherd: 'Circle of the Shepherd',
+                    spores: 'Circle of Spores',
+                    stars: 'Circle of Stars',
+                    wildfire: 'Circle of Wildfire'
+                },
+                fighter: {
+                    champion: 'Champion',
+                    'battle-master': 'Battle Master',
+                    'eldritch-knight': 'Eldritch Knight',
+                    'purple-dragon-knight': 'Purple Dragon Knight',
+                    arcane: 'Arcane Archer',
+                    cavalier: 'Cavalier',
+                    samurai: 'Samurai',
+                    'echo-knight': 'Echo Knight',
+                    'psi-warrior': 'Psi Warrior',
+                    'rune-knight': 'Rune Knight'
+                },
+                monk: {
+                    'open-hand': 'Way of the Open Hand',
+                    shadow: 'Way of Shadow',
+                    'four-elements': 'Way of the Four Elements',
+                    'drunken-master': 'Way of the Drunken Master',
+                    kensei: 'Way of the Kensei',
+                    'sun-soul': 'Way of the Sun Soul',
+                    mercy: 'Way of Mercy',
+                    'astral-self': 'Way of the Astral Self',
+                    ascendant: 'Way of the Ascendant Dragon'
+                },
+                paladin: {
+                    devotion: 'Oath of Devotion',
+                    ancients: 'Oath of the Ancients',
+                    vengeance: 'Oath of Vengeance',
+                    crown: 'Oath of the Crown',
+                    conquest: 'Oath of Conquest',
+                    redemption: 'Oath of Redemption',
+                    glory: 'Oath of Glory',
+                    watchers: 'Oath of the Watchers',
+                    oathbreaker: 'Oathbreaker'
+                },
+                ranger: {
+                    hunter: 'Hunter',
+                    'beast-master': 'Beast Master',
+                    'gloom-stalker': 'Gloom Stalker',
+                    'horizon-walker': 'Horizon Walker',
+                    'monster-slayer': 'Monster Slayer',
+                    'fey-wanderer': 'Fey Wanderer',
+                    swarmkeeper: 'Swarmkeeper',
+                    drakewarden: 'Drakewarden'
+                },
+                rogue: {
+                    thief: 'Thief',
+                    assassin: 'Assassin',
+                    'arcane-trickster': 'Arcane Trickster',
+                    mastermind: 'Mastermind',
+                    swashbuckler: 'Swashbuckler',
+                    inquisitive: 'Inquisitive',
+                    scout: 'Scout',
+                    phantom: 'Phantom',
+                    soulknife: 'Soulknife'
+                },
+                sorcerer: {
+                    draconic: 'Draconic Bloodline',
+                    'wild-magic': 'Wild Magic',
+                    storm: 'Storm Sorcery',
+                    shadow: 'Shadow Magic',
+                    divine: 'Divine Soul',
+                    clockwork: 'Clockwork Soul',
+                    aberrant: 'Aberrant Mind'
+                },
+                warlock: {
+                    archfey: 'The Archfey',
+                    fiend: 'The Fiend',
+                    'great-old-one': 'The Great Old One',
+                    celestial: 'The Celestial',
+                    hexblade: 'The Hexblade',
+                    fathomless: 'The Fathomless',
+                    genie: 'The Genie',
+                    undying: 'The Undying',
+                    undead: 'The Undead'
+                },
+                wizard: {
+                    abjuration: 'School of Abjuration',
+                    conjuration: 'School of Conjuration',
+                    divination: 'School of Divination',
+                    enchantment: 'School of Enchantment',
+                    evocation: 'School of Evocation',
+                    illusion: 'School of Illusion',
+                    necromancy: 'School of Necromancy',
+                    transmutation: 'School of Transmutation',
+                    bladesinging: 'Bladesinging',
+                    'war-magic': 'War Magic',
+                    chronurgy: 'Chronurgy Magic',
+                    graviturgy: 'Graviturgy Magic',
+                    order: 'Order of Scribes'
+                }
+            },
+            
+            backgrounds: {
+                acolyte: {
+                    name: 'Acolyte',
+                    skills: ['Insight', 'Religion'],
+                    languages: ['Two of your choice'],
+                    tools: [],
+                    equipment: ['Holy symbol', 'Prayer book or prayer wheel', '5 sticks of incense', 'Vestments', 'Common clothes', 'Belt pouch with 15 gp']
+                },
+                criminal: {
+                    name: 'Criminal',
+                    skills: ['Deception', 'Stealth'],
+                    languages: [],
+                    tools: ['One type of gaming set', 'Thieves\' tools'],
+                    equipment: ['Crowbar', 'Dark common clothes with hood', 'Belt pouch with 15 gp']
+                },
+                folk_hero: {
+                    name: 'Folk Hero',
+                    skills: ['Animal Handling', 'Survival'],
+                    languages: [],
+                    tools: ['One type of artisan\'s tools', 'Vehicles (land)'],
+                    equipment: ['Artisan\'s tools', 'Shovel', 'Iron pot', 'Common clothes', 'Belt pouch with 10 gp']
+                },
+                noble: {
+                    name: 'Noble',
+                    skills: ['History', 'Persuasion'],
+                    languages: ['One of your choice'],
+                    tools: ['One type of gaming set'],
+                    equipment: ['Fine clothes', 'Signet ring', 'Scroll of pedigree', 'Purse with 25 gp']
+                },
+                sage: {
+                    name: 'Sage',
+                    skills: ['Arcana', 'History'],
+                    languages: ['Two of your choice'],
+                    tools: [],
+                    equipment: ['Black ink', 'Quill', 'Small knife', 'Letter from dead colleague', 'Common clothes', 'Belt pouch with 10 gp']
+                },
+                soldier: {
+                    name: 'Soldier',
+                    skills: ['Athletics', 'Intimidation'],
+                    languages: [],
+                    tools: ['One type of gaming set', 'Vehicles (land)'],
+                    equipment: ['Insignia of rank', 'Trophy from fallen enemy', 'Deck of cards or dice', 'Common clothes', 'Belt pouch with 10 gp']
+                },
+                charlatan: {
+                    name: 'Charlatan',
+                    skills: ['Deception', 'Sleight of Hand'],
+                    languages: [],
+                    tools: ['Disguise kit', 'Forgery kit'],
+                    equipment: ['Fine clothes', 'Disguise kit', 'Tools of con (weighted dice, marked cards, signet ring)', 'Belt pouch with 15 gp']
+                },
+                entertainer: {
+                    name: 'Entertainer',
+                    skills: ['Acrobatics', 'Performance'],
+                    languages: [],
+                    tools: ['Disguise kit', 'One type of musical instrument'],
+                    equipment: ['Musical instrument', 'Favor of admirer', 'Costume', 'Belt pouch with 15 gp']
+                },
+                guild_artisan: {
+                    name: 'Guild Artisan',
+                    skills: ['Insight', 'Persuasion'],
+                    languages: ['One of your choice'],
+                    tools: ['One type of artisan\'s tools'],
+                    equipment: ['Artisan\'s tools', 'Letter of introduction from guild', 'Traveler\'s clothes', 'Belt pouch with 15 gp']
+                },
+                hermit: {
+                    name: 'Hermit',
+                    skills: ['Medicine', 'Religion'],
+                    languages: ['One of your choice'],
+                    tools: ['Herbalism kit'],
+                    equipment: ['Scroll case with notes', 'Winter blanket', 'Common clothes', 'Herbalism kit', '5 gp']
+                },
+                outlander: {
+                    name: 'Outlander',
+                    skills: ['Athletics', 'Survival'],
+                    languages: ['One of your choice'],
+                    tools: ['One type of musical instrument'],
+                    equipment: ['Staff', 'Hunting trap', 'Trophy from animal', 'Traveler\'s clothes', 'Belt pouch with 10 gp']
+                },
+                sailor: {
+                    name: 'Sailor',
+                    skills: ['Athletics', 'Perception'],
+                    languages: [],
+                    tools: ['Navigator\'s tools', 'Vehicles (water)'],
+                    equipment: ['Belaying pin', '50 feet of silk rope', 'Lucky charm', 'Common clothes', 'Belt pouch with 10 gp']
+                },
+                urchin: {
+                    name: 'Urchin',
+                    skills: ['Sleight of Hand', 'Stealth'],
+                    languages: [],
+                    tools: ['Disguise kit', 'Thieves\' tools'],
+                    equipment: ['Small knife', 'Map of home city', 'Pet mouse', 'Token from parents', 'Common clothes', 'Belt pouch with 10 gp']
+                }
+            }
+        };
+        
+        // Global variables
+        let currentRaceData = null;
+        let tashasEnabled = false;
+        let tashasMode = '2plus1';
+        
+        // Initialize all event handlers
+        function initializeEventHandlers() {
+            // Race change handler
+            document.getElementById('race').addEventListener('change', handleRaceChange);
+            
+            // Subrace change handler
+            document.getElementById('subrace').addEventListener('change', handleSubraceChange);
+            
+            // Class change handler
+            document.getElementById('class').addEventListener('change', handleClassChange);
+            
+            // Level change handler
+            document.getElementById('level').addEventListener('change', handleLevelChange);
+            
+            // Background change handler
+            document.getElementById('background').addEventListener('change', handleBackgroundChange);
+            
+            // Ability score change handlers
+            ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'].forEach(ability => {
+                const input = document.getElementById(ability);
+                input.addEventListener('change', updateAbilityModifiers);
+                input.addEventListener('input', updateAbilityModifiers);
+            });
+            
+            // Tasha's system handlers
+            document.getElementById('useTashas').addEventListener('change', toggleTashasControls);
+            
+            document.querySelectorAll('input[name="tashasMode"]').forEach(radio => {
+                radio.addEventListener('change', updateTashasOptions);
+            });
+            
+            document.querySelectorAll('.tashas-select').forEach(select => {
+                select.addEventListener('change', function() {
+                    validateTashasDistribution();
+                    updateAbilityModifiers();
+                });
+            });
+            
+            // Form submission handler
+            document.getElementById('characterForm').addEventListener('submit', handleFormSubmit);
+        }
+        
+        // Race change handler
+        function handleRaceChange() {
+            const raceName = this.value;
+            const subraceSelect = document.getElementById('subrace');
+            const featuresDiv = document.getElementById('raceFeatures');
+            
+            console.log('Race changed to:', raceName);
+            
+            // Clear subraces
+            subraceSelect.innerHTML = '<option value="">None</option>';
+            
+            // Update Tasha's visibility
+            updateTashasVisibility();
+            
+            if (!raceName) {
+                featuresDiv.innerHTML = '<p style="color: #888;">Select a race to see features...</p>';
+                currentRaceData = null;
+                updateAbilityModifiers();
+                return;
+            }
+            
+            // Get race data
+            const raceData = dndData.races[raceName];
+            if (!raceData) {
+                featuresDiv.innerHTML = '<p class="error">Race data not found</p>';
+                return;
+            }
+            
+            currentRaceData = {...raceData};
+            
+            // Update subraces if available
+            if (raceData.subraces && Object.keys(raceData.subraces).length > 0) {
+                Object.entries(raceData.subraces).forEach(([key, subrace]) => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = subrace.name || key;
+                    subraceSelect.appendChild(option);
+                });
+            }
+            
+            // Display race features
+            displayRaceFeatures(currentRaceData);
+            
+            // Update ability displays
+            updateAbilityModifiers();
+        }
+        
+        // Subrace change handler
+        function handleSubraceChange() {
+            const race = document.getElementById('race').value;
+            const subrace = this.value;
+            
+            if (!race || !subrace || !dndData.races[race]) return;
+            
+            const raceData = dndData.races[race];
+            
+            if (raceData.subraces && raceData.subraces[subrace]) {
+                // Merge parent race and subrace data
+                currentRaceData = {
+                    ...raceData,
+                    name: raceData.subraces[subrace].name || subrace,
+                    ability_scores: {
+                        ...raceData.ability_scores,
+                        ...raceData.subraces[subrace].ability_scores
+                    },
+                    features: [
+                        ...(raceData.features || []),
+                        ...(raceData.subraces[subrace].features || [])
+                    ]
+                };
+                
+                displayRaceFeatures(currentRaceData);
+                updateAbilityModifiers();
+            }
+        }
+        
+        // Class change handler
+        function handleClassChange() {
+            const className = this.value;
+            const subclassSelect = document.getElementById('subclass');
+            const featuresDiv = document.getElementById('classFeatures');
+            
+            console.log('Class changed to:', className);
+            
+            // Clear subclasses
+            subclassSelect.innerHTML = '<option value="">None</option>';
+            
+            if (!className) {
+                featuresDiv.innerHTML = '<p style="color: #888;">Select a class to see features...</p>';
+                return;
+            }
+            
+            // Get class data
+            const classData = dndData.classes[className];
+            if (!classData) {
+                featuresDiv.innerHTML = '<p class="error">Class data not found</p>';
+                return;
+            }
+            
+            // Add subclasses
+            const subclasses = dndData.subclasses[className];
+            if (subclasses) {
+                Object.entries(subclasses).forEach(([key, name]) => {
+                    const option = document.createElement('option');
+                    option.value = key;
+                    option.textContent = name;
+                    subclassSelect.appendChild(option);
+                });
+            }
+            
+            // Display class features
+            displayClassFeatures(classData);
+        }
+        
+        // Level change handler
+        function handleLevelChange() {
+            const className = document.getElementById('class').value;
+            if (className && dndData.classes[className]) {
+                displayClassFeatures(dndData.classes[className]);
+            }
+        }
+        
+        // Background change handler
+        function handleBackgroundChange() {
+            const backgroundName = this.value;
+            
+            if (!backgroundName) return;
+            
+            const backgroundData = dndData.backgrounds[backgroundName];
+            if (!backgroundData) return;
+            
+            console.log('Background changed to:', backgroundName);
+            
+            // Auto-populate skills
+            if (backgroundData.skills) {
+                // Clear all skill checkboxes first
+                document.querySelectorAll('input[name="skills"]').forEach(cb => cb.checked = false);
+                
+                // Check background skills
+                backgroundData.skills.forEach(skill => {
+                    const skillId = skill.toLowerCase().replace(/\s+/g, '_');
+                    const checkbox = document.getElementById(skillId);
+                    if (checkbox) checkbox.checked = true;
+                });
+            }
+            
+            // Auto-populate languages
+            if (backgroundData.languages && backgroundData.languages.length > 0) {
+                const langField = document.getElementById('languages');
+                langField.value = backgroundData.languages.join(', ');
+            }
+            
+            // Auto-populate tools
+            if (backgroundData.tools && backgroundData.tools.length > 0) {
+                const toolField = document.getElementById('tools');
+                toolField.value = backgroundData.tools.join(', ');
+            }
+            
+            // Auto-populate equipment
+            if (backgroundData.equipment && backgroundData.equipment.length > 0) {
+                const equipField = document.getElementById('equipment');
+                equipField.value = backgroundData.equipment.join('\n');
+            }
+        }
+        
+        // Display race features
+        function displayRaceFeatures(data) {
+            const div = document.getElementById('raceFeatures');
+            
+            let html = '<div class="feature-card">';
+            html += `<h3>${data.name} Traits</h3>`;
+            
+            if (data.size) html += `<p><strong>Size:</strong> ${data.size}</p>`;
+            if (data.speed) html += `<p><strong>Speed:</strong> ${data.speed} feet</p>`;
+            
+            // Ability score bonuses
+            if (data.ability_scores) {
+                const bonuses = [];
+                Object.entries(data.ability_scores).forEach(([ability, bonus]) => {
+                    if (bonus !== 0) {
+                        const sign = bonus > 0 ? '+' : '';
+                        bonuses.push(`${ability.charAt(0).toUpperCase() + ability.slice(1)} ${sign}${bonus}`);
+                    }
+                });
+                if (bonuses.length > 0) {
+                    html += `<p><strong>Ability Score Increase:</strong> ${bonuses.join(', ')}</p>`;
+                }
+            }
+            
+            // Features
+            if (data.features && data.features.length > 0) {
+                html += '<ul class="feature-list">';
+                data.features.forEach(feature => {
+                    html += `<li>${feature}</li>`;
+                });
+                html += '</ul>';
+            }
+            
+            // Languages
+            if (data.languages && data.languages.length > 0) {
+                html += `<p><strong>Languages:</strong> ${data.languages.join(', ')}</p>`;
+            }
+            
+            html += '</div>';
+            div.innerHTML = html;
+        }
+        
+        // Display class features
+        function displayClassFeatures(data) {
+            const div = document.getElementById('classFeatures');
+            const level = parseInt(document.getElementById('level').value) || 1;
+            
+            let html = '';
+            
+            // Basic class info
+            html += '<div class="feature-card">';
+            html += `<h3>${data.name} Basics</h3>`;
+            if (data.hit_dice) html += `<p><strong>Hit Dice:</strong> ${data.hit_dice} per level</p>`;
+            if (data.primary_ability) html += `<p><strong>Primary Ability:</strong> ${data.primary_ability}</p>`;
+            if (data.saves && data.saves.length > 0) {
+                html += `<p><strong>Saving Throw Proficiencies:</strong> ${data.saves.map(s => s.charAt(0).toUpperCase() + s.slice(1)).join(', ')}</p>`;
+            }
+            if (data.skills_choices && data.skills) {
+                html += `<p><strong>Skills:</strong> Choose ${data.skills_choices} from ${data.skills.join(', ')}</p>`;
+            }
+            html += '</div>';
+            
+            // Features by level
+            if (data.features_by_level) {
+                for (let i = 1; i <= level; i++) {
+                    const features = data.features_by_level[String(i)];
+                    if (features && features.length > 0) {
+                        html += '<div class="feature-card">';
+                        html += `<h3>Level ${i} Features</h3>`;
+                        html += '<ul class="feature-list">';
+                        features.forEach(feature => {
+                            html += `<li>${feature}</li>`;
+                        });
+                        html += '</ul>';
+                        html += '</div>';
+                    }
+                }
+            }
+            
+            div.innerHTML = html || '<p style="color: #888;">No features for this level</p>';
+        }
+        
+        // Tasha's Custom Lineage Functions
+        function updateTashasVisibility() {
+            const race = document.getElementById('race').value;
+            const tashasOption = document.getElementById('tashasOption');
+            
+            if (race) {
+                tashasOption.style.display = 'block';
+            } else {
+                tashasOption.style.display = 'none';
+                document.getElementById('useTashas').checked = false;
+                toggleTashasControls();
+            }
+        }
+        
+        function toggleTashasControls() {
+            const useTashas = document.getElementById('useTashas').checked;
+            const controls = document.getElementById('tashasControls');
+            
+            tashasEnabled = useTashas;
+            controls.style.display = useTashas ? 'block' : 'none';
+            
+            if (useTashas) {
+                resetTashasDistribution();
+            }
+            
+            updateAbilityModifiers();
+        }
+        
+        function resetTashasDistribution() {
+            const selects = document.querySelectorAll('.tashas-select');
+            selects.forEach(select => {
+                select.value = '0';
+                select.classList.remove('tashas-invalid', 'tashas-valid');
+            });
+            validateTashasDistribution();
+        }
+        
+        function validateTashasDistribution() {
+            const mode = document.querySelector('input[name="tashasMode"]:checked').value;
+            const selects = document.querySelectorAll('.tashas-select');
+            const errorDiv = document.getElementById('tashasError');
+            const remainingSpan = document.getElementById('tashasPointsRemaining');
+            
+            let totalPoints = 0;
+            let twoPointCount = 0;
+            let onePointCount = 0;
+            
+            selects.forEach(select => {
+                const value = parseInt(select.value);
+                totalPoints += value;
+                if (value === 2) twoPointCount++;
+                if (value === 1) onePointCount++;
+            });
+            
+            let isValid = false;
+            let errorMsg = '';
+            
+            if (mode === '2plus1') {
+                isValid = (totalPoints === 3 && twoPointCount === 1 && onePointCount === 1);
+                if (!isValid && totalPoints > 0) {
+                    errorMsg = 'Must assign +2 to exactly one ability and +1 to exactly one ability.';
+                }
+                remainingSpan.textContent = Math.max(0, 3 - totalPoints);
+            } else {
+                isValid = (totalPoints === 3 && onePointCount === 3 && twoPointCount === 0);
+                if (!isValid && totalPoints > 0) {
+                    errorMsg = 'Must assign +1 to exactly three different abilities.';
+                }
+                remainingSpan.textContent = Math.max(0, 3 - totalPoints);
+            }
+            
+            selects.forEach(select => {
+                select.classList.remove('tashas-invalid', 'tashas-valid');
+                if (totalPoints > 0) {
+                    select.classList.add(isValid ? 'tashas-valid' : 'tashas-invalid');
+                }
+            });
+            
+            errorDiv.textContent = errorMsg;
+            errorDiv.style.display = errorMsg ? 'block' : 'none';
+            
+            return isValid;
+        }
+        
+        function updateTashasOptions() {
+            const mode = document.querySelector('input[name="tashasMode"]:checked').value;
+            const selects = document.querySelectorAll('.tashas-select');
+            
+            tashasMode = mode;
+            
+            selects.forEach(select => {
+                const options = select.querySelectorAll('option');
+                if (mode === '1plus1plus1') {
+                    options[2].style.display = 'none';
+                    if (select.value === '2') select.value = '0';
+                } else {
+                    options[2].style.display = 'block';
+                }
+            });
+            
+            validateTashasDistribution();
+        }
+        
+        // Update ability modifiers with racial bonuses
+        function updateAbilityModifiers() {
+            const abilities = ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'];
+            const abbreviations = ['str', 'dex', 'con', 'int', 'wis', 'cha'];
+            
+            abilities.forEach((ability, index) => {
+                const abbrev = abbreviations[index];
+                const baseScore = parseInt(document.getElementById(ability).value) || 10;
+                
+                // Calculate racial/Tasha's bonus
+                let racialBonus = 0;
+                if (tashasEnabled) {
+                    // Use Tasha's custom bonuses
+                    const tashasSelect = document.getElementById(`tashas${abbrev.charAt(0).toUpperCase() + abbrev.slice(1)}`);
+                    if (tashasSelect) {
+                        racialBonus = parseInt(tashasSelect.value) || 0;
+                    }
+                } else {
+                    // Use race bonuses (including subrace)
+                    if (currentRaceData && currentRaceData.ability_scores && currentRaceData.ability_scores[ability]) {
+                        racialBonus = currentRaceData.ability_scores[ability];
+                    }
+                }
+                
+                // Calculate totals
+                const totalScore = baseScore + racialBonus;
+                const modifier = Math.floor((totalScore - 10) / 2);
+                
+                // Update displays
+                const racialBonusSpan = document.getElementById(`${abbrev}RacialBonus`);
+                const totalScoreSpan = document.getElementById(`${abbrev}Total`);
+                const modifierSpan = document.getElementById(`${abbrev}Mod`);
+                
+                if (racialBonusSpan) {
+                    racialBonusSpan.textContent = racialBonus > 0 ? `+${racialBonus}` : racialBonus;
+                    racialBonusSpan.style.color = racialBonus > 0 ? '#4caf50' : (racialBonus < 0 ? '#ff6b6b' : '#888');
+                }
+                
+                if (totalScoreSpan) {
+                    totalScoreSpan.textContent = totalScore;
+                }
+                
+                if (modifierSpan) {
+                    modifierSpan.textContent = modifier >= 0 ? `+${modifier}` : `${modifier}`;
+                }
+            });
+        }
+        
+        // Form submission handler
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            
+            // Validate Tasha's if enabled
+            if (tashasEnabled && !validateTashasDistribution()) {
+                alert('Please complete your Tasha\'s ability score distribution before submitting.');
+                return;
+            }
+            
+            // Collect form data
+            const formData = new FormData(e.target);
+            const characterData = {
+                // Basic info
+                playerName: formData.get('playerName'),
+                characterName: formData.get('characterName'),
+                
+                // Race & Class
+                race: formData.get('race'),
+                subrace: formData.get('subrace'),
+                class: formData.get('class'),
+                subclass: formData.get('subclass'),
+                level: formData.get('level'),
+                
+                // Background
+                background: formData.get('background'),
+                alignment: formData.get('alignment'),
+                
+                // Ability Scores
+                abilityScores: {
+                    strength: parseInt(formData.get('strength')),
+                    dexterity: parseInt(formData.get('dexterity')),
+                    constitution: parseInt(formData.get('constitution')),
+                    intelligence: parseInt(formData.get('intelligence')),
+                    wisdom: parseInt(formData.get('wisdom')),
+                    charisma: parseInt(formData.get('charisma'))
+                },
+                
+                // Skills
+                skills: [],
+                languages: formData.get('languages'),
+                tools: formData.get('tools'),
+                equipment: formData.get('equipment')
+            };
+            
+            // Get checked skills
+            formData.getAll('skills').forEach(skill => {
+                characterData.skills.push(skill);
+            });
+            
+            // Add Tasha's data if enabled
+            if (tashasEnabled) {
+                characterData.useTashas = true;
+                characterData.tashasMode = tashasMode;
+                characterData.tashasAbilityBonuses = {};
+                
+                document.querySelectorAll('.tashas-select').forEach(select => {
+                    const ability = select.id.replace('tashas', '').toLowerCase();
+                    const abilityMap = {
+                        'str': 'strength',
+                        'dex': 'dexterity', 
+                        'con': 'constitution',
+                        'int': 'intelligence',
+                        'wis': 'wisdom',
+                        'cha': 'charisma'
+                    };
+                    const fullAbility = abilityMap[ability];
+                    const bonus = parseInt(select.value);
+                    
+                    if (bonus > 0) {
+                        characterData.tashasAbilityBonuses[fullAbility] = bonus;
+                    }
+                });
+            }
+            
+            // Calculate final ability scores and modifiers
+            characterData.finalScores = {};
+            characterData.modifiers = {};
+            
+            ['strength', 'dexterity', 'constitution', 'intelligence', 'wisdom', 'charisma'].forEach(ability => {
+                const baseScore = characterData.abilityScores[ability];
+                let racialBonus = 0;
+                
+                if (tashasEnabled && characterData.tashasAbilityBonuses[ability]) {
+                    racialBonus = characterData.tashasAbilityBonuses[ability];
+                } else if (currentRaceData && currentRaceData.ability_scores && currentRaceData.ability_scores[ability]) {
+                    racialBonus = currentRaceData.ability_scores[ability];
+                }
+                
+                const finalScore = baseScore + racialBonus;
+                const modifier = Math.floor((finalScore - 10) / 2);
+                
+                characterData.finalScores[ability] = finalScore;
+                characterData.modifiers[ability] = modifier;
+            });
+            
+            console.log('Character Data:', characterData);
+            
+            // Display character summary
+            displayCharacterSummary(characterData);
+        }
+        
+        function displayCharacterSummary(data) {
+            let summary = `
+Character Created Successfully!
+
+${data.characterName} - Level ${data.level} ${data.race} ${data.class}
+${data.subrace ? `(${data.subrace})` : ''} ${data.subclass ? `- ${data.subclass}` : ''}
+
+Final Ability Scores:
+STR: ${data.finalScores.strength} (${data.modifiers.strength >= 0 ? '+' : ''}${data.modifiers.strength})
+DEX: ${data.finalScores.dexterity} (${data.modifiers.dexterity >= 0 ? '+' : ''}${data.modifiers.dexterity})
+CON: ${data.finalScores.constitution} (${data.modifiers.constitution >= 0 ? '+' : ''}${data.modifiers.constitution})
+INT: ${data.finalScores.intelligence} (${data.modifiers.intelligence >= 0 ? '+' : ''}${data.modifiers.intelligence})
+WIS: ${data.finalScores.wisdom} (${data.modifiers.wisdom >= 0 ? '+' : ''}${data.modifiers.wisdom})
+CHA: ${data.finalScores.charisma} (${data.modifiers.charisma >= 0 ? '+' : ''}${data.modifiers.charisma})
+
+Background: ${data.background}
+${data.alignment ? `Alignment: ${data.alignment}` : ''}
+
+Skills: ${data.skills.join(', ') || 'None selected'}
+`;
+            
+            alert(summary);
+            console.log('Full character data:', data);
+        }
+        
+        // Initialize on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('D&D Character Builder - Hosted Edition loaded');
+            initializeEventHandlers();
+            updateAbilityModifiers();
+        });
+    </script>
+</body>
+</html>

@@ -1,8 +1,0 @@
-{
-  "name": "punkassgrackle-site",
-  "version": "1.0.0",
-  "description": "Punkass Grackle website - D&D tools and more",
-  "scripts": {
-    "build": "exit 0"
-  }
-}
