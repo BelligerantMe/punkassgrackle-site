@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Punkass Grackle</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+            max-width: 800px;
+        }
+        h1 {
+            color: #e94560;
+            font-size: 3em;
+            margin-bottom: 20px;
+        }
+        .subtitle {
+            color: #f39c12;
+            font-size: 1.2em;
+            margin-bottom: 40px;
+        }
+        .links {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        .link-card {
+            background: #0f3460;
+            padding: 30px;
+            border-radius: 10px;
+            text-decoration: none;
+            color: #fff;
+            transition: transform 0.2s, background 0.2s;
+            min-width: 200px;
+        }
+        .link-card:hover {
+            transform: translateY(-5px);
+            background: #1e4a7d;
+        }
+        .link-card h2 {
+            margin: 0 0 10px 0;
+            color: #3498db;
+        }
+        .link-card p {
+            margin: 0;
+            color: #aaa;
+            font-size: 0.9em;
+        }
+        .coming-soon {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        .coming-soon:hover {
+            transform: none;
+            background: #0f3460;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Punkass Grackle</h1>
+        <p class="subtitle">Digital tools and experiments</p>
+        
+        <div class="links">
+            <a href="/dnd/" class="link-card">
+                <h2>D&D Character Survey</h2>
+                <p>Create your D&D 5e character with our comprehensive survey tool</p>
+            </a>
+            
+            <div class="link-card coming-soon">
+                <h2>Tools</h2>
+                <p>Coming soon...</p>
+            </div>
+            
+            <div class="link-card coming-soon">
+                <h2>Games</h2>
+                <p>Coming soon...</p>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
