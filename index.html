@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Punkass Grackle</title>
+    <title>Punkass Grackle - D&D Tools</title>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -19,7 +19,7 @@
         .container {
             text-align: center;
             padding: 40px;
-            max-width: 800px;
+            max-width: 900px;
         }
         h1 {
             color: #e94560;
@@ -45,6 +45,7 @@
             color: #fff;
             transition: transform 0.2s, background 0.2s;
             min-width: 200px;
+            max-width: 250px;
         }
         .link-card:hover {
             transform: translateY(-5px);
@@ -53,42 +54,52 @@
         .link-card h2 {
             margin: 0 0 10px 0;
             color: #3498db;
+            font-size: 1.3em;
         }
         .link-card p {
             margin: 0;
             color: #aaa;
             font-size: 0.9em;
         }
-        .coming-soon {
-            opacity: 0.5;
-            cursor: not-allowed;
+        .link-card .emoji {
+            font-size: 2em;
+            margin-bottom: 10px;
         }
-        .coming-soon:hover {
-            transform: none;
-            background: #0f3460;
+        .featured {
+            background: linear-gradient(135deg, #0f3460 0%, #1e4a7d 100%);
+            border: 2px solid #3498db;
         }
     </style>
 </head>
 <body>
     <div class="container">
         <h1>Punkass Grackle</h1>
-        <p class="subtitle">Digital tools and experiments</p>
-        
+        <p class="subtitle">D&D 5e Digital Tools</p>
+
         <div class="links">
-            <a href="/dnd/" class="link-card">
-                <h2>D&D Character Survey</h2>
-                <p>Create your D&D 5e character with our comprehensive survey tool</p>
+            <a href="https://vtt.punkassgrackle.com" class="link-card featured">
+                <div class="emoji">🗺️</div>
+                <h2>Battle Map VTT</h2>
+                <p>Virtual tabletop with AI-generated maps, tokens, and real-time multiplayer</p>
             </a>
-            
-            <div class="link-card coming-soon">
-                <h2>Tools</h2>
-                <p>Coming soon...</p>
-            </div>
-            
-            <div class="link-card coming-soon">
-                <h2>Games</h2>
-                <p>Coming soon...</p>
-            </div>
+
+            <a href="/dnd/" class="link-card">
+                <div class="emoji">⚔️</div>
+                <h2>Character Builder</h2>
+                <p>Create your D&D 5e character with all official races and classes</p>
+            </a>
+
+            <a href="/dnd/survey/" class="link-card">
+                <div class="emoji">📋</div>
+                <h2>Character Survey</h2>
+                <p>Detailed character questionnaire for backstory and personality</p>
+            </a>
+
+            <a href="/barbarian_calculator" class="link-card">
+                <div class="emoji">🪓</div>
+                <h2>Barbarian Calculator</h2>
+                <p>Calculate rage damage, attacks, and combat options</p>
+            </a>
         </div>
     </div>
 </body>
