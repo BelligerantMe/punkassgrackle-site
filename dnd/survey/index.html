@@ -1,0 +1,1010 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enhanced D&D Character Survey - 2014 & 2024 Rules Support</title>
+    <style>
+        html {
+            box-sizing: border-box;
+        }
+        
+        *, *:before, *:after {
+            box-sizing: inherit;
+        }
+        
+        body, h1, h2, h3, h4, h5, h6, p, ol, ul {
+            margin: 0;
+            padding: 0;
+            font-weight: normal;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #1e1e2e 0%, #2d2d44 100%);
+            color: #e0e0e0;
+            min-height: 100vh;
+            padding: 20px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: rgba(40, 40, 60, 0.95);
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+        }
+        
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            color: #a0a0a0;
+            font-size: 1.2em;
+        }
+        
+        .version-selector {
+            background: rgba(100, 60, 60, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .version-selector h3 {
+            color: #ffd93d;
+            margin-bottom: 15px;
+        }
+        
+        .version-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .version-btn {
+            background: rgba(255, 107, 107, 0.3);
+            color: #e0e0e0;
+            border: 2px solid #ff6b6b;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .version-btn:hover,
+        .version-btn.selected {
+            background: #ff6b6b;
+            color: white;
+            transform: scale(1.05);
+        }
+        
+        .section {
+            margin-bottom: 30px;
+            background: rgba(60, 60, 80, 0.5);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid #ff6b6b;
+        }
+        
+        .section h2 {
+            color: #ffd93d;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+        
+        .form-row {
+            display: flex;
+            gap: 15px;
+            align-items: end;
+        }
+        
+        .form-row .form-group {
+            flex: 1;
+            margin-bottom: 0;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            color: #b0b0ff;
+            font-weight: 600;
+        }
+        
+        input[type="text"],
+        input[type="number"],
+        textarea,
+        select {
+            width: 100%;
+            padding: 12px;
+            background-color: #f5f5f5 !important;
+            background: #f5f5f5 !important;
+            border: 2px solid #666666;
+            border-radius: 8px;
+            color: #000000 !important;
+            font-size: 16px;
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            -webkit-text-fill-color: #000000 !important;
+            opacity: 1 !important;
+        }
+        
+        input:focus,
+        textarea:focus,
+        select:focus {
+            outline: none;
+            border-color: #ff6b6b;
+            background-color: #ffffff !important;
+            background: #ffffff !important;
+            box-shadow: 0 0 10px rgba(255, 107, 107, 0.3);
+            color: #000000 !important;
+            -webkit-text-fill-color: #000000 !important;
+        }
+        
+        textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+        
+        /* Fix for dropdown options visibility */
+        select option {
+            background-color: #f5f5f5;
+            color: #000000;
+        }
+        
+        /* Additional fix for input placeholder text */
+        input::placeholder,
+        textarea::placeholder {
+            color: #666666 !important;
+            opacity: 1 !important;
+            -webkit-text-fill-color: #666666 !important;
+        }
+        
+        /* Override any autofill styling */
+        input:-webkit-autofill,
+        input:-webkit-autofill:hover,
+        input:-webkit-autofill:focus,
+        textarea:-webkit-autofill,
+        textarea:-webkit-autofill:hover,
+        textarea:-webkit-autofill:focus,
+        select:-webkit-autofill,
+        select:-webkit-autofill:hover,
+        select:-webkit-autofill:focus {
+            -webkit-text-fill-color: #000000 !important;
+            -webkit-box-shadow: 0 0 0px 1000px #f5f5f5 inset !important;
+            background-color: #f5f5f5 !important;
+            transition: background-color 5000s ease-in-out 0s;
+        }
+        
+        .help-text {
+            font-size: 0.9em;
+            color: #888;
+            margin-top: 5px;
+            font-style: italic;
+        }
+        
+        .stat-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 15px;
+        }
+        
+        .dynamic-section {
+            background: rgba(30, 30, 50, 0.5);
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        
+        .add-button {
+            background: #4ecdc4;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background 0.3s ease;
+        }
+        
+        .add-button:hover {
+            background: #3db5ac;
+        }
+        
+        .remove-button {
+            background: #e74c3c;
+            color: white;
+            border: none;
+            padding: 5px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 14px;
+            margin-left: 10px;
+        }
+        
+        .submit-button {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff8e53 100%);
+            color: white;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 8px;
+            font-size: 20px;
+            font-weight: bold;
+            cursor: pointer;
+            display: block;
+            margin: 40px auto 0;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(255, 107, 107, 0.3);
+        }
+        
+        .submit-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        .version-note {
+            background: rgba(255, 215, 0, 0.2);
+            padding: 10px;
+            border-radius: 5px;
+            border-left: 3px solid #ffd700;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+        
+        .resource-reference {
+            background: rgba(76, 175, 80, 0.2);
+            padding: 8px;
+            border-radius: 4px;
+            border-left: 3px solid #4caf50;
+            margin-top: 8px;
+            font-size: 0.85em;
+        }
+        
+        .external-resources {
+            background: rgba(60, 80, 100, 0.6);
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+        }
+        
+        .external-resources h3 {
+            color: #4caf50;
+            margin-bottom: 15px;
+        }
+        
+        .output-section {
+            display: none;
+            margin-top: 40px;
+            padding: 20px;
+            background: rgba(40, 60, 40, 0.8);
+            border-radius: 10px;
+            border: 2px solid #4ecdc4;
+        }
+        
+        #jsonOutput {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border-radius: 5px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            color: #4ecdc4;
+            max-height: 400px;
+            overflow-y: auto;
+            white-space: pre-wrap;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎲 Enhanced D&D Character Survey</h1>
+            <div class="subtitle">Supporting D&D 2014 & 2024 Rules + External Resources</div>
+        </div>
+        
+        <div class="external-resources">
+            <h3>📚 External D&D Resources Integrated</h3>
+            <p>This form supports official D&D content from:</p>
+            <ul style="margin: 10px 0 0 20px; color: #a0a0a0;">
+                <li>Player's Handbook (2014 & 2024)</li>
+                <li>Dungeon Master's Guide (2014 & 2024)</li>
+                <li>Tasha's Cauldron of Everything</li>
+                <li>Xanathar's Guide to Everything</li>
+                <li>Volo's Guide to Monsters</li>
+                <li>Mordenkainen's Tome of Foes</li>
+                <li>Fizban's Treasury of Dragons</li>
+                <li>Monsters of the Multiverse</li>
+            </ul>
+        </div>
+        
+        <form id="characterForm">
+            <div class="version-selector">
+                <h3>🔧 Select Your D&D Rules Version</h3>
+                <div class="version-buttons">
+                    <button type="button" class="version-btn" data-version="2014">D&D 2014 Rules</button>
+                    <button type="button" class="version-btn" data-version="2024">D&D 2024 Rules</button>
+                    <button type="button" class="version-btn selected" data-version="mixed">Mixed Campaign</button>
+                </div>
+                <div class="version-note">
+                    <strong>Mixed Campaign:</strong> Some players use 2014 rules, others use 2024 rules
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>👤 Player & Character Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="player">Player Name *</label>
+                        <input type="text" id="player" name="player" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="characterName">Character Name *</label>
+                        <input type="text" id="characterName" name="characterName" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="fullName">Full Character Name (if different)</label>
+                    <input type="text" id="fullName" name="fullName">
+                    <div class="help-text">Include titles, epithets, or formal names</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>⚔️ Core Character Build</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="race">Race *</label>
+                        <select id="race" name="race" required>
+                            <option value="">Select Race</option>
+                            <option value="dragonborn">Dragonborn</option>
+                            <option value="dragonborn_2024">Dragonborn (2024 Updated)</option>
+                            <option value="dwarf">Dwarf</option>
+                            <option value="elf">Elf</option>
+                            <option value="gnome">Gnome</option>
+                            <option value="half-elf">Half-Elf</option>
+                            <option value="half-orc">Half-Orc</option>
+                            <option value="halfling">Halfling</option>
+                            <option value="human">Human</option>
+                            <option value="variant_human">Variant Human (2014)</option>
+                            <option value="tiefling">Tiefling</option>
+                            <option value="tiefling_2024">Tiefling (2024 Updated)</option>
+                            <option value="ardling">Ardling (2024 New)</option>
+                            <option value="aasimar">Aasimar</option>
+                            <option value="bugbear">Bugbear</option>
+                            <option value="centaur">Centaur</option>
+                            <option value="changeling">Changeling</option>
+                            <option value="custom">Custom Lineage</option>
+                            <option value="other">Other (specify in notes)</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="class">Class *</label>
+                        <select id="class" name="class" required>
+                            <option value="">Select Class</option>
+                            <option value="artificer">Artificer</option>
+                            <option value="barbarian">Barbarian</option>
+                            <option value="bard">Bard</option>
+                            <option value="cleric">Cleric</option>
+                            <option value="druid">Druid</option>
+                            <option value="fighter">Fighter</option>
+                            <option value="monk">Monk</option>
+                            <option value="paladin">Paladin</option>
+                            <option value="ranger">Ranger</option>
+                            <option value="rogue">Rogue</option>
+                            <option value="sorcerer">Sorcerer</option>
+                            <option value="warlock">Warlock</option>
+                            <option value="wizard">Wizard</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="subclass">Subclass/Archetype</label>
+                        <input type="text" id="subclass" name="subclass">
+                        <div class="help-text">e.g., Circle of the Moon, College of Lore, etc.</div>
+                    </div>
+                    <div class="form-group">
+                        <label for="level">Character Level</label>
+                        <input type="number" id="level" name="level" min="1" max="20" value="1">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="background">Background *</label>
+                        <select id="background" name="background" required>
+                            <option value="">Select Background</option>
+                            <option value="acolyte">Acolyte</option>
+                            <option value="criminal">Criminal</option>
+                            <option value="folk_hero">Folk Hero</option>
+                            <option value="noble">Noble</option>
+                            <option value="sage">Sage</option>
+                            <option value="soldier">Soldier</option>
+                            <option value="charlatan">Charlatan</option>
+                            <option value="entertainer">Entertainer</option>
+                            <option value="guild_artisan">Guild Artisan</option>
+                            <option value="hermit">Hermit</option>
+                            <option value="outlander">Outlander</option>
+                            <option value="sailor">Sailor</option>
+                            <option value="custom">Custom Background</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="alignment">Alignment</label>
+                        <select id="alignment" name="alignment">
+                            <option value="">Select Alignment</option>
+                            <option value="lawful_good">Lawful Good</option>
+                            <option value="neutral_good">Neutral Good</option>
+                            <option value="chaotic_good">Chaotic Good</option>
+                            <option value="lawful_neutral">Lawful Neutral</option>
+                            <option value="true_neutral">True Neutral</option>
+                            <option value="chaotic_neutral">Chaotic Neutral</option>
+                            <option value="lawful_evil">Lawful Evil</option>
+                            <option value="neutral_evil">Neutral Evil</option>
+                            <option value="chaotic_evil">Chaotic Evil</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="resource-reference">
+                    📖 <strong>Reference:</strong> Race and class information from Player's Handbook (2014/2024), Tasha's Cauldron, and Monsters of the Multiverse
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🎯 Ability Scores & Combat Stats</h2>
+                <div class="stat-grid">
+                    <div class="form-group">
+                        <label for="str">Strength</label>
+                        <input type="number" id="str" name="str" min="1" max="30" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="dex">Dexterity</label>
+                        <input type="number" id="dex" name="dex" min="1" max="30" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="con">Constitution</label>
+                        <input type="number" id="con" name="con" min="1" max="30" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="int">Intelligence</label>
+                        <input type="number" id="int" name="int" min="1" max="30" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="wis">Wisdom</label>
+                        <input type="number" id="wis" name="wis" min="1" max="30" value="10">
+                    </div>
+                    <div class="form-group">
+                        <label for="cha">Charisma</label>
+                        <input type="number" id="cha" name="cha" min="1" max="30" value="10">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="hp">Hit Points</label>
+                        <input type="number" id="hp" name="hp" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="ac">Armor Class</label>
+                        <input type="number" id="ac" name="ac" min="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="speed">Speed (feet)</label>
+                        <input type="number" id="speed" name="speed" value="30">
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>✨ Features & Abilities</h2>
+                <div id="featsSection">
+                    <label>Feats (if using Variant Human or higher level)</label>
+                    <div id="featsList"></div>
+                    <button type="button" class="add-button" onclick="addFeat()">+ Add Feat</button>
+                    <div class="resource-reference">
+                        📖 <strong>Reference:</strong> Feats from Player's Handbook, Tasha's Cauldron, and other official sources
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="racialFeatures">Racial Features & Traits</label>
+                    <textarea id="racialFeatures" name="racialFeatures" placeholder="List your racial abilities, resistances, special senses, etc."></textarea>
+                    <div class="help-text">Include darkvision, resistances, cantrips, proficiencies, etc.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="classFeatures">Class & Subclass Features</label>
+                    <textarea id="classFeatures" name="classFeatures" placeholder="List your class abilities, fighting style, spells, etc."></textarea>
+                    <div class="help-text">Include fighting styles, spellcasting, channel divinity, etc.</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="backgroundFeatures">Background Features & Proficiencies</label>
+                    <textarea id="backgroundFeatures" name="backgroundFeatures" placeholder="Skill proficiencies, languages, tools, special abilities from background"></textarea>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🧙‍♂️ Spells & Magic (if applicable)</h2>
+                <div id="spellsSection">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="spellcastingAbility">Spellcasting Ability</label>
+                            <select id="spellcastingAbility" name="spellcastingAbility">
+                                <option value="">Not a spellcaster</option>
+                                <option value="intelligence">Intelligence</option>
+                                <option value="wisdom">Wisdom</option>
+                                <option value="charisma">Charisma</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="spellSaveDC">Spell Save DC</label>
+                            <input type="number" id="spellSaveDC" name="spellSaveDC" min="8">
+                        </div>
+                    </div>
+                    
+                    <div id="knownSpells">
+                        <label>Known Spells</label>
+                        <div id="spellsList"></div>
+                        <button type="button" class="add-button" onclick="addSpell()">+ Add Spell</button>
+                    </div>
+                    <div class="resource-reference">
+                        📖 <strong>Reference:</strong> Spells from Player's Handbook, Tasha's Cauldron, Xanathar's Guide, and other official sources. Note version differences between 2014/2024 rules.
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🎒 Equipment & Wealth</h2>
+                <div class="form-group">
+                    <label for="startingGold">Starting Gold/Wealth</label>
+                    <input type="text" id="startingGold" name="startingGold" placeholder="e.g., '150 gp' or 'Starting equipment package'">
+                </div>
+                
+                <div id="equipmentSection">
+                    <label>Equipment & Gear</label>
+                    <div id="equipmentList"></div>
+                    <button type="button" class="add-button" onclick="addEquipment()">+ Add Equipment</button>
+                    <div class="help-text">Include weapons, armor, tools, adventuring gear, magical items</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>📖 Character Backstory & Personality</h2>
+                <div class="form-group">
+                    <label for="backstory">Character Backstory *</label>
+                    <textarea id="backstory" name="backstory" required placeholder="Tell your character's story: Where did they come from? What shaped them? What brought them to adventuring?"></textarea>
+                    <div class="help-text">Include major events, relationships, and formative experiences</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="appearance">Physical Appearance</label>
+                    <textarea id="appearance" name="appearance" placeholder="Describe your character's physical appearance, mannerisms, distinctive features"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="personality">Personality Traits</label>
+                    <textarea id="personality" name="personality" placeholder="How does your character act? What are their quirks, habits, speech patterns?"></textarea>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="ideals">Ideals & Values</label>
+                        <textarea id="ideals" name="ideals" placeholder="What drives your character? What do they believe in?"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="bonds">Bonds & Connections</label>
+                        <textarea id="bonds" name="bonds" placeholder="Important people, places, or things to your character"></textarea>
+                    </div>
+                </div>
+                
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="flaws">Flaws & Weaknesses</label>
+                        <textarea id="flaws" name="flaws" placeholder="Character weaknesses, vices, or personality flaws"></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="fears">Fears & Concerns</label>
+                        <textarea id="fears" name="fears" placeholder="What does your character fear or worry about?"></textarea>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>👥 Important NPCs & Relationships</h2>
+                <div id="npcSection">
+                    <div id="npcList"></div>
+                    <button type="button" class="add-button" onclick="addNPC()">+ Add Important NPC</button>
+                    <div class="help-text">Include family, friends, mentors, rivals, enemies from your backstory</div>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🎯 Plot Hooks & DM Notes</h2>
+                <div class="form-group">
+                    <label for="goals">Character Goals & Motivations</label>
+                    <textarea id="goals" name="goals" placeholder="What does your character want to achieve? Short-term and long-term goals"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="secrets">Character Secrets</label>
+                    <textarea id="secrets" name="secrets" placeholder="Things your character hasn't told the party or wants to keep hidden"></textarea>
+                    <div class="help-text">This helps the DM create personal storylines</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="plotHooks">Suggested Plot Hooks</label>
+                    <textarea id="plotHooks" name="plotHooks" placeholder="Ideas for how your character's backstory could create adventures"></textarea>
+                    <div class="help-text">Optional: The AI will also generate plot hooks based on your backstory</div>
+                </div>
+                
+                <div class="form-group">
+                    <label for="dmNotes">Additional Notes for DM</label>
+                    <textarea id="dmNotes" name="dmNotes" placeholder="Anything else the DM should know about your character or how you want to play them"></textarea>
+                </div>
+            </div>
+            
+            <div class="section">
+                <h2>🎭 Roleplay Preferences</h2>
+                <div class="form-group">
+                    <label for="voiceDescription">Character Voice & Speech</label>
+                    <textarea id="voiceDescription" name="voiceDescription" placeholder="How does your character speak? Accent, vocabulary, speech patterns"></textarea>
+                </div>
+                
+                <div class="form-group">
+                    <label for="roleplayStyle">Roleplay Style Preferences</label>
+                    <textarea id="roleplayStyle" name="roleplayStyle" placeholder="How do you prefer to roleplay this character? Any specific goals or themes?"></textarea>
+                </div>
+            </div>
+            
+            <button type="submit" class="submit-button">Generate Character Profile</button>
+        </form>
+        
+        <div id="outputSection" class="output-section">
+            <h2>Generated Character Data</h2>
+            <pre id="jsonOutput"></pre>
+        </div>
+    </div>
+
+    <script>
+        let selectedVersion = 'mixed';
+        
+        // Version selection handling
+        document.querySelectorAll('.version-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.version-btn').forEach(b => b.classList.remove('selected'));
+                this.classList.add('selected');
+                selectedVersion = this.dataset.version;
+                updateVersionSpecificFields();
+            });
+        });
+        
+        function updateVersionSpecificFields() {
+            // Update form fields based on selected D&D version
+            const raceSelect = document.getElementById('race');
+            const versionNotes = document.querySelectorAll('.version-note');
+            
+            // Add version-specific notes or field modifications here
+            if (selectedVersion === '2024') {
+                // Emphasize 2024 options
+                console.log('Using D&D 2024 rules');
+            } else if (selectedVersion === '2014') {
+                // Emphasize 2014 options
+                console.log('Using D&D 2014 rules');
+            }
+        }
+        
+        // Dynamic list management functions
+        function addFeat() {
+            const featsList = document.getElementById('featsList');
+            const featDiv = document.createElement('div');
+            featDiv.className = 'dynamic-section';
+            featDiv.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="feat_name" placeholder="Feat Name">
+                    </div>
+                    <div class="form-group">
+                        <textarea name="feat_description" placeholder="Feat description and benefits"></textarea>
+                    </div>
+                    <button type="button" class="remove-button" onclick="this.parentElement.parentElement.remove()">Remove</button>
+                </div>
+            `;
+            featsList.appendChild(featDiv);
+        }
+        
+        function addSpell() {
+            const spellsList = document.getElementById('spellsList');
+            const spellDiv = document.createElement('div');
+            spellDiv.className = 'dynamic-section';
+            spellDiv.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="spell_name" placeholder="Spell Name">
+                    </div>
+                    <div class="form-group">
+                        <select name="spell_level">
+                            <option value="0">Cantrip</option>
+                            <option value="1">1st Level</option>
+                            <option value="2">2nd Level</option>
+                            <option value="3">3rd Level</option>
+                            <option value="4">4th Level</option>
+                            <option value="5">5th Level</option>
+                            <option value="6">6th Level</option>
+                            <option value="7">7th Level</option>
+                            <option value="8">8th Level</option>
+                            <option value="9">9th Level</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <input type="text" name="spell_school" placeholder="School (e.g., Evocation)">
+                    </div>
+                    <button type="button" class="remove-button" onclick="this.parentElement.parentElement.remove()">Remove</button>
+                </div>
+            `;
+            spellsList.appendChild(spellDiv);
+        }
+        
+        function addEquipment() {
+            const equipmentList = document.getElementById('equipmentList');
+            const equipDiv = document.createElement('div');
+            equipDiv.className = 'dynamic-section';
+            equipDiv.innerHTML = `
+                <div class="form-row">
+                    <div class="form-group">
+                        <input type="text" name="equipment_name" placeholder="Item Name">
+                    </div>
+                    <div class="form-group">
+                        <select name="equipment_type">
+                            <option value="weapon">Weapon</option>
+                            <option value="armor">Armor</option>
+                            <option value="tool">Tool</option>
+                            <option value="gear">Adventuring Gear</option>
+                            <option value="magic">Magic Item</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <textarea name="equipment_description" placeholder="Description, stats, or special properties"></textarea>
+                    </div>
+                    <button type="button" class="remove-button" onclick="this.parentElement.parentElement.remove()">Remove</button>
+                </div>
+            `;
+            equipmentList.appendChild(equipDiv);
+        }
+        
+        function addNPC() {
+            const npcList = document.getElementById('npcList');
+            const npcDiv = document.createElement('div');
+            npcDiv.className = 'dynamic-section';
+            npcDiv.innerHTML = `
+                <h4 style="color: #ffd93d; margin-bottom: 10px;">Important NPC</h4>
+                <div class="form-group">
+                    <input type="text" name="npc_name" placeholder="NPC Name" required>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <select name="npc_relationship">
+                            <option value="family">Family Member</option>
+                            <option value="friend">Friend</option>
+                            <option value="mentor">Mentor/Teacher</option>
+                            <option value="rival">Rival</option>
+                            <option value="enemy">Enemy</option>
+                            <option value="romantic">Romantic Interest</option>
+                            <option value="ally">Ally</option>
+                            <option value="contact">Contact/Acquaintance</option>
+                            <option value="other">Other</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <select name="npc_status">
+                            <option value="alive">Alive</option>
+                            <option value="dead">Dead</option>
+                            <option value="missing">Missing</option>
+                            <option value="unknown">Unknown</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <textarea name="npc_description" placeholder="Describe this NPC: appearance, personality, role in your backstory"></textarea>
+                </div>
+                <div class="form-group">
+                    <textarea name="npc_location" placeholder="Where is this NPC? Current location or last known whereabouts"></textarea>
+                </div>
+                <div class="form-group">
+                    <textarea name="npc_significance" placeholder="Why is this NPC important to your character? What role could they play in the campaign?"></textarea>
+                </div>
+                <button type="button" class="remove-button" onclick="this.parentElement.remove()">Remove NPC</button>
+                <hr style="margin: 15px 0; border-color: #666;">
+            `;
+            npcList.appendChild(npcDiv);
+        }
+        
+        // Form submission handling
+        document.getElementById('characterForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            const formData = new FormData(this);
+            const data = {
+                metadata: {
+                    characterName: formData.get('characterName'),
+                    player: formData.get('player'),
+                    dnd_version: selectedVersion,
+                    submission_date: new Date().toISOString(),
+                    external_resources_used: [
+                        'Players_Handbook_2014_2024',
+                        'Dungeon_Masters_Guide',
+                        'Tashas_Cauldron_of_Everything',
+                        'Xanathars_Guide_to_Everything',
+                        'Volos_Guide_to_Monsters',
+                        'Mordenkainens_Tome_of_Foes',
+                        'Fizbans_Treasury_of_Dragons',
+                        'Monsters_of_the_Multiverse'
+                    ]
+                },
+                character: {
+                    name: formData.get('characterName'),
+                    full_name: formData.get('fullName') || formData.get('characterName'),
+                    race: formData.get('race'),
+                    class: formData.get('class'),
+                    subclass: formData.get('subclass'),
+                    level: parseInt(formData.get('level')) || 1,
+                    background: formData.get('background'),
+                    alignment: formData.get('alignment'),
+                    stats: {
+                        str: parseInt(formData.get('str')) || 10,
+                        dex: parseInt(formData.get('dex')) || 10,
+                        con: parseInt(formData.get('con')) || 10,
+                        int: parseInt(formData.get('int')) || 10,
+                        wis: parseInt(formData.get('wis')) || 10,
+                        cha: parseInt(formData.get('cha')) || 10,
+                        hp: parseInt(formData.get('hp')),
+                        ac: parseInt(formData.get('ac')),
+                        speed: parseInt(formData.get('speed')) || 30
+                    },
+                    backstory: formData.get('backstory'),
+                    appearance: formData.get('appearance'),
+                    personality: formData.get('personality'),
+                    ideals: formData.get('ideals'),
+                    bonds: formData.get('bonds'),
+                    flaws: formData.get('flaws'),
+                    fears: formData.get('fears'),
+                    goals: formData.get('goals'),
+                    secrets: formData.get('secrets'),
+                    plot_hooks: formData.get('plotHooks'),
+                    dm_notes: formData.get('dmNotes'),
+                    voice_description: formData.get('voiceDescription'),
+                    roleplay_style: formData.get('roleplayStyle'),
+                    racial_features: formData.get('racialFeatures'),
+                    class_features: formData.get('classFeatures'),
+                    background_features: formData.get('backgroundFeatures'),
+                    spellcasting_ability: formData.get('spellcastingAbility'),
+                    spell_save_dc: parseInt(formData.get('spellSaveDC')),
+                    starting_gold: formData.get('startingGold')
+                },
+                feats: [],
+                spells: [],
+                equipment: [],
+                npcs: {}
+            };
+            
+            // Collect feats
+            const featNames = formData.getAll('feat_name');
+            const featDescriptions = formData.getAll('feat_description');
+            for (let i = 0; i < featNames.length; i++) {
+                if (featNames[i]) {
+                    data.feats.push({
+                        name: featNames[i],
+                        description: featDescriptions[i] || ''
+                    });
+                }
+            }
+            
+            // Collect spells
+            const spellNames = formData.getAll('spell_name');
+            const spellLevels = formData.getAll('spell_level');
+            const spellSchools = formData.getAll('spell_school');
+            for (let i = 0; i < spellNames.length; i++) {
+                if (spellNames[i]) {
+                    data.spells.push({
+                        name: spellNames[i],
+                        level: parseInt(spellLevels[i]) || 0,
+                        school: spellSchools[i] || ''
+                    });
+                }
+            }
+            
+            // Collect equipment
+            const equipNames = formData.getAll('equipment_name');
+            const equipTypes = formData.getAll('equipment_type');
+            const equipDescriptions = formData.getAll('equipment_description');
+            for (let i = 0; i < equipNames.length; i++) {
+                if (equipNames[i]) {
+                    data.equipment.push({
+                        name: equipNames[i],
+                        type: equipTypes[i] || 'other',
+                        description: equipDescriptions[i] || ''
+                    });
+                }
+            }
+            
+            // Collect NPCs
+            const npcNames = formData.getAll('npc_name');
+            const npcRelationships = formData.getAll('npc_relationship');
+            const npcStatuses = formData.getAll('npc_status');
+            const npcDescriptions = formData.getAll('npc_description');
+            const npcLocations = formData.getAll('npc_location');
+            const npcSignificances = formData.getAll('npc_significance');
+            
+            for (let i = 0; i < npcNames.length; i++) {
+                if (npcNames[i]) {
+                    data.npcs[npcNames[i]] = {
+                        relationship: npcRelationships[i] || 'other',
+                        status: npcStatuses[i] || 'unknown',
+                        description: npcDescriptions[i] || '',
+                        location: npcLocations[i] || '',
+                        significance: npcSignificances[i] || ''
+                    };
+                }
+            }
+            
+            // Display the generated data
+            document.getElementById('jsonOutput').textContent = JSON.stringify(data, null, 2);
+            document.getElementById('outputSection').style.display = 'block';
+            
+            // Scroll to output
+            document.getElementById('outputSection').scrollIntoView({ behavior: 'smooth' });
+            
+            // Auto-submit to server if available
+            submitToServer(data);
+        });
+        
+        function submitToServer(data) {
+            fetch('/submit', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(result => {
+                if (result.status === 'success') {
+                    alert(`Character submitted successfully!\\n\\nCharacter: ${result.character}\\nPlayer: ${result.player}\\nFile: ${result.filename}`);
+                } else {
+                    console.log('Server submission failed, but character data is still generated above');
+                }
+            })
+            .catch(error => {
+                console.log('Server not available, but character data is still generated above');
+            });
+        }
+        
+        // Initialize with some default NPCs/spells/equipment for testing
+        // Uncomment these lines to start with some examples:
+        // addNPC();
+        // addSpell();
+        // addEquipment();
+        // addFeat();
+    </script>
+
+</body>
+</html>
