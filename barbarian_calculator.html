@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>D&D 5e Barbarian Action Calculator</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Marcellus:wght@400&display=swap');
+        
+        body {
+            font-family: 'Marcellus', serif;
+            background: linear-gradient(135deg, #0f0f23 0%, #1a1a40 50%, #2d1b42 100%);
+            background-attachment: fixed;
+            color: #f4f1e8;
+            padding: 20px;
+            margin: 0;
+            min-height: 100vh;
+        }
+        
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(circle at 20% 50%, rgba(120, 119, 198, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 80% 20%, rgba(255, 119, 48, 0.1) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(255, 0, 128, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            position: relative;
+        }
+        
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            font-weight: 700;
+            color: #d4af37;
+            text-align: center;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.8), 0 0 20px rgba(212, 175, 55, 0.3);
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            text-align: center;
+            color: #c9aa71;
+            font-style: italic;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+        
+        .calculator-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 25px;
+            margin-top: 20px;
+        }
+        
+        .section {
+            background: linear-gradient(145deg, #1e1e3f 0%, #2a2a5a 100%);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 
+                0 8px 16px rgba(0,0,0,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.1);
+            position: relative;
+        }
+        
+        .section::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #d4af37, #f4d03f, #d4af37);
+            border-radius: 12px;
+            z-index: -1;
+            opacity: 0.7;
+        }
+        
+        h2 {
+            font-family: 'Cinzel', serif;
+            color: #f4d03f;
+            margin-top: 0;
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            font-weight: 600;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            border-bottom: 1px solid rgba(244, 208, 63, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        h3 {
+            font-family: 'Cinzel', serif;
+            color: #e8c547;
+            margin-top: 20px;
+            margin-bottom: 12px;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+        
+        label {
+            display: block;
+            margin: 12px 0 6px;
+            color: #c9aa71;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+        
+        input, select {
+            width: 100%;
+            padding: 10px;
+            background: linear-gradient(145deg, #0f0f23, #1a1a40);
+            color: #f4f1e8;
+            border: 1px solid #d4af37;
+            border-radius: 6px;
+            box-sizing: border-box;
+            font-family: 'Marcellus', serif;
+            font-size: 0.95rem;
+        }
+        
+        input:focus, select:focus {
+            outline: none;
+            border-color: #f4d03f;
+            box-shadow: 0 0 8px rgba(244, 208, 63, 0.4);
+        }
+        
+        input[type="checkbox"], input[type="radio"] {
+            width: auto;
+            margin-right: 8px;
+            margin-left: 0;
+        }
+        
+        .checkbox-label, .radio-label {
+            display: flex;
+            align-items: center;
+            margin: 12px 0;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        
+        .checkbox-label:hover, .radio-label:hover {
+            color: #f4d03f;
+        }
+        
+        button {
+            background: linear-gradient(145deg, #8b0000, #cd5c5c);
+            color: white;
+            padding: 14px 28px;
+            border: 2px solid #d4af37;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin: 12px 0;
+            width: 100%;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+            transition: all 0.3s ease;
+        }
+        
+        button:hover {
+            background: linear-gradient(145deg, #a50000, #dc6868);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.4);
+            transform: translateY(-1px);
+        }
+        
+        .small-button {
+            padding: 10px 20px;
+            font-size: 14px;
+            width: auto;
+            margin: 8px 5px;
+        }
+        
+        #results {
+            background: linear-gradient(145deg, #1e1e3f, #2a2a5a);
+            border: 2px solid #d4af37;
+            padding: 25px;
+            border-radius: 12px;
+            margin-top: 25px;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 25px;
+            box-shadow: 0 8px 16px rgba(0,0,0,0.3);
+        }
+        
+        .result-box {
+            background: linear-gradient(145deg, #0f0f23, #1a1a40);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .result-box h3 {
+            margin-top: 0;
+            color: #f4d03f;
+            font-family: 'Cinzel', serif;
+            border-bottom: 1px solid rgba(244, 208, 63, 0.3);
+            padding-bottom: 8px;
+        }
+        
+        .result-value {
+            font-size: 28px;
+            font-weight: bold;
+            color: #50c878;
+            margin: 15px 0;
+            text-shadow: 0 0 10px rgba(80, 200, 120, 0.4);
+            font-family: 'Cinzel', serif;
+        }
+        
+        .damage-breakdown {
+            font-size: 13px;
+            color: #a0a0a0;
+            margin-top: 8px;
+            font-style: italic;
+            line-height: 1.4;
+        }
+        
+        .advantage {
+            color: #50c878;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(80, 200, 120, 0.3);
+        }
+        
+        .disadvantage {
+            color: #ff6b6b;
+            font-weight: bold;
+            text-shadow: 0 0 8px rgba(255, 107, 107, 0.3);
+        }
+        
+        .custom-weapon-section {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(212, 175, 55, 0.3);
+        }
+        
+        .inline-fields {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        
+        .roll-type-selection {
+            margin: 20px 0;
+            padding: 18px;
+            background: linear-gradient(145deg, #0f0f23, #1a1a40);
+            border: 1px solid rgba(212, 175, 55, 0.3);
+            border-radius: 8px;
+        }
+        
+        #contestedResult {
+            background: linear-gradient(145deg, #0f0f23, #1a1a40);
+            border: 1px solid rgba(212, 175, 55, 0.5);
+            border-radius: 8px;
+            box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .edition-toggle {
+            text-align: center;
+            margin: 20px 0;
+            padding: 15px;
+            background: linear-gradient(145deg, #1e1e3f, #2a2a5a);
+            border: 1px solid #d4af37;
+            border-radius: 8px;
+        }
+        
+        .edition-toggle label {
+            color: #f4d03f;
+            font-family: 'Cinzel', serif;
+            font-weight: 600;
+            margin: 0 15px;
+        }
+        
+        .warning-box {
+            background: linear-gradient(145deg, #3d1a1a, #5a2d2d);
+            border: 2px solid #ff6b6b;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+            color: #ffcccc;
+        }
+        
+        @media (max-width: 1024px) {
+            .calculator-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+            h1 {
+                font-size: 2.8rem;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .calculator-grid {
+                grid-template-columns: 1fr;
+            }
+            #results {
+                grid-template-columns: 1fr;
+            }
+            h1 {
+                font-size: 2.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>D&D 5e Barbarian Action Calculator</h1>
+        
+        <!-- Edition Selection -->
+        <div class="edition-toggle">
+            <h3 style="margin: 0; color: #f4d03f; font-family: 'Cinzel', serif;">D&D Edition</h3>
+            <label><input type="radio" name="edition" value="2014" checked> 2014 Rules</label>
+            <label><input type="radio" name="edition" value="2024"> 2024 Rules</label>
+        </div>
+        
+        <div id="edition2024Warning" class="warning-box" style="display: none;">
+            <strong>⚠️ 2024 Rules Notice:</strong> The 2024 D&D rules are not fully released. This calculator currently uses 2014 rules for all calculations. The edition toggle is prepared for future updates when complete 2024 barbarian rules are available.
+        </div>
+        
+        <div class="calculator-grid">
+            <!-- Character Setup -->
+            <div class="section">
+                <h2>Character Setup</h2>
+                
+                <label for="level">Barbarian Level:</label>
+                <input type="number" id="level" min="1" max="20" value="5">
+                
+                <label for="subclass">Subclass:</label>
+                <select id="subclass">
+                    <option value="berserker">Path of the Berserker</option>
+                    <option value="totem">Path of the Totem Warrior</option>
+                    <option value="ancestral">Path of the Ancestral Guardian</option>
+                    <option value="storm">Path of the Storm Herald</option>
+                    <option value="zealot">Path of the Zealot</option>
+                    <option value="beast">Path of the Beast</option>
+                    <option value="wild_magic">Path of Wild Magic</option>
+                    <option value="battlerager">Path of the Battlerager (SCAG)</option>
+                    <option value="giant">Path of the Giant (Glory of Giants)</option>
+                    <option value="juggernaut">Path of the Juggernaut (Critical Role)</option>
+                    <option value="world_tree">Path of the World Tree (2024)</option>
+                </select>
+                
+                <label for="size">Creature Size:</label>
+                <select id="size">
+                    <option value="tiny">Tiny</option>
+                    <option value="small">Small</option>
+                    <option value="medium" selected>Medium</option>
+                    <option value="large">Large</option>
+                    <option value="huge">Huge</option>
+                    <option value="gargantuan">Gargantuan</option>
+                </select>
+                
+                <label for="strength">Strength Score:</label>
+                <input type="number" id="strength" min="1" max="30" value="16">
+                
+                <label for="proficiency">Proficiency Bonus:</label>
+                <input type="number" id="proficiency" min="2" max="6" value="3">
+                
+                <div class="checkbox-label">
+                    <input type="checkbox" id="raging">
+                    <label for="raging">Currently Raging</label>
+                </div>
+                
+                <div class="checkbox-label">
+                    <input type="checkbox" id="reckless">
+                    <label for="reckless">Reckless Attack</label>
+                </div>
+                
+                <div class="checkbox-label">
+                    <input type="checkbox" id="gwm">
+                    <label for="gwm">Great Weapon Master (-5/+10)</label>
+                </div>
+            </div>
+            
+            <!-- Weapon Setup -->
+            <div class="section">
+                <h2>Weapon & Attack</h2>
+                
+                <label for="weapon">Weapon Type:</label>
+                <select id="weapon" onchange="checkCustomWeapon()">
+                    <option value="greataxe">Greataxe (1d12)</option>
+                    <option value="greatsword">Greatsword (2d6)</option>
+                    <option value="maul">Maul (2d6)</option>
+                    <option value="longsword">Longsword (1d10 two-handed)</option>
+                    <option value="warhammer">Warhammer (1d10 two-handed)</option>
+                    <option value="battleaxe">Battleaxe (1d10 two-handed)</option>
+                    <option value="handaxe">Handaxe (1d6)</option>
+                    <option value="javelin">Javelin (1d6)</option>
+                    <option value="glaive">Glaive (1d10, reach)</option>
+                    <option value="halberd">Halberd (1d10, reach)</option>
+                    <option value="pike">Pike (1d10, reach)</option>
+                    <option value="unarmed">Unarmed Strike (1 + STR)</option>
+                    <option value="custom">Custom Weapon</option>
+                </select>
+                
+                <div id="customWeaponSection" class="custom-weapon-section" style="display: none;">
+                    <h3>Custom Weapon</h3>
+                    <label for="customName">Weapon Name:</label>
+                    <input type="text" id="customName" placeholder="My Weapon">
+                    
+                    <div class="inline-fields">
+                        <div>
+                            <label for="customDice">Number of Dice:</label>
+                            <input type="number" id="customDice" min="1" max="4" value="1">
+                        </div>
+                        <div>
+                            <label for="customSides">Die Type:</label>
+                            <select id="customSides">
+                                <option value="4">d4</option>
+                                <option value="6">d6</option>
+                                <option value="8">d8</option>
+                                <option value="10">d10</option>
+                                <option value="12">d12</option>
+                                <option value="20">d20</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <button class="small-button" onclick="saveCustomWeapon()">Save Custom Weapon</button>
+                </div>
+                
+                <label for="weaponBonus">Weapon Bonus (+X):</label>
+                <input type="number" id="weaponBonus" min="0" max="3" value="0">
+                
+                <label for="attacks">Number of Attacks:</label>
+                <input type="number" id="attacks" min="1" max="4" value="1">
+                
+                <div class="checkbox-label">
+                    <input type="checkbox" id="advantage">
+                    <label for="advantage">Advantage (from other source)</label>
+                </div>
+                
+                <div class="checkbox-label">
+                    <input type="checkbox" id="disadvantage">
+                    <label for="disadvantage">Disadvantage</label>
+                </div>
+                
+                <label for="brutalCritical">Brutal Critical Dice:</label>
+                <input type="number" id="brutalCritical" min="0" max="3" value="0">
+                
+                <h3>D20 Roll Method</h3>
+                <div class="roll-type-selection">
+                    <div class="radio-label">
+                        <input type="radio" id="autoRoll" name="rollType" value="auto" checked>
+                        <label for="autoRoll">Auto-roll D20</label>
+                    </div>
+                    <div class="radio-label">
+                        <input type="radio" id="manualRoll" name="rollType" value="manual">
+                        <label for="manualRoll">Enter D20 roll manually</label>
+                    </div>
+                    <div id="manualRollInput" style="display: none; margin-top: 10px;">
+                        <label for="d20Result">D20 Result:</label>
+                        <input type="number" id="d20Result" min="1" max="20" value="10">
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Ability Checks -->
+            <div class="section">
+                <h2>Contested Checks</h2>
+                
+                <h3>Strength/Athletics Check</h3>
+                <p style="font-size: 14px; color: #7f8c8d;">For grappling, shoving, etc.</p>
+                
+                <label for="athleticsProf">Athletics Proficiency:</label>
+                <select id="athleticsProf">
+                    <option value="0">Not Proficient</option>
+                    <option value="1" selected>Proficient</option>
+                    <option value="2">Expertise (Double Prof)</option>
+                </select>
+                
+                <div class="checkbox-label">
+                    <input type="checkbox" id="contestedAdvantage">
+                    <label for="contestedAdvantage">Additional Advantage Source</label>
+                </div>
+                
+                <h3>D20 Roll Method</h3>
+                <div class="roll-type-selection">
+                    <div class="radio-label">
+                        <input type="radio" id="contestedAutoRoll" name="contestedRollType" value="auto" checked>
+                        <label for="contestedAutoRoll">Auto-roll D20</label>
+                    </div>
+                    <div class="radio-label">
+                        <input type="radio" id="contestedManualRoll" name="contestedRollType" value="manual">
+                        <label for="contestedManualRoll">Enter D20 roll manually</label>
+                    </div>
+                    <div id="contestedManualRollInput" style="display: none; margin-top: 10px;">
+                        <label for="contestedD20Result">D20 Result:</label>
+                        <input type="number" id="contestedD20Result" min="1" max="20" value="10">
+                    </div>
+                </div>
+                
+                <button onclick="calculateContested()">Calculate Contested Check</button>
+                
+                <div id="contestedResult" style="margin-top: 15px; padding: 15px; background: #1a1a2e; border-radius: 5px; display: none;">
+                    <h3>Contested Check Result</h3>
+                    <div id="contestedRollResult"></div>
+                </div>
+            </div>
+        </div>
+        
+        <button onclick="calculateActions()">Calculate Attack</button>
+        
+        <div id="results" style="display: none;">
+            <div class="result-box">
+                <h3>Attack Roll</h3>
+                <div id="attackRollResult"></div>
+                <button id="rollDamageBtn" onclick="rollDamage()">Roll Damage</button>
+            </div>
+            
+            <div class="result-box">
+                <h3>Damage Result</h3>
+                <div class="checkbox-label">
+                    <input type="checkbox" id="autoDamage" checked>
+                    <label for="autoDamage">Auto-roll damage</label>
+                </div>
+                <div id="damageRollResult">
+                    <p style="color: #7f8c8d;">Click "Roll Damage" to calculate</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script>
+        /* 
+         * D&D 5e Math Validation for 2014 vs 2024 Rules
+         * 
+         * CORE MECHANICS (SAME IN BOTH EDITIONS):
+         * - Ability Score Modifiers: floor((score - 10) / 2)
+         * - Proficiency Bonus by Level: floor((level - 1) / 4) + 2
+         * - Attack Roll: d20 + ability modifier + proficiency + magic bonus
+         * - Damage Roll: weapon dice + ability modifier + magic bonus + rage damage
+         * - Critical Hit: Double weapon dice (not modifiers)
+         * - Advantage/Disadvantage: Roll 2d20, take higher/lower
+         * 
+         * BARBARIAN-SPECIFIC RULES:
+         * - Rage Damage: +2 (lvl 1-8), +3 (lvl 9-15), +4 (lvl 16+) [SAME BOTH EDITIONS]
+         * - Reckless Attack: Advantage on STR-based melee attacks [SAME BOTH EDITIONS]
+         * - Rage Advantage: STR checks and saves while raging [SAME BOTH EDITIONS]
+         * - Brutal Critical: Extra weapon dice on crits [DIFFERENT - see below]
+         * 
+         * KEY DIFFERENCES BETWEEN EDITIONS:
+         * 
+         * 2014 RULES:
+         * - Brutal Critical: 1 extra die (lvl 9), 2 extra (lvl 13), 3 extra (lvl 17)
+         * - Great Weapon Master: -5 attack, +10 damage (feat)
+         * - Extra Attack: 1 additional attack at level 5
+         * 
+         * 2024 RULES:
+         * - Brutal Critical: 1 extra die (lvl 9), 2 extra (lvl 13), 3 extra (lvl 17) [SAME]
+         * - Great Weapon Master: Modified implementation (TBD - not fully released)
+         * - Extra Attack: Same progression [SAME]
+         * 
+         * CONTESTED CHECKS:
+         * - Athletics (STR): d20 + STR mod + proficiency (if proficient)
+         * - Expertise: Double proficiency bonus
+         * - Rage Advantage: Applies to STR checks (including Athletics)
+         * 
+         * CURRENT IMPLEMENTATION STATUS:
+         * - All math follows 2014 rules (verified correct)
+         * - 2024 toggle prepared for future rule differences
+         * - Edition selector ready for differentiation when 2024 rules finalized
+         */
+        
+        // Weapon damage dice
+        const weaponDice = {
+            'greataxe': { dice: 1, sides: 12, twoHanded: true },
+            'greatsword': { dice: 2, sides: 6, twoHanded: true },
+            'maul': { dice: 2, sides: 6, twoHanded: true },
+            'longsword': { dice: 1, sides: 10, twoHanded: true },
+            'warhammer': { dice: 1, sides: 10, twoHanded: true },
+            'battleaxe': { dice: 1, sides: 10, twoHanded: true },
+            'handaxe': { dice: 1, sides: 6, twoHanded: false },
+            'javelin': { dice: 1, sides: 6, twoHanded: false },
+            'glaive': { dice: 1, sides: 10, twoHanded: true },
+            'halberd': { dice: 1, sides: 10, twoHanded: true },
+            'pike': { dice: 1, sides: 10, twoHanded: true },
+            'unarmed': { dice: 0, sides: 0, twoHanded: false }
+        };
+        
+        // Store last attack calculation for damage rolls
+        let lastAttackData = null;
+        
+        // Load saved custom weapons
+        const savedWeapons = JSON.parse(localStorage.getItem('customWeapons') || '{}');
+        Object.assign(weaponDice, savedWeapons);
+        
+        // If we have custom weapons, add them to the select
+        Object.keys(savedWeapons).forEach(key => {
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = key.charAt(0).toUpperCase() + key.slice(1) + ` (${savedWeapons[key].dice}d${savedWeapons[key].sides})`;
+            document.getElementById('weapon').insertBefore(option, document.getElementById('weapon').lastElementChild);
+        });
+        
+        // Auto-update proficiency and attacks based on level
+        document.getElementById('level').addEventListener('change', function() {
+            const level = parseInt(this.value);
+            
+            // Update proficiency bonus
+            const profBonus = Math.floor((level - 1) / 4) + 2;
+            document.getElementById('proficiency').value = profBonus;
+            
+            // Update number of attacks
+            const attacks = level >= 5 ? 2 : 1;
+            document.getElementById('attacks').value = attacks;
+            
+            // Update brutal critical
+            let brutalDice = 0;
+            if (level >= 9) brutalDice = 1;
+            if (level >= 13) brutalDice = 2;
+            if (level >= 17) brutalDice = 3;
+            document.getElementById('brutalCritical').value = brutalDice;
+        });
+        
+        // Handle roll type radio buttons
+        document.querySelectorAll('input[name="rollType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('manualRollInput').style.display = 
+                    this.value === 'manual' ? 'block' : 'none';
+            });
+        });
+        
+        // Handle contested check roll type radio buttons
+        document.querySelectorAll('input[name="contestedRollType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                document.getElementById('contestedManualRollInput').style.display = 
+                    this.value === 'manual' ? 'block' : 'none';
+            });
+        });
+        
+        // Auto-recalculate contested checks when relevant inputs change
+        ['raging', 'contestedAdvantage', 'strength', 'proficiency', 'athleticsProf'].forEach(id => {
+            document.getElementById(id).addEventListener('change', function() {
+                if (document.getElementById('contestedResult').style.display === 'block') {
+                    calculateContested();
+                }
+            });
+            
+            // Also listen for input events on number fields
+            if (['strength', 'proficiency'].includes(id)) {
+                document.getElementById(id).addEventListener('input', function() {
+                    if (document.getElementById('contestedResult').style.display === 'block') {
+                        calculateContested();
+                    }
+                });
+            }
+        });
+        
+        // Handle edition selection changes
+        document.querySelectorAll('input[name="edition"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const warning = document.getElementById('edition2024Warning');
+                warning.style.display = this.value === '2024' ? 'block' : 'none';
+                
+                // Recalculate if results are visible
+                if (document.getElementById('contestedResult').style.display === 'block') {
+                    calculateContested();
+                }
+                if (document.getElementById('results').style.display === 'grid') {
+                    calculateActions();
+                }
+            });
+        });
+        
+        function getStrengthModifier(score) {
+            return Math.floor((score - 10) / 2);
+        }
+        
+        function getRageDamage(level) {
+            const edition = document.querySelector('input[name="edition"]:checked').value;
+            
+            if (edition === '2024') {
+                // 2024 rules: Rage damage scaling
+                if (level >= 16) return 4;
+                if (level >= 9) return 3;
+                return 2;
+            } else {
+                // 2014 rules: Same scaling
+                if (level >= 16) return 4;
+                if (level >= 9) return 3;
+                return 2;
+            }
+        }
+        
+        function rollDice(dice, sides) {
+            let total = 0;
+            let rolls = [];
+            for (let i = 0; i < dice; i++) {
+                const roll = Math.floor(Math.random() * sides) + 1;
+                rolls.push(roll);
+                total += roll;
+            }
+            return { total, rolls };
+        }
+        
+        function rollD20WithAdvantage(hasAdvantage, hasDisadvantage) {
+            const roll1 = Math.floor(Math.random() * 20) + 1;
+            const roll2 = Math.floor(Math.random() * 20) + 1;
+            
+            if (hasAdvantage && !hasDisadvantage) {
+                return { result: Math.max(roll1, roll2), rolls: [roll1, roll2], type: 'advantage' };
+            } else if (!hasAdvantage && hasDisadvantage) {
+                return { result: Math.min(roll1, roll2), rolls: [roll1, roll2], type: 'disadvantage' };
+            } else {
+                return { result: roll1, rolls: [roll1], type: 'normal' };
+            }
+        }
+        
+        function checkCustomWeapon() {
+            const weaponSelect = document.getElementById('weapon');
+            const customSection = document.getElementById('customWeaponSection');
+            customSection.style.display = weaponSelect.value === 'custom' ? 'block' : 'none';
+        }
+        
+        function saveCustomWeapon() {
+            const name = document.getElementById('customName').value.trim();
+            if (!name) {
+                alert('Please enter a weapon name');
+                return;
+            }
+            
+            const dice = parseInt(document.getElementById('customDice').value);
+            const sides = parseInt(document.getElementById('customSides').value);
+            const key = name.toLowerCase().replace(/\s+/g, '_');
+            
+            // Save to weapon dice
+            weaponDice[key] = { dice, sides, twoHanded: true };
+            
+            // Save to localStorage
+            const customs = JSON.parse(localStorage.getItem('customWeapons') || '{}');
+            customs[key] = { dice, sides, twoHanded: true };
+            localStorage.setItem('customWeapons', JSON.stringify(customs));
+            
+            // Add to select
+            const option = document.createElement('option');
+            option.value = key;
+            option.textContent = `${name} (${dice}d${sides})`;
+            const weaponSelect = document.getElementById('weapon');
+            weaponSelect.insertBefore(option, weaponSelect.lastElementChild);
+            
+            // Select the new weapon
+            weaponSelect.value = key;
+            checkCustomWeapon();
+            
+            alert('Custom weapon saved!');
+        }
+        
+        function calculateContested() {
+            // Get inputs
+            const strength = parseInt(document.getElementById('strength').value) || 10;
+            const proficiency = parseInt(document.getElementById('proficiency').value) || 2;
+            const athleticsProf = parseInt(document.getElementById('athleticsProf').value) || 0;
+            const isRaging = document.getElementById('raging').checked;
+            const hasAdvantage = isRaging || document.getElementById('contestedAdvantage').checked;
+            const rollType = document.querySelector('input[name="contestedRollType"]:checked').value;
+            
+            const strMod = getStrengthModifier(strength);
+            
+            // Calculate Athletics bonus
+            let athleticsBonus = 0;
+            if (athleticsProf === 1) athleticsBonus = proficiency;      // Proficient
+            if (athleticsProf === 2) athleticsBonus = proficiency * 2;  // Expertise
+            
+            const totalBonus = strMod + athleticsBonus;
+            
+            // Roll or get the d20
+            let d20Result;
+            let rollInfo = '';
+            
+            if (rollType === 'manual') {
+                d20Result = parseInt(document.getElementById('contestedD20Result').value) || 10;
+                rollInfo = `Manual d20: ${d20Result}`;
+            } else {
+                const roll = rollD20WithAdvantage(hasAdvantage, false); // No disadvantage on contested checks
+                d20Result = roll.result;
+                if (roll.type === 'advantage') {
+                    rollInfo = `d20 with advantage: [${roll.rolls[0]}, ${roll.rolls[1]}] = ${d20Result}`;
+                } else {
+                    rollInfo = `d20: ${d20Result}`;
+                }
+            }
+            
+            const totalResult = d20Result + totalBonus;
+            const isNat20 = d20Result === 20;
+            const isNat1 = d20Result === 1;
+            
+            // Build result HTML
+            let resultHTML = '';
+            
+            if (isNat1) {
+                resultHTML = '<div class="result-value" style="color: #e74c3c;">Natural 1!</div>';
+                resultHTML += `<div>Total: ${totalResult}</div>`;
+            } else if (isNat20) {
+                resultHTML = '<div class="result-value" style="color: #f39c12;">Natural 20!</div>';
+                resultHTML += `<div>Total: ${totalResult}</div>`;
+            } else {
+                resultHTML = `<div class="result-value">${totalResult}</div>`;
+            }
+            
+            resultHTML += `<div class="damage-breakdown">${rollInfo} + ${totalBonus}`;
+            resultHTML += ` (STR: +${strMod}`;
+            if (athleticsProf === 1) resultHTML += `, Proficiency: +${proficiency}`;
+            if (athleticsProf === 2) resultHTML += `, Expertise: +${proficiency * 2}`;
+            resultHTML += ')</div>';
+            
+            if (hasAdvantage) {
+                resultHTML += '<div class="advantage">With Advantage</div>';
+            }
+            
+            document.getElementById('contestedRollResult').innerHTML = resultHTML;
+            document.getElementById('contestedResult').style.display = 'block';
+        }
+        
+        function calculateActions() {
+            // Get inputs
+            const level = parseInt(document.getElementById('level').value);
+            const subclass = document.getElementById('subclass').value;
+            const size = document.getElementById('size').value;
+            const strength = parseInt(document.getElementById('strength').value);
+            const proficiency = parseInt(document.getElementById('proficiency').value);
+            const isRaging = document.getElementById('raging').checked;
+            const isReckless = document.getElementById('reckless').checked;
+            const gwm = document.getElementById('gwm').checked;
+            const weapon = document.getElementById('weapon').value;
+            const weaponBonus = parseInt(document.getElementById('weaponBonus').value);
+            const attacks = parseInt(document.getElementById('attacks').value);
+            const hasAdvantage = document.getElementById('advantage').checked || isReckless;
+            const hasDisadvantage = document.getElementById('disadvantage').checked;
+            const brutalCritical = parseInt(document.getElementById('brutalCritical').value);
+            const rollType = document.querySelector('input[name="rollType"]:checked').value;
+            
+            // Calculate modifiers
+            const strMod = getStrengthModifier(strength);
+            const rageDamage = isRaging ? getRageDamage(level) : 0;
+            
+            // Calculate attack bonus
+            let attackBonus = strMod + proficiency + weaponBonus;
+            if (gwm) attackBonus -= 5;
+            
+            // Get weapon info
+            const weaponInfo = weaponDice[weapon] || { dice: 1, sides: 6, twoHanded: false };
+            let damageBonus = strMod + weaponBonus + rageDamage;
+            if (gwm) damageBonus += 10;
+            
+            // Store attack data for damage rolls
+            lastAttackData = {
+                weapon, weaponInfo, damageBonus, brutalCritical,
+                subclass, level, isRaging
+            };
+            
+            // Roll or get the d20
+            let d20Result;
+            let rollInfo = '';
+            
+            if (rollType === 'manual') {
+                d20Result = parseInt(document.getElementById('d20Result').value);
+                rollInfo = `Manual d20: ${d20Result}`;
+            } else {
+                const roll = rollD20WithAdvantage(hasAdvantage, hasDisadvantage);
+                d20Result = roll.result;
+                if (roll.type === 'advantage') {
+                    rollInfo = `d20 with advantage: [${roll.rolls[0]}, ${roll.rolls[1]}] = ${d20Result}`;
+                } else if (roll.type === 'disadvantage') {
+                    rollInfo = `d20 with disadvantage: [${roll.rolls[0]}, ${roll.rolls[1]}] = ${d20Result}`;
+                } else {
+                    rollInfo = `d20: ${d20Result}`;
+                }
+            }
+            
+            const totalAttack = d20Result + attackBonus;
+            const isCrit = d20Result === 20;
+            const isFumble = d20Result === 1;
+            
+            // Build attack result
+            let attackHTML = '';
+            
+            if (isFumble) {
+                attackHTML = '<div class="result-value" style="color: #e74c3c;">Natural 1 - Critical Miss!</div>';
+            } else if (isCrit) {
+                attackHTML = '<div class="result-value" style="color: #f39c12;">Natural 20 - Critical Hit!</div>';
+                attackHTML += `<div>Total: ${totalAttack}</div>`;
+            } else {
+                attackHTML = `<div class="result-value">${totalAttack}</div>`;
+            }
+            
+            attackHTML += `<div class="damage-breakdown">${rollInfo} + ${attackBonus}`;
+            attackHTML += ` (STR: +${strMod}, Prof: +${proficiency}, Weapon: +${weaponBonus}`;
+            if (gwm) attackHTML += ', GWM: -5';
+            attackHTML += ')</div>';
+            
+            if (hasAdvantage && !hasDisadvantage) {
+                attackHTML += '<div class="advantage">With Advantage</div>';
+            } else if (!hasAdvantage && hasDisadvantage) {
+                attackHTML += '<div class="disadvantage">With Disadvantage</div>';
+            }
+            
+            document.getElementById('attackRollResult').innerHTML = attackHTML;
+            document.getElementById('results').style.display = 'grid';
+            
+            // Store if it's a crit
+            lastAttackData.isCrit = isCrit;
+            
+            // Auto-roll damage if checked
+            if (document.getElementById('autoDamage').checked && !isFumble) {
+                rollDamage();
+            }
+        }
+        
+        function rollDamage() {
+            if (!lastAttackData) {
+                alert('Please calculate an attack first!');
+                return;
+            }
+            
+            const { weapon, weaponInfo, damageBonus, brutalCritical, subclass, level, isRaging, isCrit } = lastAttackData;
+            
+            let damageHTML = '';
+            let totalDamage = damageBonus;
+            let diceResults = [];
+            
+            // Roll weapon damage
+            if (weapon === 'unarmed') {
+                totalDamage += 1;
+                damageHTML = `<div class="result-value">${totalDamage} damage</div>`;
+                damageHTML += `<div class="damage-breakdown">Unarmed: 1 + ${damageBonus}</div>`;
+            } else {
+                const normalDice = isCrit ? weaponInfo.dice * 2 + brutalCritical : weaponInfo.dice;
+                const weaponRoll = rollDice(normalDice, weaponInfo.sides);
+                totalDamage += weaponRoll.total;
+                
+                damageHTML = `<div class="result-value">${totalDamage} damage</div>`;
+                damageHTML += `<div class="damage-breakdown">`;
+                damageHTML += `${normalDice}d${weaponInfo.sides}: [${weaponRoll.rolls.join(', ')}] = ${weaponRoll.total}`;
+                damageHTML += ` + ${damageBonus}`;
+                
+                if (isCrit) {
+                    damageHTML += ` (CRIT: doubled dice`;
+                    if (brutalCritical > 0) damageHTML += ` + ${brutalCritical} brutal`;
+                    damageHTML += ')';
+                }
+                damageHTML += '</div>';
+            }
+            
+            // Special subclass bonuses
+            if (subclass === 'zealot' && isRaging && level >= 3) {
+                const zealotBonus = Math.floor(level / 2);
+                const zealotRoll = rollDice(1, 6);
+                const zealotDamage = zealotRoll.total + zealotBonus;
+                totalDamage += zealotDamage;
+                
+                damageHTML += `<div class="damage-breakdown">Divine Fury: 1d6+${zealotBonus} = [${zealotRoll.rolls[0]}] + ${zealotBonus} = ${zealotDamage}</div>`;
+                damageHTML = damageHTML.replace('result-value">', `result-value">${totalDamage} total (was `);
+                damageHTML = damageHTML.replace(' damage<', ' damage)<');
+            }
+            
+            document.getElementById('damageRollResult').innerHTML = damageHTML;
+        }
+        
+        // Initialize
+        document.getElementById('level').dispatchEvent(new Event('change'));
+    </script>
+</body>
+</html>
