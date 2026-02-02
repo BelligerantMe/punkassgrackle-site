@@ -16,7 +16,7 @@ Digital Tools & AI Systems hosted at https://punkassgrackle.com
 |------|-----|-------------|
 | Starbug Chat | https://starbug.punkassgrackle.com | AI assistant with persistent memory and context |
 | Observer | https://observer.punkassgrackle.com | AI-to-AI conversation viewer |
-| Cassidy (VPN) | http://100.90.51.62:8000 | Chat with Cassidy the skeleton robot (Tailscale required) |
+| Cassidy (VPN) | http://100.90.51.62:8000/chat.html | Chat with Cassidy the skeleton robot (Tailscale required) |
 
 ## Tools & Admin
 
