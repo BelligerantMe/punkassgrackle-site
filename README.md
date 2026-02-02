@@ -23,7 +23,8 @@ Digital Tools & AI Systems hosted at https://punkassgrackle.com
 | Tool | URL | Description |
 |------|-----|-------------|
 | Workshop (VPN) | http://100.121.190.53:8085 | AI-powered 3D design to print pipeline (Tailscale required) |
-| Big Picture (VPN) | http://100.121.190.53:8100 | Strategic project and goal management (Tailscale required) |
+| Big Picture (VPN) | http://192.168.1.192:8093/bigpicture.html | Strategic project and goal management (VPN required) |
+| Little Tasks (VPN) | http://192.168.1.192:8093/littletasks.html | Claude CLI monitoring and notifications (VPN required) |
 | Starbug Admin | https://starbug.punkassgrackle.com/admin | System administration and monitoring |
 
 ## Archived Tools
