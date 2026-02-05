@@ -1,9 +1,40 @@
 {
   "collections": [
-    { "id": "burning-man", "name": "Burning Man / Flipside" },
-    { "id": "the-guild", "name": "The Guild Nights" },
-    { "id": "bird-on-the-wire", "name": "Bird on the Wire Radio" },
-    { "id": "weirdly-specific", "name": "Weirdly Specific" }
+    {
+      "id": "bird-on-the-wire",
+      "name": "Bird on the Wire Radio",
+      "icon": "📻",
+      "accentColor": "--iridescent-teal",
+      "description": "Monthly radio show appearances"
+    },
+    {
+      "id": "the-guild",
+      "name": "The Guild Nights",
+      "icon": "🍸",
+      "accentColor": "--iridescent-purple",
+      "description": "Live sets from The Guild"
+    },
+    {
+      "id": "burning-man",
+      "name": "Burning Man / Flipside",
+      "icon": "🔥",
+      "accentColor": "--iridescent-bronze",
+      "description": "Festival and burn mixes"
+    },
+    {
+      "id": "weirdly-specific",
+      "name": "Weirdly Specific",
+      "icon": "🧩",
+      "accentColor": "--iridescent-blue",
+      "description": "Theme mixes with unusual concepts"
+    },
+    {
+      "id": "productions",
+      "name": "Original Productions",
+      "icon": "🎵",
+      "accentColor": "--accent-pink",
+      "description": "Original music productions"
+    }
   ],
   "mixes": [
     {

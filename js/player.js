@@ -3,12 +3,16 @@ const PlayerState = {
   mixes: [],
   collections: [],
   currentMix: null,
-  isPlaying: false
+  isPlaying: false,
+  bannerMode: true
 };
 
 // DOM Elements
 const playerContainer = document.getElementById('player-container');
 const mixList = document.getElementById('mix-list');
+const heroBanner = document.getElementById('hero-banner');
+const activePlayer = document.getElementById('active-player');
+const playerClose = document.getElementById('player-close');
 
 // Initialize player on load
 document.addEventListener('DOMContentLoaded', initPlayer);
@@ -19,12 +23,127 @@ async function initPlayer() {
     const data = await response.json();
     PlayerState.mixes = data.mixes;
     PlayerState.collections = data.collections;
+    renderCollections();
     renderMixList(PlayerState.mixes);
     renderPlayerUI();
+    setupBannerEventListeners();
   } catch (error) {
     console.error('Failed to load mixes:', error);
     playerContainer.innerHTML = '<div class="player-error">Failed to load mixes</div>';
   }
+}
+
+function setupBannerEventListeners() {
+  if (heroBanner) {
+    heroBanner.addEventListener('click', playRandomMix);
+    heroBanner.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        playRandomMix();
+      }
+    });
+  }
+  if (playerClose) {
+    playerClose.addEventListener('click', showBanner);
+  }
+}
+
+function playRandomMix() {
+  if (!PlayerState.mixes || PlayerState.mixes.length === 0) return;
+  let availableMixes = PlayerState.mixes;
+  if (PlayerState.currentMix) {
+    availableMixes = PlayerState.mixes.filter(m => m.id !== PlayerState.currentMix.id);
+  }
+  const randomIndex = Math.floor(Math.random() * availableMixes.length);
+  loadMix(availableMixes[randomIndex].id);
+  showActivePlayer();
+}
+
+function showActivePlayer() {
+  if (heroBanner) heroBanner.classList.add('hidden');
+  if (activePlayer) activePlayer.classList.remove('hidden');
+  PlayerState.bannerMode = false;
+}
+
+function showBanner() {
+  if (activePlayer) activePlayer.classList.add('hidden');
+  if (heroBanner) heroBanner.classList.remove('hidden');
+  PlayerState.bannerMode = true;
+}
+
+function renderCollections() {
+  const mixListEl = document.getElementById('mix-list');
+  if (!mixListEl) return;
+
+  // Create collection layout container
+  const layout = document.createElement('div');
+  layout.className = 'collection-layout';
+
+  // Define asymmetrical arrangement
+  const arrangement = [
+    { column: 'left', collections: ['bird-on-the-wire', 'weirdly-specific'], sizes: ['large', 'small'], rotations: ['neg', 'pos'] },
+    { column: 'center', collections: ['the-guild'], sizes: ['medium'], rotations: ['featured'] },
+    { column: 'right', collections: ['burning-man', 'productions'], sizes: ['medium', 'small'], rotations: ['pos', 'neg'] }
+  ];
+
+  arrangement.forEach(col => {
+    const column = document.createElement('div');
+    column.className = `collection-column ${col.column}`;
+
+    col.collections.forEach((collId, idx) => {
+      const coll = PlayerState.collections.find(c => c.id === collId);
+      if (!coll) return;
+
+      // Count mixes for this collection
+      let mixCount;
+      if (collId === 'productions') {
+        mixCount = PlayerState.mixes.filter(m => !m.collections || m.collections.length === 0).length;
+      } else {
+        mixCount = PlayerState.mixes.filter(m => m.collections && m.collections.includes(collId)).length;
+      }
+
+      const card = document.createElement('div');
+      const rotation = col.rotations[idx];
+      const rotationClass = rotation === 'featured' ? 'featured' : `rotate-${rotation}`;
+      card.className = `collection-card iridescent-border size-${col.sizes[idx]} ${rotationClass}`;
+      card.dataset.collection = collId;
+      card.style.setProperty('--card-accent', `var(${coll.accentColor})`);
+
+      card.innerHTML = `
+        <span class="collection-icon">${coll.icon}</span>
+        <span class="collection-name">${coll.name}</span>
+        <span class="collection-count">${mixCount} mix${mixCount !== 1 ? 'es' : ''}</span>
+      `;
+
+      card.addEventListener('click', () => filterByCollection(collId));
+      column.appendChild(card);
+    });
+
+    layout.appendChild(column);
+  });
+
+  // Insert layout before mix-list
+  mixListEl.parentNode.insertBefore(layout, mixListEl);
+}
+
+function filterByCollection(collectionId) {
+  // Update filter state
+  if (window.FilterState) {
+    window.FilterState.collection = collectionId;
+  }
+
+  // Update active states on cards
+  document.querySelectorAll('.collection-card').forEach(card => {
+    card.classList.toggle('active', card.dataset.collection === collectionId);
+  });
+
+  // Apply filters if available
+  if (window.applyFilters) {
+    window.applyFilters();
+  }
+
+  // Scroll to mix list
+  document.getElementById('mix-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
 function renderPlayerUI() {
@@ -122,6 +241,9 @@ function loadMix(mixId) {
     <a href="${mix.externalUrl}" target="_blank" rel="noopener">Open on ${mix.platform}</a>
   `;
 
+  // Show active player when a mix is loaded
+  showActivePlayer();
+
   // Notify mini-player
   window.dispatchEvent(new CustomEvent('mixLoaded', { detail: mix }));
 }
@@ -134,6 +256,9 @@ function formatDate(dateStr) {
   return `${monthNames[parseInt(month) - 1]} ${year}`;
 }
 
-// Export for filters.js
+// Export for filters.js and external use
 window.PlayerState = PlayerState;
 window.renderMixList = renderMixList;
+window.playRandomMix = playRandomMix;
+window.showActivePlayer = showActivePlayer;
+window.showBanner = showBanner;

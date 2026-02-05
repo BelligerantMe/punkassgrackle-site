@@ -46,4 +46,16 @@
   "/>
   <!-- Punk eye slit -->
   <path fill="#0a0a0f" d="M 40 33 L 52 32 Q 54 32.5, 52 33 L 40 34 Q 38 33.5, 40 33 Z"/>
+  <!-- Grackle feature overlays -->
+  <g class="grackle-overlays" fill="none" stroke="white" stroke-opacity="0.2">
+    <!-- Beak ridge line -->
+    <path d="M 5 42 Q 15 38, 25 36" stroke-width="1.5" stroke-opacity="0.4"/>
+    <!-- Eye - circular with light ring -->
+    <circle cx="46" cy="30" r="4" stroke-width="1" stroke-opacity="0.8" fill="none"/>
+    <circle cx="46" cy="30" r="2" fill="white" fill-opacity="0.6" stroke="none"/>
+    <!-- Feather texture - neck/breast curves -->
+    <path d="M 65 35 Q 68 45, 65 55" stroke-width="0.8" stroke-opacity="0.3"/>
+    <path d="M 60 40 Q 62 50, 58 60" stroke-width="0.8" stroke-opacity="0.25"/>
+    <path d="M 55 45 Q 56 55, 52 65" stroke-width="0.8" stroke-opacity="0.2"/>
+  </g>
 </svg>
