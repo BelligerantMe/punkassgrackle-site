@@ -1,5 +1,3 @@
 name = "punkassgrackle-v4"
 compatibility_date = "2026-01-20"
-
-[assets]
-directory = "./_deploy"
+pages_build_output_dir = "./_deploy"
