@@ -4,7 +4,8 @@ const PlayerState = {
   collections: [],
   currentMix: null,
   isPlaying: false,
-  bannerMode: true
+  bannerMode: true,
+  expandedCollection: null
 };
 
 // DOM Elements
@@ -22,12 +23,12 @@ async function initPlayer() {
     const data = await response.json();
     PlayerState.mixes = data.mixes;
     PlayerState.collections = data.collections;
-    renderCollections();
-    renderMixList(PlayerState.mixes);
+    renderCompactCollections();
     setupBannerEventListeners();
   } catch (error) {
     console.error('Failed to load mixes:', error);
-    if (mixList) mixList.innerHTML = '<div class="player-error">Failed to load mixes</div>';
+    const collectionCards = document.getElementById('collection-cards');
+    if (collectionCards) collectionCards.innerHTML = '<div class="player-error">Failed to load mixes</div>';
   }
 }
 
@@ -69,79 +70,90 @@ function showBanner() {
   PlayerState.bannerMode = true;
 }
 
-function renderCollections() {
-  const mixListEl = document.getElementById('mix-list');
-  if (!mixListEl) return;
+function renderCompactCollections() {
+  const container = document.getElementById('collection-cards');
+  if (!container) return;
 
-  // Create collection layout container
-  const layout = document.createElement('div');
-  layout.className = 'collection-layout';
+  container.innerHTML = PlayerState.collections.map(coll => {
+    // Count mixes for this collection
+    let mixCount;
+    if (coll.id === 'productions') {
+      mixCount = PlayerState.mixes.filter(m => !m.collections || m.collections.length === 0).length;
+    } else {
+      mixCount = PlayerState.mixes.filter(m => m.collections && m.collections.includes(coll.id)).length;
+    }
 
-  // Define asymmetrical arrangement
-  const arrangement = [
-    { column: 'left', collections: ['bird-on-the-wire', 'weirdly-specific'], sizes: ['large', 'small'], rotations: ['neg', 'pos'] },
-    { column: 'center', collections: ['the-guild'], sizes: ['medium'], rotations: ['featured'] },
-    { column: 'right', collections: ['burning-man', 'productions'], sizes: ['medium', 'small'], rotations: ['pos', 'neg'] }
-  ];
-
-  arrangement.forEach(col => {
-    const column = document.createElement('div');
-    column.className = `collection-column ${col.column}`;
-
-    col.collections.forEach((collId, idx) => {
-      const coll = PlayerState.collections.find(c => c.id === collId);
-      if (!coll) return;
-
-      // Count mixes for this collection
-      let mixCount;
-      if (collId === 'productions') {
-        mixCount = PlayerState.mixes.filter(m => !m.collections || m.collections.length === 0).length;
-      } else {
-        mixCount = PlayerState.mixes.filter(m => m.collections && m.collections.includes(collId)).length;
-      }
-
-      const card = document.createElement('div');
-      const rotation = col.rotations[idx];
-      const rotationClass = rotation === 'featured' ? 'featured' : `rotate-${rotation}`;
-      card.className = `collection-card iridescent-border size-${col.sizes[idx]} ${rotationClass}`;
-      card.dataset.collection = collId;
-      card.style.setProperty('--card-accent', `var(${coll.accentColor})`);
-
-      card.innerHTML = `
+    return `
+      <div class="collection-card-mini iridescent-border"
+           data-collection="${coll.id}"
+           style="--card-accent: var(${coll.accentColor})"
+           onclick="expandCategory('${coll.id}')">
         <span class="collection-icon">${coll.icon}</span>
         <span class="collection-name">${coll.name}</span>
-        <span class="collection-count">${mixCount} mix${mixCount !== 1 ? 'es' : ''}</span>
-      `;
-
-      card.addEventListener('click', () => filterByCollection(collId));
-      column.appendChild(card);
-    });
-
-    layout.appendChild(column);
-  });
-
-  // Insert layout before mix-list
-  mixListEl.parentNode.insertBefore(layout, mixListEl);
+        <span class="collection-count">${mixCount}</span>
+      </div>
+    `;
+  }).join('');
 }
 
-function filterByCollection(collectionId) {
+function filterMixesByCollection(collectionId) {
+  if (collectionId === 'productions') {
+    return PlayerState.mixes.filter(m => !m.collections || m.collections.length === 0);
+  }
+  return PlayerState.mixes.filter(m => m.collections && m.collections.includes(collectionId));
+}
+
+function expandCategory(collectionId) {
+  const expandedSection = document.getElementById('expanded-mixes');
+
+  // If clicking same collection, collapse it
+  if (PlayerState.expandedCollection === collectionId) {
+    collapseCategory();
+    return;
+  }
+
+  // Filter mixes for this collection
+  const mixes = filterMixesByCollection(collectionId);
+
+  // Update active state on cards
+  document.querySelectorAll('.collection-card-mini').forEach(card => {
+    card.classList.toggle('active', card.dataset.collection === collectionId);
+  });
+
+  // Store current collection for era filtering
+  PlayerState.expandedCollection = collectionId;
+
   // Update filter state
   if (window.FilterState) {
     window.FilterState.collection = collectionId;
   }
 
-  // Update active states on cards
-  document.querySelectorAll('.collection-card').forEach(card => {
-    card.classList.toggle('active', card.dataset.collection === collectionId);
-  });
+  // Render mixes
+  renderMixList(mixes);
 
-  // Apply filters if available
-  if (window.applyFilters) {
-    window.applyFilters();
+  // Show expanded section
+  if (expandedSection) {
+    expandedSection.classList.remove('hidden');
   }
 
-  // Scroll to mix list
-  document.getElementById('mix-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  // Scroll to expanded mixes
+  if (expandedSection) {
+    expandedSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+}
+
+function collapseCategory() {
+  const expandedSection = document.getElementById('expanded-mixes');
+  if (expandedSection) {
+    expandedSection.classList.add('hidden');
+  }
+  document.querySelectorAll('.collection-card-mini').forEach(card => {
+    card.classList.remove('active');
+  });
+  PlayerState.expandedCollection = null;
+  if (window.FilterState) {
+    window.FilterState.collection = 'all';
+  }
 }
 
 // Player UI is now defined in HTML (active-player element)
@@ -250,3 +262,6 @@ window.renderMixList = renderMixList;
 window.playRandomMix = playRandomMix;
 window.showActivePlayer = showActivePlayer;
 window.showBanner = showBanner;
+window.expandCategory = expandCategory;
+window.collapseCategory = collapseCategory;
+window.filterMixesByCollection = filterMixesByCollection;

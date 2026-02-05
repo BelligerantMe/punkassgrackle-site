@@ -221,11 +221,11 @@
 /* Hero Banner */
 .hero-banner {
   position: relative;
-  padding: var(--space-xl) var(--space-lg);
-  margin-bottom: var(--space-lg);
+  padding: var(--space-lg) var(--space-md);
+  margin-bottom: var(--space-md);
   cursor: pointer;
   overflow: hidden;
-  clip-path: polygon(0 0, 100% 5%, 100% 95%, 0 100%);
+  clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%);
   transform: skewY(-1deg);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
 }
@@ -248,14 +248,14 @@
 }
 
 .banner-text {
-  font-size: clamp(1rem, 4vw, 2rem);
+  font-size: clamp(0.9rem, 3vw, 1.5rem);
   color: var(--accent-pink);
   text-shadow: 0 0 10px rgba(255, 0, 110, 0.8), 0 0 20px rgba(255, 0, 110, 0.4);
   letter-spacing: 4px;
 }
 
 .shuffle-icon {
-  font-size: clamp(1.5rem, 5vw, 3rem);
+  font-size: clamp(1.2rem, 4vw, 2rem);
   color: var(--accent-cyan);
   animation: pulse-glow 2s ease-in-out infinite;
   filter: drop-shadow(0 0 10px rgba(0, 245, 212, 0.6));
@@ -463,4 +463,60 @@
   .collection-icon { font-size: 2rem; }
   .collection-name { font-size: 0.75rem; }
   .collection-description { display: none; }
+}
+
+/* Compact Collection Cards (Dashboard Layout) */
+.collection-cards-compact {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--space-sm);
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.collection-card-mini {
+  width: 100px;
+  padding: var(--space-sm);
+  text-align: center;
+  cursor: pointer;
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  transition: all var(--transition-fast);
+  border: 1px solid transparent;
+}
+
+.collection-card-mini:hover {
+  border-color: var(--card-accent, var(--iridescent-purple));
+  transform: scale(1.05);
+}
+
+.collection-card-mini.active {
+  border-color: var(--card-accent);
+  box-shadow: 0 0 15px var(--card-accent);
+}
+
+.collection-card-mini .collection-icon {
+  font-size: 1.8rem;
+  display: block;
+  margin-bottom: var(--space-xs);
+}
+
+.collection-card-mini .collection-name {
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  display: block;
+}
+
+.collection-card-mini .collection-count {
+  font-size: 0.5rem;
+  color: var(--card-accent, var(--accent-cyan));
+}
+
+/* Expanded Mixes Section */
+.expanded-mixes {
+  animation: slideDown 0.3s ease;
+}
+
+.expanded-mixes.hidden {
+  display: none;
 }

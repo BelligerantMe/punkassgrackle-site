@@ -40,18 +40,17 @@ function applyFilters() {
     return;
   }
 
-  let filteredMixes = [...window.PlayerState.mixes];
-
-  // Apply era filter
-  if (FilterState.era !== 'all') {
-    filteredMixes = filteredMixes.filter(mix => mix.era === FilterState.era);
+  // Only filter if a collection is expanded
+  if (!window.PlayerState.expandedCollection) {
+    return;
   }
 
-  // Apply collection filter
-  if (FilterState.collection !== 'all') {
-    filteredMixes = filteredMixes.filter(mix =>
-      mix.collections && mix.collections.includes(FilterState.collection)
-    );
+  // Start with mixes from the expanded collection
+  let filteredMixes = window.filterMixesByCollection(window.PlayerState.expandedCollection);
+
+  // Apply era filter within the collection
+  if (FilterState.era !== 'all') {
+    filteredMixes = filteredMixes.filter(mix => mix.era === FilterState.era);
   }
 
   // Re-render the mix list
