@@ -465,51 +465,100 @@
   .collection-description { display: none; }
 }
 
-/* Compact Collection Cards (Dashboard Layout) */
+/* Hexagon Collection Cards (Dashboard Layout) */
 .collection-cards-compact {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-sm);
+  gap: var(--space-md);
   justify-content: flex-start;
-  align-items: flex-start;
+  padding: var(--space-md) 0;
 }
 
 .collection-card-mini {
-  width: 100px;
+  width: 110px;
+  height: 95px;
   padding: var(--space-sm);
   text-align: center;
   cursor: pointer;
   background: var(--bg-card);
-  border-radius: var(--radius-md);
   transition: all var(--transition-fast);
-  border: 1px solid transparent;
+  border: none;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Hexagon shape */
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+}
+
+.collection-card-mini::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: var(--card-accent, var(--iridescent-purple));
+  opacity: 0;
+  clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
+  transition: opacity var(--transition-fast);
+  z-index: -1;
+}
+
+.collection-card-mini:hover::before {
+  opacity: 0.3;
 }
 
 .collection-card-mini:hover {
-  border-color: var(--card-accent, var(--iridescent-purple));
-  transform: scale(1.05);
+  transform: scale(1.1);
+  filter: drop-shadow(0 0 10px var(--card-accent, var(--iridescent-purple)));
 }
 
 .collection-card-mini.active {
-  border-color: var(--card-accent);
-  box-shadow: 0 0 15px var(--card-accent);
+  filter: drop-shadow(0 0 15px var(--card-accent));
+}
+
+.collection-card-mini.active::before {
+  opacity: 0.4;
+}
+
+/* Remove border styling since hexagons use clip-path */
+.collection-card-mini.iridescent-border {
+  border: none;
 }
 
 .collection-card-mini .collection-icon {
-  font-size: 1.8rem;
+  font-size: 1.6rem;
   display: block;
-  margin-bottom: var(--space-xs);
+  margin-bottom: 2px;
 }
 
 .collection-card-mini .collection-name {
-  font-size: 0.6rem;
+  font-size: 0.5rem;
   color: var(--text-muted);
   display: block;
+  max-width: 70px;
+  line-height: 1.2;
 }
 
 .collection-card-mini .collection-count {
-  font-size: 0.5rem;
+  font-size: 0.45rem;
   color: var(--card-accent, var(--accent-cyan));
+  margin-top: 2px;
+}
+
+/* Mobile responsive hexagons */
+@media (max-width: 480px) {
+  .collection-card-mini {
+    width: 90px;
+    height: 78px;
+  }
+
+  .collection-card-mini .collection-icon {
+    font-size: 1.4rem;
+  }
+
+  .collection-card-mini .collection-name {
+    font-size: 0.45rem;
+  }
 }
 
 /* Expanded Mixes Section */
