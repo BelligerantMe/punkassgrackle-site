@@ -15,140 +15,105 @@
   <!-- Background Grid -->
   <div class="bg-grid"></div>
 
-  <main class="container">
-    <!-- Hero: Audio Player Section -->
-    <section id="hero-player" class="hero-player">
-      <div class="site-header">
-        <svg class="header-grackle" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
-          <defs>
-            <linearGradient id="hdr-iridescent" x1="0%" y1="0%" x2="100%" y2="100%">
-              <stop offset="0%" style="stop-color:#6b3fa0"/>
-              <stop offset="35%" style="stop-color:#1a936f"/>
-              <stop offset="65%" style="stop-color:#a67c52"/>
-              <stop offset="100%" style="stop-color:#2d5a7b"/>
-            </linearGradient>
-          </defs>
-          <path fill="url(#hdr-iridescent)" d="M 5 45 Q 0 42, 2 38 L 25 35 Q 32 33, 38 28 Q 45 22, 50 20 L 52 12 L 54 19 L 56 10 L 58 18 L 60 8 L 62 17 Q 68 20, 72 28 Q 75 34, 76 42 Q 77 50, 75 58 Q 73 66, 68 72 Q 62 78, 54 82 Q 46 86, 38 88 L 32 90 Q 28 92, 24 90 Q 20 88, 22 84 L 30 78 Q 36 74, 40 68 Q 44 62, 44 55 Q 44 48, 40 44 Q 36 40, 30 40 L 8 42 Q 4 43, 5 45 Z"/>
-          <path fill="#0a0a0f" d="M 40 33 L 52 32 Q 54 32.5, 52 33 L 40 34 Q 38 33.5, 40 33 Z"/>
-          <!-- Grackle feature overlays -->
-          <g class="grackle-overlays" fill="none" stroke="white" stroke-opacity="0.2">
-            <!-- Beak ridge line -->
-            <path d="M 5 42 Q 15 38, 25 36" stroke-width="1.5" stroke-opacity="0.4"/>
-            <!-- Eye - circular with light ring -->
-            <circle cx="46" cy="30" r="4" stroke-width="1" stroke-opacity="0.8" fill="none"/>
-            <circle cx="46" cy="30" r="2" fill="white" fill-opacity="0.6" stroke="none"/>
-            <!-- Feather texture - neck/breast curves -->
-            <path d="M 65 35 Q 68 45, 65 55" stroke-width="0.8" stroke-opacity="0.3"/>
-            <path d="M 60 40 Q 62 50, 58 60" stroke-width="0.8" stroke-opacity="0.25"/>
-            <path d="M 55 45 Q 56 55, 52 65" stroke-width="0.8" stroke-opacity="0.2"/>
-          </g>
-        </svg>
-        <h1 class="pixel-text site-title">Punkass Grackle</h1>
-      </div>
-      <p class="tagline">Music • D&D Tools • AI Systems</p>
+  <main class="dashboard">
+    <!-- Site Header - Full Width -->
+    <header class="site-header-full">
+      <svg class="header-grackle" viewBox="0 0 120 100" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="hdr-iridescent" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#6b3fa0"/>
+            <stop offset="35%" style="stop-color:#1a936f"/>
+            <stop offset="65%" style="stop-color:#a67c52"/>
+            <stop offset="100%" style="stop-color:#2d5a7b"/>
+          </linearGradient>
+        </defs>
+        <path fill="url(#hdr-iridescent)" d="M 5 45 Q 0 42, 2 38 L 25 35 Q 32 33, 38 28 Q 45 22, 50 20 L 52 12 L 54 19 L 56 10 L 58 18 L 60 8 L 62 17 Q 68 20, 72 28 Q 75 34, 76 42 Q 77 50, 75 58 Q 73 66, 68 72 Q 62 78, 54 82 Q 46 86, 38 88 L 32 90 Q 28 92, 24 90 Q 20 88, 22 84 L 30 78 Q 36 74, 40 68 Q 44 62, 44 55 Q 44 48, 40 44 Q 36 40, 30 40 L 8 42 Q 4 43, 5 45 Z"/>
+        <path fill="#0a0a0f" d="M 40 33 L 52 32 Q 54 32.5, 52 33 L 40 34 Q 38 33.5, 40 33 Z"/>
+        <!-- Grackle feature overlays -->
+        <g class="grackle-overlays" fill="none" stroke="white" stroke-opacity="0.2">
+          <!-- Beak ridge line -->
+          <path d="M 5 42 Q 15 38, 25 36" stroke-width="1.5" stroke-opacity="0.4"/>
+          <!-- Eye - circular with light ring -->
+          <circle cx="46" cy="30" r="4" stroke-width="1" stroke-opacity="0.8" fill="none"/>
+          <circle cx="46" cy="30" r="2" fill="white" fill-opacity="0.6" stroke="none"/>
+          <!-- Feather texture - neck/breast curves -->
+          <path d="M 65 35 Q 68 45, 65 55" stroke-width="0.8" stroke-opacity="0.3"/>
+          <path d="M 60 40 Q 62 50, 58 60" stroke-width="0.8" stroke-opacity="0.25"/>
+          <path d="M 55 45 Q 56 55, 52 65" stroke-width="0.8" stroke-opacity="0.2"/>
+        </g>
+      </svg>
+      <h1 class="pixel-text site-title">Punkass Grackle</h1>
+      <p class="tagline">Music . D&D Tools . AI Systems</p>
+    </header>
 
-      <div id="hero-banner" class="hero-banner iridescent-border crt-glow" role="button" tabindex="0" aria-label="Play random mix">
-        <div class="banner-content">
-          <span class="banner-text pixel-text" data-text="PUNKASS GRACKLE">PUNKASS GRACKLE</span>
-          <span class="shuffle-icon">⟳</span>
+    <!-- Dashboard Content - Two Column Layout -->
+    <div class="dashboard-content">
+      <!-- LEFT COLUMN: Music & Mixes -->
+      <section class="music-column">
+        <div id="hero-banner" class="hero-banner iridescent-border crt-glow" role="button" tabindex="0" aria-label="Play random mix">
+          <div class="banner-content">
+            <span class="banner-text pixel-text" data-text="PUNKASS GRACKLE">PUNKASS GRACKLE</span>
+            <span class="shuffle-icon">⟳</span>
+          </div>
+          <div class="banner-subtitle">Click to play random mix</div>
         </div>
-        <div class="banner-subtitle">Click to play random mix</div>
-      </div>
 
-      <div id="active-player" class="active-player iridescent-border hidden">
-        <div class="player-embed" id="player-embed"></div>
-        <div class="player-info">
-          <div class="player-title" id="player-title"></div>
-          <div class="player-meta" id="player-meta"></div>
+        <div id="active-player" class="active-player iridescent-border hidden">
+          <div class="player-embed" id="player-embed"></div>
+          <div class="player-info">
+            <div class="player-title" id="player-title"></div>
+            <div class="player-meta" id="player-meta"></div>
+          </div>
+          <button class="player-close" id="player-close" aria-label="Close player">×</button>
         </div>
-        <button class="player-close" id="player-close" aria-label="Close player">×</button>
-      </div>
 
-      <!-- Filter Controls -->
-      <div class="filter-controls">
-        <div class="filter-group">
-          <span class="filter-label pixel-text">Era:</span>
-          <button class="filter-chip active" data-filter="era" data-value="all">All</button>
-          <button class="filter-chip" data-filter="era" data-value="sean-sparks">Sean Sparks</button>
-          <button class="filter-chip" data-filter="era" data-value="punkass-grackle">Punkass Grackle</button>
+        <!-- Compact Collection Cards (JS will populate) -->
+        <div id="collection-cards" class="collection-cards-compact"></div>
+
+        <!-- Expanded Mixes Section (hidden by default) -->
+        <div id="expanded-mixes" class="expanded-mixes hidden">
+          <!-- Filter Controls -->
+          <div class="filter-controls">
+            <div class="filter-group">
+              <span class="filter-label pixel-text">Era:</span>
+              <button class="filter-chip active" data-filter="era" data-value="all">All</button>
+              <button class="filter-chip" data-filter="era" data-value="sean-sparks">Sean Sparks</button>
+              <button class="filter-chip" data-filter="era" data-value="punkass-grackle">Punkass Grackle</button>
+            </div>
+          </div>
+
+          <!-- Mix List -->
+          <div id="mix-list" class="mix-list">
+            <!-- Mix items will be injected by JS -->
+          </div>
         </div>
-      </div>
+      </section>
 
-      <!-- Mix List -->
-      <div id="mix-list" class="mix-list">
-        <!-- Mix items will be injected by JS -->
-      </div>
-    </section>
+      <!-- RIGHT COLUMN: Tools Sidebar -->
+      <aside class="tools-sidebar">
+        <div class="tool-section">
+          <h3 class="tool-section-title pixel-text">D&D Tools</h3>
+          <a href="https://vtt.punkassgrackle.com" class="tool-link">🗺️ Battle Map VTT</a>
+          <a href="/dnd/survey/" class="tool-link">📋 Character Survey</a>
+          <a href="/barbarian_calculator.html" class="tool-link">🪓 Barbarian Calc</a>
+        </div>
 
-    <!-- Tools Grid Section -->
-    <section id="tools" class="tools-section">
-      <h2 class="section-title pixel-text">D&D Tools</h2>
-      <div class="card-grid">
-        <a href="https://vtt.punkassgrackle.com" class="tool-card iridescent-border">
-          <div class="card-icon">🗺️</div>
-          <h3>Battle Map VTT</h3>
-          <p>Virtual tabletop with AI-generated maps, tokens, and real-time multiplayer</p>
-        </a>
-        <a href="/dnd/survey/" class="tool-card iridescent-border">
-          <div class="card-icon">📋</div>
-          <h3>Character Survey</h3>
-          <p>Detailed character questionnaire for backstory and personality</p>
-        </a>
-        <a href="/barbarian_calculator.html" class="tool-card iridescent-border">
-          <div class="card-icon">🪓</div>
-          <h3>Barbarian Calculator</h3>
-          <p>Calculate rage damage, attacks, and combat options</p>
-        </a>
-      </div>
+        <div class="tool-section">
+          <h3 class="tool-section-title pixel-text">AI Systems</h3>
+          <a href="https://starbug.punkassgrackle.com" class="tool-link">💬 Starbug</a>
+          <a href="https://observer.punkassgrackle.com" class="tool-link">👁️ Observer</a>
+          <a href="http://100.90.51.62:8000/chat.html" class="tool-link vpn">🤖 Cassidy</a>
+        </div>
 
-      <h2 class="section-title pixel-text">AI Systems</h2>
-      <div class="card-grid">
-        <a href="https://starbug.punkassgrackle.com" class="tool-card iridescent-border">
-          <div class="card-icon">💬</div>
-          <h3>Starbug Chat</h3>
-          <p>AI assistant with persistent memory and context</p>
-        </a>
-        <a href="https://observer.punkassgrackle.com" class="tool-card iridescent-border">
-          <div class="card-icon">👁️</div>
-          <h3>Observer</h3>
-          <p>Watch AI-to-AI conversations and collaboration</p>
-        </a>
-        <a href="http://100.90.51.62:8000/chat.html" class="tool-card iridescent-border">
-          <div class="card-icon">🤖</div>
-          <span class="badge vpn">VPN</span>
-          <h3>Cassidy</h3>
-          <p>Chat with Cassidy the skeleton robot</p>
-        </a>
-      </div>
-
-      <h2 class="section-title pixel-text">Tools & Admin</h2>
-      <div class="card-grid">
-        <a href="http://100.121.190.53:8085" class="tool-card iridescent-border">
-          <div class="card-icon">🔧</div>
-          <span class="badge vpn">VPN</span>
-          <h3>Workshop</h3>
-          <p>AI-powered 3D design to print pipeline</p>
-        </a>
-        <a href="http://192.168.1.192:8093/bigpicture.html" class="tool-card iridescent-border">
-          <div class="card-icon">📊</div>
-          <span class="badge vpn">VPN</span>
-          <h3>Big Picture</h3>
-          <p>Strategic project and goal management</p>
-        </a>
-        <a href="http://192.168.1.192:8093/littletasks.html" class="tool-card iridescent-border">
-          <div class="card-icon">📋</div>
-          <span class="badge vpn">VPN</span>
-          <h3>Little Tasks</h3>
-          <p>Claude CLI monitoring and notifications</p>
-        </a>
-        <a href="https://starbug.punkassgrackle.com/admin" class="tool-card iridescent-border">
-          <div class="card-icon">⚙️</div>
-          <span class="badge login">LOGIN</span>
-          <h3>Starbug Admin</h3>
-          <p>System administration and monitoring</p>
-        </a>
-      </div>
-    </section>
+        <div class="tool-section">
+          <h3 class="tool-section-title pixel-text">Tools & Admin</h3>
+          <a href="http://100.121.190.53:8085" class="tool-link vpn">🔧 Workshop</a>
+          <a href="http://192.168.1.192:8093/bigpicture.html" class="tool-link vpn">📊 Big Picture</a>
+          <a href="http://192.168.1.192:8093/littletasks.html" class="tool-link vpn">📋 Little Tasks</a>
+          <a href="https://starbug.punkassgrackle.com/admin" class="tool-link login">⚙️ Admin</a>
+        </div>
+      </aside>
+    </div>
   </main>
 
   <!-- Mini Player (fixed footer) -->
