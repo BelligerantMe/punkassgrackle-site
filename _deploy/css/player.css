@@ -221,13 +221,14 @@
 /* Hero Banner */
 .hero-banner {
   position: relative;
-  padding: var(--space-lg) var(--space-md);
-  margin-bottom: var(--space-md);
+  padding: var(--space-md) var(--space-xl);
   cursor: pointer;
   overflow: hidden;
   clip-path: polygon(0 0, 100% 3%, 100% 97%, 0 100%);
   transform: skewY(-1deg);
   transition: transform var(--transition-normal), box-shadow var(--transition-normal);
+  width: 100%;
+  max-width: 600px;
 }
 
 .hero-banner:hover {
@@ -248,10 +249,11 @@
 }
 
 .banner-text {
-  font-size: clamp(0.9rem, 3vw, 1.5rem);
+  font-size: clamp(1rem, 4vw, 1.8rem);
   color: var(--accent-pink);
   text-shadow: 0 0 10px rgba(255, 0, 110, 0.8), 0 0 20px rgba(255, 0, 110, 0.4);
   letter-spacing: 4px;
+  white-space: nowrap;
 }
 
 .shuffle-icon {
@@ -469,9 +471,9 @@
 .collection-cards-compact {
   display: flex;
   flex-wrap: wrap;
-  gap: var(--space-md);
-  justify-content: flex-start;
-  padding: var(--space-md) 0;
+  gap: var(--space-sm);
+  justify-content: center;
+  padding: var(--space-sm) 0;
 }
 
 .collection-card-mini {

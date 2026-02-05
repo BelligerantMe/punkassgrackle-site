@@ -3,50 +3,52 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-}
-
-.site-header-full {
-  text-align: center;
-  padding: var(--space-md) var(--space-lg);
-  display: flex;
   align-items: center;
-  justify-content: center;
-  gap: var(--space-md);
-  flex-wrap: wrap;
+  justify-content: flex-start;
+  padding: var(--space-lg) var(--space-lg);
+  padding-bottom: 80px; /* Space for mini player */
+  padding-top: var(--space-xl);
 }
 
 .dashboard-content {
-  display: grid;
-  grid-template-columns: 1fr 280px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
   gap: var(--space-lg);
-  padding: var(--space-lg);
-  flex: 1;
-  max-width: 1400px;
-  margin: 0 auto;
   width: 100%;
+  max-width: 900px;
 }
 
-/* Left Column - Music */
+/* Music Column - Centered */
 .music-column {
   display: flex;
   flex-direction: column;
+  align-items: center;
   gap: var(--space-md);
+  width: 100%;
 }
 
-/* Right Column - Tools Sidebar */
+/* Tools Sidebar - Now Horizontal Footer */
 .tools-sidebar {
   display: flex;
-  flex-direction: column;
-  gap: var(--space-md);
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: var(--space-sm);
+  width: 100%;
+  margin-top: var(--space-md);
+  padding-top: var(--space-md);
+  border-top: 1px solid rgba(107, 63, 160, 0.2);
 }
 
-/* Mobile: Stack columns */
-@media (max-width: 900px) {
-  .dashboard-content {
-    grid-template-columns: 1fr;
-  }
+/* Mobile: Stack tool sections */
+@media (max-width: 700px) {
   .tools-sidebar {
-    order: -1; /* Tools first on mobile for quick access */
+    flex-direction: column;
+    align-items: center;
+  }
+  .tool-section {
+    width: 100%;
+    max-width: 300px;
   }
 }
 
@@ -128,19 +130,20 @@
   color: white;
 }
 
-/* Tool Sidebar (Compact) */
+/* Tool Sections (Horizontal Layout) */
 .tool-section {
   background: var(--bg-card);
   border-radius: var(--radius-md);
-  padding: var(--space-md);
-  border: 1px solid rgba(107, 63, 160, 0.3);
+  padding: var(--space-xs) var(--space-sm);
+  border: 1px solid rgba(107, 63, 160, 0.2);
+  flex: 0 1 auto;
 }
 
 .tool-section-title {
   font-family: 'Press Start 2P', cursive;
-  font-size: 0.55rem;
+  font-size: 0.45rem;
   color: var(--accent-pink);
-  margin-bottom: var(--space-sm);
+  margin-bottom: var(--space-xs);
   text-transform: uppercase;
   letter-spacing: 1px;
 }
