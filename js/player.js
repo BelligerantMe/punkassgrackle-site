@@ -8,7 +8,6 @@ const PlayerState = {
 };
 
 // DOM Elements
-const playerContainer = document.getElementById('player-container');
 const mixList = document.getElementById('mix-list');
 const heroBanner = document.getElementById('hero-banner');
 const activePlayer = document.getElementById('active-player');
@@ -25,11 +24,10 @@ async function initPlayer() {
     PlayerState.collections = data.collections;
     renderCollections();
     renderMixList(PlayerState.mixes);
-    renderPlayerUI();
     setupBannerEventListeners();
   } catch (error) {
     console.error('Failed to load mixes:', error);
-    playerContainer.innerHTML = '<div class="player-error">Failed to load mixes</div>';
+    if (mixList) mixList.innerHTML = '<div class="player-error">Failed to load mixes</div>';
   }
 }
 
@@ -146,17 +144,7 @@ function filterByCollection(collectionId) {
   document.getElementById('mix-list').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
 
-function renderPlayerUI() {
-  playerContainer.innerHTML = `
-    <div class="player-embed" id="player-embed">
-      <div class="player-placeholder">Select a mix to play</div>
-    </div>
-    <div class="player-info">
-      <div class="player-title" id="player-title">No mix selected</div>
-      <div class="player-meta" id="player-meta"></div>
-    </div>
-  `;
-}
+// Player UI is now defined in HTML (active-player element)
 
 function renderMixList(mixes) {
   if (!mixes || mixes.length === 0) {
