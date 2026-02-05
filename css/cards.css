@@ -1,0 +1,77 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: var(--space-lg);
+}
+
+.tools-section {
+  margin-top: var(--space-xl);
+}
+
+.section-title {
+  font-size: 0.9rem;
+  color: var(--accent-pink);
+  margin: var(--space-xl) 0 var(--space-lg);
+  text-align: center;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--space-lg);
+  margin-bottom: var(--space-lg);
+}
+
+.tool-card {
+  display: block;
+  padding: var(--space-lg);
+  text-decoration: none;
+  color: var(--text-primary);
+  transition: transform var(--transition-normal);
+  position: relative;
+}
+
+.tool-card:hover {
+  transform: translateY(-4px);
+  color: var(--text-primary);
+}
+
+.card-icon {
+  font-size: 2.5rem;
+  margin-bottom: var(--space-md);
+}
+
+.tool-card h3 {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--space-sm);
+  color: var(--accent-cyan);
+}
+
+.tool-card p {
+  font-size: 0.85rem;
+  color: var(--text-muted);
+  line-height: 1.5;
+}
+
+.badge {
+  position: absolute;
+  top: var(--space-sm);
+  right: var(--space-sm);
+  font-family: 'Press Start 2P', cursive;
+  font-size: 0.5rem;
+  padding: var(--space-xs) var(--space-sm);
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+}
+
+.badge.vpn {
+  background: var(--iridescent-bronze);
+  color: var(--bg-deep);
+}
+
+.badge.login {
+  background: var(--accent-pink);
+  color: white;
+}
