@@ -12,7 +12,7 @@
 </head>
 <body class="scanlines">
   <!-- Background Grid -->
-  <div class="bg-grid" style="position:fixed;inset:0;z-index:-1;background:url('assets/grackle-grid.svg') center/cover no-repeat;"></div>
+  <div class="bg-grid"></div>
 
   <main class="container">
     <!-- Hero: Audio Player Section -->
@@ -39,6 +39,12 @@
           <button class="filter-chip" data-filter="mood" data-value="chill">Chill</button>
           <button class="filter-chip" data-filter="mood" data-value="high-energy">High Energy</button>
           <button class="filter-chip" data-filter="mood" data-value="late-night">Late Night</button>
+        </div>
+        <div class="filter-group">
+          <span class="filter-label pixel-text">Type:</span>
+          <button class="filter-chip active" data-filter="type" data-value="all">All</button>
+          <button class="filter-chip" data-filter="type" data-value="live-set">Live Set</button>
+          <button class="filter-chip" data-filter="type" data-value="studio-mix">Studio Mix</button>
         </div>
       </div>
 
