@@ -1,0 +1,185 @@
+{
+  "collections": [
+    { "id": "burning-man", "name": "Burning Man / Flipside" },
+    { "id": "the-guild", "name": "The Guild Nights" },
+    { "id": "bird-on-the-wire", "name": "Bird on the Wire Radio" },
+    { "id": "weirdly-specific", "name": "Weirdly Specific" }
+  ],
+  "mixes": [
+    {
+      "id": "botw-f-2024",
+      "title": "Bird on the Wire - Letter F",
+      "fullTitle": "Punkass Grackle | The Guild Bird on the Wire | Brought to You by the Letter F",
+      "era": "punkass-grackle",
+      "collections": ["bird-on-the-wire", "the-guild"],
+      "date": "2024-01",
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sharedfrequenciesradio/punkass-grackle-brought-to-you",
+      "externalUrl": "https://soundcloud.com/sharedfrequenciesradio/punkass-grackle-brought-to-you"
+    },
+    {
+      "id": "botw-r-2024",
+      "title": "Bird on the Wire - Letter R",
+      "fullTitle": "Punkass Grackle | The Guild Bird on the Wire - Brought to you by the Letter R",
+      "era": "punkass-grackle",
+      "collections": ["bird-on-the-wire", "the-guild"],
+      "date": "2024-02",
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sharedfrequenciesradio/brought-to-you-by-the-letter-r",
+      "externalUrl": "https://soundcloud.com/sharedfrequenciesradio/brought-to-you-by-the-letter-r"
+    },
+    {
+      "id": "botw-i-2024",
+      "title": "Bird on the Wire - Letter I",
+      "fullTitle": "Punkass Grackle | The Guild Bird on the Wire - Brought to you by the Letter I",
+      "era": "punkass-grackle",
+      "collections": ["bird-on-the-wire", "the-guild"],
+      "date": "2024-03",
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sharedfrequenciesradio/punkass-grackle-the-guild-bird",
+      "externalUrl": "https://soundcloud.com/sharedfrequenciesradio/punkass-grackle-the-guild-bird"
+    },
+    {
+      "id": "botw-apr-2024",
+      "title": "Bird on the Wire - April 2024",
+      "fullTitle": "Punkass Grackle | Bird on the Wire | April 2024",
+      "era": "punkass-grackle",
+      "collections": ["bird-on-the-wire"],
+      "date": "2024-04",
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sharedfrequenciesradio/punkass-grackle-bird-on-the",
+      "externalUrl": "https://soundcloud.com/sharedfrequenciesradio/punkass-grackle-bird-on-the"
+    },
+    {
+      "id": "botw-may-2024",
+      "title": "Bird on the Wire - May 2024",
+      "fullTitle": "Punkass Grackle | Bird on the Wire | May 2024",
+      "era": "punkass-grackle",
+      "collections": ["bird-on-the-wire"],
+      "date": "2024-05",
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/sharedfrequenciesradio/punkass-grackle-bird-on-the-1",
+      "externalUrl": "https://soundcloud.com/sharedfrequenciesradio/punkass-grackle-bird-on-the-1"
+    },
+    {
+      "id": "haunted-house-2019",
+      "title": "Haunted House of Dirt 2019",
+      "era": "sean-sparks",
+      "collections": ["weirdly-specific"],
+      "date": "2019-11",
+      "duration": "1:01:16",
+      "plays": 140,
+      "platform": "mixcloud",
+      "embedUrl": "https://www.mixcloud.com/widget/iframe/?feed=%2Fseansparks%2Fhaunted-house-of-dirt-2019%2F",
+      "externalUrl": "https://www.mixcloud.com/seansparks/haunted-house-of-dirt-2019/"
+    },
+    {
+      "id": "happy-mothers-day-2018",
+      "title": "Happy Mother's Day",
+      "era": "sean-sparks",
+      "collections": ["weirdly-specific"],
+      "date": "2018-05",
+      "duration": "1:05:34",
+      "plays": 36,
+      "platform": "mixcloud",
+      "embedUrl": "https://www.mixcloud.com/widget/iframe/?feed=%2Fseansparks%2Fhappy-mothers-day%2F",
+      "externalUrl": "https://www.mixcloud.com/seansparks/happy-mothers-day/"
+    },
+    {
+      "id": "gdammit-youre-sexy",
+      "title": "G*Dammit You're Sexy",
+      "era": "sean-sparks",
+      "collections": ["the-guild"],
+      "date": "2015-10",
+      "duration": "1:01:05",
+      "plays": 187,
+      "platform": "mixcloud",
+      "embedUrl": "https://www.mixcloud.com/widget/iframe/?feed=%2Fseansparks%2Fgdammit-youre-sexy%2F",
+      "externalUrl": "https://www.mixcloud.com/seansparks/gdammit-youre-sexy/"
+    },
+    {
+      "id": "with-gusto",
+      "title": "With Gusto",
+      "era": "sean-sparks",
+      "collections": ["the-guild"],
+      "date": "2015-09",
+      "duration": "57:47",
+      "plays": 144,
+      "platform": "mixcloud",
+      "embedUrl": "https://www.mixcloud.com/widget/iframe/?feed=%2Fseansparks%2Fwith-gusto%2F",
+      "externalUrl": "https://www.mixcloud.com/seansparks/with-gusto/"
+    },
+    {
+      "id": "unidextrous-mix",
+      "title": "Unidextrous",
+      "era": "sean-sparks",
+      "collections": ["the-guild"],
+      "date": "2015-09",
+      "duration": "51:40",
+      "plays": 73,
+      "platform": "mixcloud",
+      "embedUrl": "https://www.mixcloud.com/widget/iframe/?feed=%2Fseansparks%2Funidextrous%2F",
+      "externalUrl": "https://www.mixcloud.com/seansparks/unidextrous/"
+    },
+    {
+      "id": "warm-me-up-burning-man",
+      "title": "Warm Me Up, Burning Man",
+      "era": "sean-sparks",
+      "collections": ["burning-man"],
+      "date": "2015-08",
+      "duration": "49:51",
+      "plays": 107,
+      "platform": "mixcloud",
+      "embedUrl": "https://www.mixcloud.com/widget/iframe/?feed=%2Fseansparks%2Fwarm-me-up-burning-man%2F",
+      "externalUrl": "https://www.mixcloud.com/seansparks/warm-me-up-burning-man/"
+    },
+    {
+      "id": "ish-happened-again",
+      "title": "Ish Happened Again",
+      "era": "sean-sparks",
+      "collections": ["burning-man"],
+      "date": "2014-06",
+      "duration": "56:04",
+      "plays": 128,
+      "platform": "mixcloud",
+      "embedUrl": "https://www.mixcloud.com/widget/iframe/?feed=%2Fseansparks%2Fish-happened-again%2F",
+      "externalUrl": "https://www.mixcloud.com/seansparks/ish-happened-again/"
+    },
+    {
+      "id": "warm-me-up-track",
+      "title": "Warm Me Up",
+      "type": "production",
+      "era": "sean-sparks",
+      "collections": [],
+      "date": "2012",
+      "plays": 662,
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/seansparks/warm-me-up",
+      "externalUrl": "https://soundcloud.com/seansparks/warm-me-up"
+    },
+    {
+      "id": "unidextrous-track",
+      "title": "Unidextrous (Left Handed Heart)",
+      "type": "production",
+      "era": "sean-sparks",
+      "collections": [],
+      "date": "2012",
+      "plays": 597,
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/seansparks/unidextrous-left-handed-heart",
+      "externalUrl": "https://soundcloud.com/seansparks/unidextrous-left-handed-heart"
+    },
+    {
+      "id": "orphans-wish",
+      "title": "The Orphan's Wish",
+      "type": "production",
+      "era": "sean-sparks",
+      "collections": [],
+      "date": "2011",
+      "plays": 342,
+      "platform": "soundcloud",
+      "embedUrl": "https://w.soundcloud.com/player/?url=https%3A//soundcloud.com/seansparks/the-orphans-wish",
+      "externalUrl": "https://soundcloud.com/seansparks/the-orphans-wish"
+    }
+  ]
+}
