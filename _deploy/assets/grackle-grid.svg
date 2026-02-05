@@ -4,6 +4,14 @@
       <stop offset="0%" style="stop-color:#2d5a7b;stop-opacity:0.4"/>
       <stop offset="100%" style="stop-color:#0a0a0f;stop-opacity:0"/>
     </linearGradient>
+    <linearGradient id="grackleGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#6b3fa0"/>
+      <stop offset="35%" style="stop-color:#1a936f"/>
+      <stop offset="65%" style="stop-color:#a67c52"/>
+      <stop offset="100%" style="stop-color:#2d5a7b"/>
+    </linearGradient>
+    <!-- Grackle silhouette path for reuse -->
+    <path id="grackle-shape" d="M 5 45 Q 0 42, 2 38 L 25 35 Q 32 33, 38 28 Q 45 22, 52 20 Q 58 18, 62 20 Q 68 22, 72 28 Q 75 34, 76 42 Q 77 50, 75 58 Q 73 66, 68 72 Q 62 78, 54 82 Q 46 86, 38 88 L 32 90 Q 28 92, 24 90 Q 20 88, 22 84 L 30 78 Q 36 74, 40 68 Q 44 62, 44 55 Q 44 48, 40 44 Q 36 40, 30 40 L 8 42 Q 4 43, 5 45 Z"/>
   </defs>
 
   <!-- Background -->
@@ -32,5 +40,15 @@
     <path d="M0,920 Q960,880 1920,920"/>
     <path d="M0,840 Q960,780 1920,840"/>
     <path d="M0,760 Q960,700 1920,760"/>
+  </g>
+
+  <!-- Subtle grackle silhouettes scattered in background -->
+  <g fill="url(#grackleGrad)" opacity="0.08">
+    <!-- Upper left grackle - small, looking right -->
+    <use href="#grackle-shape" transform="translate(120, 80) scale(1.2)"/>
+    <!-- Lower right grackle - larger, looking left (flipped) -->
+    <use href="#grackle-shape" transform="translate(1750, 550) scale(-1.8, 1.8)"/>
+    <!-- Mid-right grackle - tiny accent -->
+    <use href="#grackle-shape" transform="translate(1500, 180) scale(0.7) rotate(-10)"/>
   </g>
 </svg>
