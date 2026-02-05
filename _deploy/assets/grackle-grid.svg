@@ -12,6 +12,10 @@
     </linearGradient>
     <!-- Punk grackle silhouette with mohawk -->
     <path id="grackle-shape" d="M 5 45 Q 0 42, 2 38 L 25 35 Q 32 33, 38 28 Q 45 22, 50 20 L 52 12 L 54 19 L 56 10 L 58 18 L 60 8 L 62 17 Q 68 20, 72 28 Q 75 34, 76 42 Q 77 50, 75 58 Q 73 66, 68 72 Q 62 78, 54 82 Q 46 86, 38 88 L 32 90 Q 28 92, 24 90 Q 20 88, 22 84 L 30 78 Q 36 74, 40 68 Q 44 62, 44 55 Q 44 48, 40 44 Q 36 40, 30 40 L 8 42 Q 4 43, 5 45 Z"/>
+    <!-- Simple eye overlay for background grackles -->
+    <g id="grackle-eye">
+      <circle cx="46" cy="30" r="3" fill="white" fill-opacity="0.3" stroke="none"/>
+    </g>
   </defs>
 
   <!-- Background -->
@@ -46,9 +50,12 @@
   <g fill="url(#grackleGrad)" opacity="0.08">
     <!-- Upper left grackle - small, looking right -->
     <use href="#grackle-shape" transform="translate(120, 80) scale(1.2)"/>
+    <use href="#grackle-eye" transform="translate(120, 80) scale(1.2)"/>
     <!-- Lower right grackle - larger, looking left (flipped) -->
     <use href="#grackle-shape" transform="translate(1750, 550) scale(-1.8, 1.8)"/>
+    <use href="#grackle-eye" transform="translate(1750, 550) scale(-1.8, 1.8)"/>
     <!-- Mid-right grackle - tiny accent -->
     <use href="#grackle-shape" transform="translate(1500, 180) scale(0.7) rotate(-10)"/>
+    <use href="#grackle-eye" transform="translate(1500, 180) scale(0.7) rotate(-10)"/>
   </g>
 </svg>

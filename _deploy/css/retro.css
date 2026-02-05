@@ -68,3 +68,46 @@
   text-transform: uppercase;
   letter-spacing: 2px;
 }
+
+/* Glitch text effect on hover */
+.banner-text {
+  position: relative;
+}
+
+.hero-banner:hover .banner-text::before,
+.hero-banner:hover .banner-text::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+.hero-banner:hover .banner-text::before {
+  animation: glitch-1 0.3s infinite;
+  color: var(--accent-cyan);
+  opacity: 0.7;
+  clip-path: inset(0 0 50% 0);
+}
+
+.hero-banner:hover .banner-text::after {
+  animation: glitch-2 0.3s infinite;
+  color: var(--accent-pink);
+  opacity: 0.7;
+  clip-path: inset(50% 0 0 0);
+}
+
+@keyframes glitch-1 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(-2px, 2px); }
+  40% { transform: translate(2px, -2px); }
+  60% { transform: translate(-1px, 1px); }
+  80% { transform: translate(1px, -1px); }
+}
+
+@keyframes glitch-2 {
+  0%, 100% { transform: translate(0); }
+  20% { transform: translate(2px, -2px); }
+  40% { transform: translate(-2px, 2px); }
+  60% { transform: translate(1px, -1px); }
+  80% { transform: translate(-1px, 1px); }
+}

@@ -35,9 +35,21 @@
       </div>
       <p class="tagline">Music • D&D Tools • AI Systems</p>
 
-      <div id="player-container" class="player-container iridescent-border crt-glow">
-        <!-- Player UI will be injected by JS -->
-        <div class="player-loading">Loading mixes...</div>
+      <div id="hero-banner" class="hero-banner iridescent-border crt-glow" role="button" tabindex="0" aria-label="Play random mix">
+        <div class="banner-content">
+          <span class="banner-text pixel-text" data-text="PUNKASS GRACKLE">PUNKASS GRACKLE</span>
+          <span class="shuffle-icon">⟳</span>
+        </div>
+        <div class="banner-subtitle">Click to play random mix</div>
+      </div>
+
+      <div id="active-player" class="active-player iridescent-border hidden">
+        <div class="player-embed" id="player-embed"></div>
+        <div class="player-info">
+          <div class="player-title" id="player-title"></div>
+          <div class="player-meta" id="player-meta"></div>
+        </div>
+        <button class="player-close" id="player-close" aria-label="Close player">×</button>
       </div>
 
       <!-- Filter Controls -->
@@ -47,14 +59,6 @@
           <button class="filter-chip active" data-filter="era" data-value="all">All</button>
           <button class="filter-chip" data-filter="era" data-value="sean-sparks">Sean Sparks</button>
           <button class="filter-chip" data-filter="era" data-value="punkass-grackle">Punkass Grackle</button>
-        </div>
-        <div class="filter-group">
-          <span class="filter-label pixel-text">Collection:</span>
-          <button class="filter-chip active" data-filter="collection" data-value="all">All</button>
-          <button class="filter-chip" data-filter="collection" data-value="bird-on-the-wire">Bird on the Wire</button>
-          <button class="filter-chip" data-filter="collection" data-value="the-guild">The Guild</button>
-          <button class="filter-chip" data-filter="collection" data-value="burning-man">Burning Man</button>
-          <button class="filter-chip" data-filter="collection" data-value="weirdly-specific">Weirdly Specific</button>
         </div>
       </div>
 
