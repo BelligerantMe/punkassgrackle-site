@@ -1,0 +1,36 @@
+:root {
+  /* Background */
+  --bg-deep: #0a0a0f;
+  --bg-card: #12121a;
+
+  /* Grackle Iridescence */
+  --iridescent-purple: #6b3fa0;
+  --iridescent-teal: #1a936f;
+  --iridescent-bronze: #a67c52;
+  --iridescent-blue: #2d5a7b;
+
+  /* Synthwave Punch */
+  --accent-pink: #ff006e;
+  --accent-cyan: #00f5d4;
+
+  /* Text */
+  --text-primary: #e0e0e0;
+  --text-muted: #4a4a5a;
+  --text-heading: #f0f0f0;
+
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 2rem;
+  --space-xl: 4rem;
+
+  /* Borders */
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
+
+  /* Transitions */
+  --transition-fast: 150ms ease;
+  --transition-normal: 300ms ease;
+}
