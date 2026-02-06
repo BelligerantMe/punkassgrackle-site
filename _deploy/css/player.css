@@ -673,9 +673,24 @@
   padding: var(--space-md);
   background: var(--bg-card);
   border-radius: var(--radius-md);
+  /* Gradient border using border-image doesn't work with border-radius, so use box-shadow */
+  border: 2px solid var(--iridescent-purple);
+  box-shadow:
+    0 0 15px rgba(107, 63, 160, 0.3),
+    0 0 30px rgba(0, 245, 212, 0.15),
+    inset 0 1px 0 rgba(255, 255, 255, 0.05);
+  transition: box-shadow var(--transition-normal), border-color var(--transition-normal);
   /* Entry animation */
   opacity: 0;
   animation: fadeSlideIn 0.5s ease forwards;
+}
+
+.tools-column:hover {
+  border-color: var(--iridescent-teal);
+  box-shadow:
+    0 0 20px rgba(0, 245, 212, 0.4),
+    0 0 40px rgba(107, 63, 160, 0.3),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
 .tools-left {
