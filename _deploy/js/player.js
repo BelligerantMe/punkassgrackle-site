@@ -13,6 +13,7 @@ const mixList = document.getElementById('mix-list');
 const heroBanner = document.getElementById('hero-banner');
 const activePlayer = document.getElementById('active-player');
 const playerClose = document.getElementById('player-close');
+const playerShuffle = document.getElementById('player-shuffle');
 
 // Initialize player on load
 document.addEventListener('DOMContentLoaded', initPlayer);
@@ -44,6 +45,9 @@ function setupBannerEventListeners() {
   }
   if (playerClose) {
     playerClose.addEventListener('click', showBanner);
+  }
+  if (playerShuffle) {
+    playerShuffle.addEventListener('click', playRandomMix);
   }
 }
 

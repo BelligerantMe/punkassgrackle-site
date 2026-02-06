@@ -359,6 +359,31 @@
   border-color: var(--accent-pink);
 }
 
+.player-shuffle {
+  position: absolute;
+  bottom: var(--space-sm);
+  right: var(--space-sm);
+  background: var(--bg-deep);
+  border: 1px solid var(--iridescent-teal);
+  color: var(--iridescent-teal);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.4rem;
+  transition: all var(--transition-fast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.player-shuffle:hover {
+  background: var(--iridescent-teal);
+  color: var(--bg-deep);
+  border-color: var(--iridescent-teal);
+  transform: rotate(180deg);
+}
+
 /* Collection Cards Grid */
 .collection-cards-grid {
   display: grid;
