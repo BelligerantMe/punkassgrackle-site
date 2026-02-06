@@ -278,6 +278,31 @@
   letter-spacing: 2px;
 }
 
+/* Banner wrapper for grackle positioning */
+.hero-banner-wrapper {
+  position: relative;
+  width: 100%;
+  max-width: 600px;
+}
+
+/* Grackle mascot standing on banner */
+.banner-grackle {
+  position: absolute;
+  top: -54px;
+  left: -35px;
+  width: 85px;
+  height: auto;
+  transform: scaleX(-1);
+  filter: drop-shadow(0 0 8px rgba(107, 63, 160, 0.6));
+  transition: filter var(--transition-normal), transform var(--transition-normal);
+  z-index: 10;
+}
+
+.hero-banner-wrapper:hover .banner-grackle {
+  filter: drop-shadow(0 0 15px rgba(255, 0, 110, 0.7));
+  transform: scaleX(-1) scale(1.1) translateY(-3px);
+}
+
 /* Active Player */
 .active-player {
   position: relative;

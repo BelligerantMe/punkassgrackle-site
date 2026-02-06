@@ -40,7 +40,7 @@ a:hover {
   position: fixed;
   inset: 0;
   z-index: -1;
-  background: url('../assets/grackle-grid.svg') center/cover no-repeat;
+  background: url('../assets/grackle-grid-v2.svg') center/cover no-repeat;
 }
 
 /* Header with grackle */
