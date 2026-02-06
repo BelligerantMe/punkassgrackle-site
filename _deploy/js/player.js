@@ -65,9 +65,14 @@ function showActivePlayer() {
 }
 
 function showBanner() {
+  // Stop playback by clearing the embed iframe
+  const embedContainer = document.getElementById('player-embed');
+  if (embedContainer) embedContainer.innerHTML = '';
+
   if (activePlayer) activePlayer.classList.add('hidden');
   if (heroBanner) heroBanner.classList.remove('hidden');
   PlayerState.bannerMode = true;
+  PlayerState.currentMix = null;
 }
 
 function renderCompactCollections() {
