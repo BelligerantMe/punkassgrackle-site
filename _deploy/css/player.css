@@ -317,12 +317,20 @@
   height: auto;
   transform: scaleX(-1);
   filter: drop-shadow(0 0 8px rgba(107, 63, 160, 0.6));
-  transition: filter var(--transition-normal), transform var(--transition-normal);
+  transition: filter var(--transition-normal);
   z-index: 10;
+  /* Subtle idle bob animation */
+  animation: grackleIdle 3s ease-in-out infinite;
+}
+
+@keyframes grackleIdle {
+  0%, 100% { transform: scaleX(-1) translateY(0); }
+  50% { transform: scaleX(-1) translateY(-3px); }
 }
 
 .hero-banner-wrapper:hover .banner-grackle {
   filter: drop-shadow(0 0 15px rgba(255, 0, 110, 0.7));
+  animation: none;
   transform: scaleX(-1) scale(1.1) translateY(-3px);
 }
 
@@ -655,14 +663,38 @@
   max-width: 1200px;
   margin: 0 auto;
   padding: var(--space-lg);
-  align-items: start;
+  align-items: center;
 }
 
 .tools-column {
   display: flex;
   flex-direction: column;
   gap: var(--space-sm);
-  padding-top: var(--space-md);
+  padding: var(--space-md);
+  background: var(--bg-card);
+  border-radius: var(--radius-md);
+  /* Entry animation */
+  opacity: 0;
+  animation: fadeSlideIn 0.5s ease forwards;
+}
+
+.tools-left {
+  animation-delay: 0.1s;
+}
+
+.tools-right {
+  animation-delay: 0.2s;
+}
+
+@keyframes fadeSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .tool-section-title {
@@ -690,12 +722,18 @@
   border-color: var(--accent-cyan);
   background: rgba(0, 245, 212, 0.1);
   transform: translateX(4px);
+  box-shadow:
+    0 0 10px rgba(0, 245, 212, 0.3),
+    0 0 20px rgba(0, 245, 212, 0.2);
 }
 
 .music-column {
   display: flex;
   flex-direction: column;
   align-items: center;
+  /* Entry animation for center content */
+  opacity: 0;
+  animation: fadeSlideIn 0.5s ease forwards;
 }
 
 /* Mobile responsive - stack columns */
@@ -849,4 +887,19 @@
   background: rgba(255, 0, 110, 0.3);
   border-radius: var(--radius-sm);
   color: var(--accent-pink);
+}
+
+/* ============================================
+   SITE FOOTER
+   ============================================ */
+.site-footer {
+  text-align: center;
+  padding: var(--space-lg) var(--space-md);
+  margin-bottom: 60px; /* Space for mini-player */
+  font-size: 0.5rem;
+  color: var(--text-muted);
+  letter-spacing: 2px;
+  opacity: 0;
+  animation: fadeSlideIn 0.6s ease forwards;
+  animation-delay: 0.4s;
 }
