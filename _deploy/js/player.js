@@ -3,10 +3,17 @@ const PlayerState = {
   mixes: [],
   collections: [],
   currentMix: null,
-  isPlaying: false,
   bannerMode: true,
   expandedCollection: null
 };
+
+// HTML escape utility for XSS prevention
+function escapeHtml(text) {
+  if (!text) return '';
+  const div = document.createElement('div');
+  div.textContent = text;
+  return div.innerHTML;
+}
 
 // DOM Elements
 const mixList = document.getElementById('mix-list');
@@ -84,13 +91,9 @@ function renderCompactCollections() {
   if (!container) return;
 
   container.innerHTML = PlayerState.collections.map(coll => {
-    // Count mixes for this collection
-    let mixCount;
-    if (coll.id === 'productions') {
-      mixCount = PlayerState.mixes.filter(m => !m.collections || m.collections.length === 0).length;
-    } else {
-      mixCount = PlayerState.mixes.filter(m => m.collections && m.collections.includes(coll.id)).length;
-    }
+    const mixCount = PlayerState.mixes.filter(m =>
+      m.collections && m.collections.includes(coll.id)
+    ).length;
 
     return `
       <div class="collection-card-mini iridescent-border"
@@ -106,10 +109,9 @@ function renderCompactCollections() {
 }
 
 function filterMixesByCollection(collectionId) {
-  if (collectionId === 'productions') {
-    return PlayerState.mixes.filter(m => !m.collections || m.collections.length === 0);
-  }
-  return PlayerState.mixes.filter(m => m.collections && m.collections.includes(collectionId));
+  return PlayerState.mixes.filter(m =>
+    m.collections && m.collections.includes(collectionId)
+  );
 }
 
 function expandCategory(collectionId) {
@@ -174,21 +176,21 @@ function renderMixList(mixes) {
   }
 
   mixList.innerHTML = mixes.map(mix => `
-    <div class="mix-item" data-mix-id="${mix.id}">
-      ${mix.letter ? `<div class="mix-letter-box">${mix.letter}</div>` : ''}
+    <div class="mix-item" data-mix-id="${escapeHtml(mix.id)}">
+      ${mix.letter ? `<div class="mix-letter-box">${escapeHtml(mix.letter)}</div>` : ''}
       <div class="mix-info">
-        <div class="mix-title">${mix.title}</div>
+        <div class="mix-title">${escapeHtml(mix.title)}</div>
         <div class="mix-meta">
           <span class="mix-date">${formatDate(mix.date)}</span>
-          ${mix.duration ? `<span class="mix-duration">${mix.duration}</span>` : ''}
-          <span class="mix-platform ${mix.platform}">${mix.platform}</span>
+          ${mix.duration ? `<span class="mix-duration">${escapeHtml(mix.duration)}</span>` : ''}
+          <span class="mix-platform ${escapeHtml(mix.platform)}">${escapeHtml(mix.platform)}</span>
         </div>
       </div>
       <div class="mix-actions">
         <button class="mix-play-btn" title="Play">
           <span class="play-icon">&#9658;</span>
         </button>
-        <a href="${mix.externalUrl}" target="_blank" rel="noopener" class="mix-external-btn" title="Open on ${mix.platform}">
+        <a href="${escapeHtml(mix.externalUrl)}" target="_blank" rel="noopener" class="mix-external-btn" title="Open on ${escapeHtml(mix.platform)}">
           <span class="external-icon">&#8599;</span>
         </a>
       </div>
@@ -247,8 +249,8 @@ function loadMix(mixId) {
   titleEl.textContent = mix.fullTitle || mix.title;
   metaEl.innerHTML = `
     <span>${formatDate(mix.date)}</span>
-    ${mix.duration ? `<span>${mix.duration}</span>` : ''}
-    <a href="${mix.externalUrl}" target="_blank" rel="noopener">Open on ${mix.platform}</a>
+    ${mix.duration ? `<span>${escapeHtml(mix.duration)}</span>` : ''}
+    <a href="${escapeHtml(mix.externalUrl)}" target="_blank" rel="noopener">Open on ${escapeHtml(mix.platform)}</a>
   `;
 
   // Show active player when a mix is loaded
