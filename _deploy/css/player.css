@@ -650,7 +650,7 @@
    ============================================ */
 .dashboard-content {
   display: grid;
-  grid-template-columns: 180px 1fr 180px;
+  grid-template-columns: 200px 1fr 200px;
   gap: var(--space-lg);
   max-width: 1200px;
   margin: 0 auto;
@@ -666,22 +666,23 @@
 }
 
 .tool-section-title {
-  font-size: 0.5rem;
-  color: var(--text-muted);
-  margin-bottom: var(--space-xs);
+  font-size: 0.7rem;
+  color: var(--accent-cyan);
+  margin-bottom: var(--space-sm);
   text-transform: uppercase;
   letter-spacing: 2px;
+  text-shadow: 0 0 8px rgba(0, 245, 212, 0.4);
 }
 
 .tool-link {
   display: block;
-  padding: var(--space-sm) var(--space-md);
+  padding: var(--space-md);
   background: var(--bg-card);
   border: 1px solid var(--iridescent-purple);
   border-radius: var(--radius-md);
   color: var(--text-primary);
   text-decoration: none;
-  font-size: 0.85rem;
+  font-size: 1rem;
   transition: all var(--transition-fast);
 }
 

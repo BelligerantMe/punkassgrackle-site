@@ -10,14 +10,7 @@
   padding-top: var(--space-xl);
 }
 
-.dashboard-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: var(--space-lg);
-  width: 100%;
-  max-width: 900px;
-}
+/* .dashboard-content moved to player.css for 3-column grid layout */
 
 /* Music Column - Centered */
 .music-column {
