@@ -166,6 +166,7 @@ function renderMixList(mixes) {
 
   mixList.innerHTML = mixes.map(mix => `
     <div class="mix-item" data-mix-id="${mix.id}">
+      ${mix.letter ? `<div class="mix-letter-box">${mix.letter}</div>` : ''}
       <div class="mix-info">
         <div class="mix-title">${mix.title}</div>
         <div class="mix-meta">

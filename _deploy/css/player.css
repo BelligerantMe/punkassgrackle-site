@@ -97,6 +97,29 @@
   border-left: 3px solid var(--accent-pink);
 }
 
+/* Letter box for BOTW series */
+.mix-letter-box {
+  width: 36px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--bg-deep);
+  border: 2px solid var(--iridescent-teal);
+  border-radius: var(--radius-sm);
+  font-family: 'Press Start 2P', monospace;
+  font-size: 1rem;
+  color: var(--iridescent-teal);
+  flex-shrink: 0;
+  text-shadow: 0 0 8px var(--iridescent-teal);
+}
+
+.mix-item:hover .mix-letter-box {
+  border-color: var(--accent-pink);
+  color: var(--accent-pink);
+  text-shadow: 0 0 8px var(--accent-pink);
+}
+
 .mix-play-btn {
   width: 40px;
   height: 40px;
